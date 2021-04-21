@@ -3,17 +3,25 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class LocalStorageService {
-  GetStorage _box = GetStorage();
+  final _box = GetStorage();
 
-  void save(String key, String value) {
-    _box.write(key, value);
+  String? read(key) {
+    return _box.read(key);
   }
 
-  String? read(String key) {
-    return _box.read<String>(key);
+  Future<void> write(String key, dynamic value) {
+    return _box.write(key, value);
   }
 
-  void clear(String key) {
-    _box.write(key, null);
+  Future<void> clear(String key) {
+    return _box.remove(key);
+  }
+
+  bool isEmpty(String key) {
+    return _box.read(key) == null;
+  }
+
+  bool isNotEmpty(String key) {
+    return _box.read(key) != null;
   }
 }
