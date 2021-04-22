@@ -9,15 +9,27 @@
 import 'package:auto_route/legacy.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/categories/views/category_view.dart';
 import '../../features/home/views/home_view.dart';
-import '../../features/signup/views/role_selection_view.dart';
+import '../../features/profile_setup/views/profile_setup_view.dart';
+import '../../features/role/views/role_selection_view.dart';
+import '../../features/signin/views/signin_view.dart';
+import '../../features/signup/views/signup_view.dart';
 
 class Routes {
   static const String homeViewRoute = '/home-view';
-  static const String roleSelectionViewRoute = '/';
+  static const String roleSelectionViewRoute = '/role-selection-view';
+  static const String signinViewRoute = '/signin-view';
+  static const String signupViewRoute = '/signup-view';
+  static const String profileSetupViewRoute = '/profile-setup-view';
+  static const String categoryViewRoute = '/';
   static const all = <String>{
     homeViewRoute,
     roleSelectionViewRoute,
+    signinViewRoute,
+    signupViewRoute,
+    profileSetupViewRoute,
+    categoryViewRoute,
   };
 }
 
@@ -27,6 +39,10 @@ class AutoRouter extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.homeViewRoute, page: HomeView),
     RouteDef(Routes.roleSelectionViewRoute, page: RoleSelectionView),
+    RouteDef(Routes.signinViewRoute, page: SigninView),
+    RouteDef(Routes.signupViewRoute, page: SignupView),
+    RouteDef(Routes.profileSetupViewRoute, page: ProfileSetupView),
+    RouteDef(Routes.categoryViewRoute, page: CategoryView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -42,6 +58,38 @@ class AutoRouter extends RouterBase {
     RoleSelectionView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => RoleSelectionView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    SigninView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SigninView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    SignupView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SignupView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    ProfileSetupView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ProfileSetupView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    CategoryView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CategoryView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

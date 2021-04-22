@@ -15,13 +15,14 @@ class AppDimens {
   static const INPUT_PADDING =
       EdgeInsets.symmetric(horizontal: 24, vertical: 20);
 
-  static const CHIP_PADDING = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
-  static const CHIP_BORDER_RADIUS = 24.0;
+  static const CHIP_PADDING =
+      EdgeInsets.symmetric(horizontal: 16, vertical: 10);
+  static const CHIP_BORDER_RADIUS = 16.0;
 
   static const BUTTON_FONT_SIZE_SMALL = 16.0;
   static const BUTTON_FONT_SIZE_MEDIUM = 17.0;
   static const BUTTON_FONT_SIZE_LARGE = 18.0;
-  static const BUTTON_BORDER_RADIUS = 32.0;
+  static const BUTTON_BORDER_RADIUS = 16.0;
 
   static const ICON_BUTTON_SIZE_SMALL = 24.0;
   static const ICON_BUTTON_SIZE_LARGE = 32.0;

@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/themes/app_themes.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'core/routes/auto_router.gr.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: MaterialApp(
+        navigatorKey: StackedService.navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: AppThemes.light,

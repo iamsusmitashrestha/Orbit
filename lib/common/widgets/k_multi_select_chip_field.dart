@@ -63,7 +63,7 @@ class _KMultiSelectChipFieldState<T> extends State<KMultiSelectChipField<T>> {
             .map(
               (e) => KChip(
                 text: e.toString(),
-                variant: ChipVariant.BORDERED,
+                variant: ChipVariant.FILLED,
                 selected: widget.selected.contains(e),
                 onPressed: () {
                   toggleSelection(e);

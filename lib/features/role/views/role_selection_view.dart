@@ -2,12 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
-import 'package:orbit/common/constants/colors.dart';
+import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 
 import 'package:orbit/core/di/injection.dart';
-import 'package:orbit/features/signup/view_models/role_selection_vm.dart';
+import 'package:orbit/features/role/view_models/role_selection_vm.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
@@ -21,7 +21,6 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<RoleSelectionViewModel>.reactive(
       viewModelBuilder: () => locator<RoleSelectionViewModel>(),
-      onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         body: ListView(
           children: [
@@ -30,7 +29,7 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.3,
                 padding: mYPagePadding,
-                color: kSecondaryColor,
+                color: SECONDARY_COLOR,
                 child: Center(
                   child: SvgPicture.asset(
                     "assets/images/choice.svg",
@@ -41,7 +40,7 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
               ),
             ),
             Image.asset(
-              "assets/images/logo.png",
+              logo_image,
               height: 100,
               width: 100,
             ),
@@ -55,7 +54,8 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                   Container(
                     child: Text(
                       "How would you like to use our platform?",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: TextStyle(
+                          fontSize: AppDimens.HEADLINE_FONT_SIZE_MEDIUM),
                     ),
                   ),
                   mHeightSpan,

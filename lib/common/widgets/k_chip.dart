@@ -26,7 +26,11 @@ class KChip extends StatelessWidget {
       child: Container(
         padding: AppDimens.CHIP_PADDING,
         decoration: BoxDecoration(
-          color: variant == ChipVariant.FILLED ? CHIP_GREY : Colors.transparent,
+          color: variant == ChipVariant.FILLED
+              ? selected
+                  ? PRIMARY_COLOR
+                  : CHIP_GREY
+              : Colors.transparent,
           border: variant == ChipVariant.BORDERED
               ? Border.all(
                   color: selected ? Theme.of(context).primaryColor : CHIP_GREY)
@@ -37,8 +41,10 @@ class KChip extends StatelessWidget {
           children: [
             Text(
               text,
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  color: selected ? Theme.of(context).primaryColor : null),
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1
+                  ?.copyWith(color: selected ? Colors.white : null),
             ),
             if (removable)
               Wrap(
