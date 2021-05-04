@@ -15,19 +15,13 @@ class KHeadline extends StatelessWidget {
     switch (size) {
       case HeadlineSize.SMALL:
         return Theme.of(context).textTheme.bodyText1?.copyWith(
-            color: BODY_COLOR,
-            fontFamily: HEADLINE_FONT_FAMILY,
-            fontSize: AppDimens.HEADLINE_FONT_SIZE_SMALL);
+            color: BODY_COLOR, fontSize: AppDimens.HEADLINE_FONT_SIZE_SMALL);
       case HeadlineSize.MEDIUM:
         return Theme.of(context).textTheme.headline5?.copyWith(
-            color: BODY_COLOR,
-            fontFamily: HEADLINE_FONT_FAMILY,
-            fontSize: AppDimens.HEADLINE_FONT_SIZE_MEDIUM);
+            color: BODY_COLOR, fontSize: AppDimens.HEADLINE_FONT_SIZE_MEDIUM);
       case HeadlineSize.LARGE:
         return Theme.of(context).textTheme.headline4?.copyWith(
-            color: BODY_COLOR,
-            fontFamily: HEADLINE_FONT_FAMILY,
-            fontSize: AppDimens.HEADLINE_FONT_SIZE_LARGE);
+            color: BODY_COLOR, fontSize: AppDimens.HEADLINE_FONT_SIZE_LARGE);
     }
   }
 

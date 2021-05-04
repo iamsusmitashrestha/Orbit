@@ -35,6 +35,10 @@ dependencies:
   intl: ^0.17.0
   country_code_picker: ^2.0.1
   oktoast: ^3.0.0
+  # flutter_map: 
+  device_preview:
+  flutter_screenutil: ^5.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -76,11 +80,17 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+  #   - family: Quicksand
   #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  #       - asset: assets/fonts/Quicksand-Regular.ttf
+  #         weight: 400
+
+  #       - asset: assets/fonts/Quicksand-Medium.ttf
+  #         weight: 600
+
+  #       - asset: assets/fonts/Quicksand-Bold.ttf
+  #         weight: 700
+
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

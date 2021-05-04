@@ -5,6 +5,7 @@ import 'package:orbit/features/profile_setup/views/profile_setup_view.dart';
 import 'package:orbit/features/role/views/role_selection_view.dart';
 import 'package:orbit/features/signin/views/signin_view.dart';
 import 'package:orbit/features/signup/views/signup_view.dart';
+import 'package:orbit/features/upload_logo/upload_logo_view.dart';
 
 @MaterialAutoRouter(
   routes: [
@@ -23,13 +24,16 @@ import 'package:orbit/features/signup/views/signup_view.dart';
     ),
     MaterialRoute(
       page: SignupView,
+      initial: true,
     ),
     MaterialRoute(
       page: ProfileSetupView,
     ),
     MaterialRoute(
       page: CategoryView,
-      initial: true,
+    ),
+    MaterialRoute(
+      page: UploadLogoView,
     ),
   ],
   usesLegacyGenerator: true,

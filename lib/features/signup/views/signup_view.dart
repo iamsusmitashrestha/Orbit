@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_text_form_field.dart';
 
@@ -29,6 +30,11 @@ class SignupView extends StatelessWidget {
             Column(
               children: [
                 KTextFormField(
+                  label: "Name",
+                  onChanged: model.onNameChanged,
+                ),
+                lHeightSpan,
+                KTextFormField(
                   label: "Email",
                   onChanged: model.onEmailChanged,
                   hint: "example@gmail.com",
@@ -51,16 +57,19 @@ class SignupView extends StatelessWidget {
                 KTextFormField(
                   label: "Confirm Password",
                   obscureText: true,
-                  onChanged: model.onPasswordChanged,
+                  onChanged: model.onConfirmPasswordChanged,
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
-                KButton(
-                  child: Text("Sign Up"),
-                  onPressed: model.onButtonClick,
-                  size: ButtonSize.LARGE,
-                ),
+                model.isBusy
+                    ? KBusy()
+                    : KButton(
+                        child: Text("Sign Up"),
+                        onPressed: model.onSignup,
+                        size: ButtonSize.LARGE,
+                        isBusy: model.isBusy,
+                      ),
                 lHeightSpan,
                 InkWell(
                   child: Text(
@@ -70,7 +79,7 @@ class SignupView extends StatelessWidget {
                         .subtitle2!
                         .copyWith(color: SECONDARY_COLOR, fontSize: 16),
                   ),
-                  onTap: model.onLoginClick,
+                  onTap: model.goToLogin,
                 ),
               ],
             ),

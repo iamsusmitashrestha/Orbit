@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 
-const FONT_FAMILY = "DINPro";
-const HEADLINE_FONT_FAMILY = "Quicksand";
+const FONT_FAMILY = "Quicksand";
 const DISABLED_COLOR = Color(0xFFbcbcbc);
 const PRIMARY_COLOR = Color(0XFF10588C);
 const SECONDARY_COLOR = Color(0XFF3CA2EA);

@@ -29,15 +29,18 @@ class ProfileSetupView extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             KTextFormField(label: "Store Name"),
             lHeightSpan,
+            KTextFormField(label: "Contact Number"),
+            lHeightSpan,
             KTextFormField(label: "City"),
             lHeightSpan,
             Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(child: KTextFormField(label: " Location")),
                 mWidthSpan,
                 SizedBox(
-                  width: 64,
-                  height: 64,
+                  width: 62,
+                  height: 62,
                   child: Container(
                     decoration: BoxDecoration(
                       color: PRIMARY_COLOR,
@@ -48,8 +51,7 @@ class ProfileSetupView extends StatelessWidget {
                       filled: true,
                       fillColor: Colors.white,
                       onPressed: model.onButtonClick,
-
-                      // size: IconButtonSize.LARGE,
+                      size: IconButtonSize.LARGE,
                     ),
                   ),
                 ),

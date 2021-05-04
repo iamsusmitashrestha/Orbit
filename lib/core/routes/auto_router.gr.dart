@@ -15,14 +15,16 @@ import '../../features/profile_setup/views/profile_setup_view.dart';
 import '../../features/role/views/role_selection_view.dart';
 import '../../features/signin/views/signin_view.dart';
 import '../../features/signup/views/signup_view.dart';
+import '../../features/upload_logo/upload_logo_view.dart';
 
 class Routes {
   static const String homeViewRoute = '/home-view';
   static const String roleSelectionViewRoute = '/role-selection-view';
   static const String signinViewRoute = '/signin-view';
-  static const String signupViewRoute = '/signup-view';
+  static const String signupViewRoute = '/';
   static const String profileSetupViewRoute = '/profile-setup-view';
-  static const String categoryViewRoute = '/';
+  static const String categoryViewRoute = '/category-view';
+  static const String uploadLogoViewRoute = '/upload-logo-view';
   static const all = <String>{
     homeViewRoute,
     roleSelectionViewRoute,
@@ -30,6 +32,7 @@ class Routes {
     signupViewRoute,
     profileSetupViewRoute,
     categoryViewRoute,
+    uploadLogoViewRoute,
   };
 }
 
@@ -43,6 +46,7 @@ class AutoRouter extends RouterBase {
     RouteDef(Routes.signupViewRoute, page: SignupView),
     RouteDef(Routes.profileSetupViewRoute, page: ProfileSetupView),
     RouteDef(Routes.categoryViewRoute, page: CategoryView),
+    RouteDef(Routes.uploadLogoViewRoute, page: UploadLogoView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -90,6 +94,14 @@ class AutoRouter extends RouterBase {
     CategoryView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => CategoryView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    UploadLogoView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UploadLogoView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

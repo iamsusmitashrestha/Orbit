@@ -75,7 +75,7 @@ class _SigninViewState extends State<SigninView> {
                   ),
                   KButton(
                     child: Text("Login"),
-                    onPressed: model.onButtonClick,
+                    onPressed: model.onSignin,
                     size: ButtonSize.LARGE,
                   ),
                   lHeightSpan,

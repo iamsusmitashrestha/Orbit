@@ -16,8 +16,7 @@ abstract class ThirdPartyServicesModule {
   @injectable
   Dio get dio {
     Dio dioInstance = new Dio();
-    // dioInstance.options.baseUrl =
-    //     "https://indianspicerestaurants.com/app/public";
+    dioInstance.options.baseUrl = "https://orbit1.herokuapp.com";
     return dioInstance;
   }
 }

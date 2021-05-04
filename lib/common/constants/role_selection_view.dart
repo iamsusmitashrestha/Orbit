@@ -53,7 +53,7 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
                 children: [
                   Container(
                     child: Text(
-                      "How would you like to use our platform?",
+                      "orbit you like to use our platform?",
                       style: TextStyle(
                           fontSize: AppDimens.HEADLINE_FONT_SIZE_SMALL),
                     ),
