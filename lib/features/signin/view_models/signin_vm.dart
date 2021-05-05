@@ -24,7 +24,7 @@ class SigninViewModel extends BaseViewModel {
   }
 
   onPasswordChanged(value) {
-    email = value;
+    password = value;
   }
 
   onCreateAccountClick() {
@@ -32,7 +32,6 @@ class SigninViewModel extends BaseViewModel {
   }
 
   void onSignin() async {
-    print("ankit");
     try {
       var response = await dio.post(
         "/user/",
@@ -44,15 +43,12 @@ class SigninViewModel extends BaseViewModel {
       localStorageService.write("token", response.data['token']);
       navigationService.replaceWith(Routes.profileSetupViewRoute);
 
-      print("message");
       goToProfileSetup();
-      print("messages");
     } on DioError catch (e) {
-      if (e.type == DioErrorType.connectTimeout) {
+      if (e.type == DioErrorType.other) {
         snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        print("sus");
         String message = e.response?.data['message'];
         snackbarService.showSnackbar(message: message.trim());
       }
@@ -61,5 +57,34 @@ class SigninViewModel extends BaseViewModel {
 
   goToProfileSetup() {
     navigationService.navigateTo(Routes.profileSetupViewRoute);
+  }
+
+  onForgetPassword() async {
+    try {
+      print("f");
+      var response = await dio.post("/user/passwordResetToken",
+          data: {
+            'email': email,
+          },
+          options: Options(headers: {
+            "x-auth-token": "Bearer ${localStorageService.read('token')}"
+          }));
+      print("g");
+
+      localStorageService.write("token", response.data['token']);
+      navigationService.navigateTo(Routes.signinViewRoute);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = e.response?.data['message'];
+        snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+  }
+
+  goToForgetPassword() {
+    navigationService.navigateTo(Routes.forgetPasswordViewRoute);
   }
 }

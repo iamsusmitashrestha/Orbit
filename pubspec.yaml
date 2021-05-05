@@ -34,8 +34,10 @@ dependencies:
   flutter_svg: ^0.21.0+1
   intl: ^0.17.0
   country_code_picker: ^2.0.1
+  fluttericon: ^2.0.0
   oktoast: ^3.0.0
-  # flutter_map: 
+  image_picker: ^0.7.4
+ 
   device_preview:
   flutter_screenutil: ^5.0.0
 

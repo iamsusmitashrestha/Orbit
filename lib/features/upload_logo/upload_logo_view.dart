@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/k_button.dart';
 
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/upload_logo/upload_logo_vm.dart';
+import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
 class UploadLogoView extends StatelessWidget {
@@ -13,40 +16,67 @@ class UploadLogoView extends StatelessWidget {
     return ViewModelBuilder<UploadLogoViewModel>.reactive(
       viewModelBuilder: () => locator<UploadLogoViewModel>(),
       builder: (context, model, child) => Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            Image.asset(
-              logo_image,
-              height: 100,
-              width: 100,
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            Text(
-              "Upload Logo",
-              style: TextStyle(fontSize: AppDimens.HEADLINE_FONT_SIZE_MEDIUM),
-            ),
-            lHeightSpan,
-            Stack(
+        body: SizedBox.expand(
+          child: Padding(
+            padding: sPagePadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: 130,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(shop_logo),
-                    ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+                Image.asset(
+                  logo_image,
+                  height: 100,
+                  width: 100,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                Text(
+                  "Upload Logo",
+                  style: TextStyle(
+                    fontSize: AppDimens.HEADLINE_FONT_SIZE_MEDIUM,
                   ),
                 ),
-                Positioned(
-                  child: Icon(Icons.edit),
+                elHeightSpan,
+                Stack(
+                  alignment: AlignmentDirectional.topEnd,
+                  children: [
+                    model.image == null
+                        ? Container(
+                            width: 180,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: CHIP_GREY,
+                            ),
+                          )
+                        : new CircleAvatar(
+                            backgroundImage: new FileImage(model.image),
+                            radius: 100.0,
+                          ),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: PRIMARY_COLOR,
+                      ),
+                      child: IconButton(
+                        onPressed: model.getImage,
+                        icon: Icon(Icons.edit_outlined),
+                        color: Colors.white,
+                        autofocus: true,
+                      ),
+                    ),
+                  ],
+                ),
+                elHeightSpan,
+                elHeightSpan,
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+                KButton(
+                  child: Text("Upload"),
+                  size: ButtonSize.LARGE,
+                  onPressed: model.uploadLogo,
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

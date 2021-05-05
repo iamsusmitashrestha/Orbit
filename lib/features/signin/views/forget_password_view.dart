@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
-import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_text_form_field.dart';
 
@@ -13,12 +12,12 @@ import 'package:orbit/features/signin/view_models/signin_vm.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
-class SigninView extends StatefulWidget {
+class ForgetPasswordView extends StatefulWidget {
   @override
-  _SigninViewState createState() => _SigninViewState();
+  _ForgetPasswordViewState createState() => _ForgetPasswordViewState();
 }
 
-class _SigninViewState extends State<SigninView> {
+class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SigninViewModel>.reactive(
@@ -52,59 +51,21 @@ class _SigninViewState extends State<SigninView> {
               child: Column(
                 children: [
                   KTextFormField(
-                    label: "Email",
-                    onChanged: model.onEmailChanged,
-                    hint: "example@gmail.com",
-                    // initialValue: "s@gmail.cccom",
-                    validator: (value) {
-                      RegExp regex =
-                          RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-
-                      if (!regex.hasMatch(value!)) return "Invalid email";
-
-                      return null;
-                    },
-                  ),
-                  lHeightSpan,
-                  KTextFormField(
-                    label: "Password",
+                    label: "New Password",
                     obscureText: true,
                     onChanged: model.onPasswordChanged,
                   ),
-                  sHeightSpan,
-                  InkWell(
-                    onTap: model.goToForgetPassword,
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Text(
-                        "Forget Password?",
-                        style: TextStyle(
-                          color: PRIMARY_COLOR,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
+                  mHeightSpan,
+                  KTextFormField(
+                    label: "Confirm Password",
+                    obscureText: true,
+                    onChanged: model.onPasswordChanged,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                  ),
-                  model.isBusy
-                      ? KBusy()
-                      : KButton(
-                          child: Text("Login"),
-                          onPressed: model.onSignin,
-                          size: ButtonSize.LARGE,
-                        ),
                   lHeightSpan,
-                  InkWell(
-                    child: Text(
-                      "Create an account",
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2!
-                          .copyWith(color: SECONDARY_COLOR, fontSize: 16),
-                    ),
-                    onTap: model.onCreateAccountClick,
+                  KButton(
+                    child: Text("Continue"),
+                    onPressed: model.onForgetPassword,
+                    size: ButtonSize.LARGE,
                   ),
                 ],
               ),

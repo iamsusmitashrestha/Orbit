@@ -25,7 +25,7 @@ class AppDimens {
   static const BUTTON_BORDER_RADIUS = 16.0;
 
   static const ICON_BUTTON_SIZE_SMALL = 24.0;
-  static const ICON_BUTTON_SIZE_LARGE = 32.0;
+  static const ICON_BUTTON_SIZE_LARGE = 50.0;
 
   static const BUTTON_PADDING_SMALL =
       EdgeInsets.symmetric(horizontal: 16, vertical: 8);

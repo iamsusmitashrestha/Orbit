@@ -18,7 +18,6 @@ class SignupViewModel extends BaseViewModel {
   SignupViewModel(this._navigationService, this._snackbarService, this._dio);
 
   void onSignup() async {
-    print("ankit");
     try {
       var response = await _dio.post(
         "/user/register",
@@ -30,9 +29,7 @@ class SignupViewModel extends BaseViewModel {
         },
       );
 
-      print("message");
       goToLogin();
-      print("messages");
     } on DioError catch (e) {
       if (e.type == DioErrorType.connectTimeout) {
         _snackbarService.showSnackbar(
@@ -66,8 +63,6 @@ class SignupViewModel extends BaseViewModel {
   }
 
   goToLogin() {
-    print("go");
     _navigationService.navigateTo(Routes.signinViewRoute);
-    print("gi");
   }
 }
