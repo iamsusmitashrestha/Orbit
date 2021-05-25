@@ -39,18 +39,18 @@ class UploadLogoView extends StatelessWidget {
                 Stack(
                   alignment: AlignmentDirectional.topEnd,
                   children: [
-                    model.image == null
-                        ? Container(
+                    model.image != null
+                        ? new CircleAvatar(
+                            backgroundImage: new FileImage(model.image),
+                            radius: 100.0,
+                          )
+                        : Container(
                             width: 180,
                             height: 180,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: CHIP_GREY,
                             ),
-                          )
-                        : new CircleAvatar(
-                            backgroundImage: new FileImage(model.image),
-                            radius: 100.0,
                           ),
                     Container(
                       decoration: BoxDecoration(

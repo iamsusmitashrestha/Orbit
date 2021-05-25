@@ -31,7 +31,7 @@ class SignupViewModel extends BaseViewModel {
 
       goToLogin();
     } on DioError catch (e) {
-      if (e.type == DioErrorType.connectTimeout) {
+      if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {

@@ -11,7 +11,9 @@ import 'package:flutter/material.dart';
 
 import '../../features/categories/views/category_view.dart';
 import '../../features/home/views/home_view.dart';
+import '../../features/profile_setup/views/map_view.dart';
 import '../../features/profile_setup/views/profile_setup_view.dart';
+import '../../features/profile_setup/views/store_profile_view.dart';
 import '../../features/role/views/role_selection_view.dart';
 import '../../features/signin/views/forget_password_view.dart';
 import '../../features/signin/views/signin_view.dart';
@@ -20,15 +22,17 @@ import '../../features/splash/splash_view.dart';
 import '../../features/upload_logo/upload_logo_view.dart';
 
 class Routes {
-  static const String splashViewRoute = '/';
+  static const String splashViewRoute = '/splash-view';
   static const String homeViewRoute = '/home-view';
   static const String roleSelectionViewRoute = '/role-selection-view';
   static const String signinViewRoute = '/signin-view';
   static const String forgetPasswordViewRoute = '/forget-password-view';
-  static const String signupViewRoute = '/signup-view';
+  static const String signupViewRoute = '/';
   static const String profileSetupViewRoute = '/profile-setup-view';
+  static const String mapViewRoute = '/map-view';
   static const String categoryViewRoute = '/category-view';
   static const String uploadLogoViewRoute = '/upload-logo-view';
+  static const String storeProfileViewRoute = '/store-profile-view';
   static const all = <String>{
     splashViewRoute,
     homeViewRoute,
@@ -37,8 +41,10 @@ class Routes {
     forgetPasswordViewRoute,
     signupViewRoute,
     profileSetupViewRoute,
+    mapViewRoute,
     categoryViewRoute,
     uploadLogoViewRoute,
+    storeProfileViewRoute,
   };
 }
 
@@ -53,8 +59,10 @@ class AutoRouter extends RouterBase {
     RouteDef(Routes.forgetPasswordViewRoute, page: ForgetPasswordView),
     RouteDef(Routes.signupViewRoute, page: SignupView),
     RouteDef(Routes.profileSetupViewRoute, page: ProfileSetupView),
+    RouteDef(Routes.mapViewRoute, page: MapView),
     RouteDef(Routes.categoryViewRoute, page: CategoryView),
     RouteDef(Routes.uploadLogoViewRoute, page: UploadLogoView),
+    RouteDef(Routes.storeProfileViewRoute, page: StoreProfileView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -115,6 +123,14 @@ class AutoRouter extends RouterBase {
         maintainState: true,
       );
     },
+    MapView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => MapView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
     CategoryView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => CategoryView(),
@@ -126,6 +142,14 @@ class AutoRouter extends RouterBase {
     UploadLogoView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => UploadLogoView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    StoreProfileView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => StoreProfileView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

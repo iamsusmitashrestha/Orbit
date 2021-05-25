@@ -9,16 +9,18 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:stacked_services/stacked_services.dart' as _i3;
 
-import '../../features/categories/view_models/category_vm.dart' as _i10;
+import '../../features/categories/view_models/category_vm.dart' as _i11;
+import '../../features/profile_setup/view_models/map_vm.dart' as _i12;
 import '../../features/profile_setup/view_models/profile_setup_vm.dart' as _i6;
+import '../../features/profile_setup/view_models/store_profile_vm.dart' as _i8;
 import '../../features/role/view_models/role_selection_vm.dart' as _i7;
-import '../../features/signin/view_models/signin_vm.dart' as _i11;
-import '../../features/signup/view_models/signup_vm.dart' as _i12;
-import '../../features/upload_logo/upload_logo_vm.dart' as _i9;
+import '../../features/signin/view_models/signin_vm.dart' as _i13;
+import '../../features/signup/view_models/signup_vm.dart' as _i14;
+import '../../features/upload_logo/upload_logo_vm.dart' as _i10;
 import '../services/local_storage_service.dart' as _i5;
-import '../services/toast_service.dart' as _i8;
+import '../services/toast_service.dart' as _i9;
 import 'third_party_modules.dart'
-    as _i13; // ignore_for_file: unnecessary_lambdas
+    as _i15; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -40,23 +42,26 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i7.RoleSelectionViewModel(get<_i3.NavigationService>()));
   gh.lazySingleton<_i3.SnackbarService>(
       () => thirdPartyServicesModule.snackBarService);
-  gh.lazySingleton<_i8.ToastService>(() => _i8.ToastService());
-  gh.factory<_i9.UploadLogoViewModel>(() => _i9.UploadLogoViewModel());
-  gh.factory<_i10.CategoryViewModel>(
-      () => _i10.CategoryViewModel(get<_i3.NavigationService>()));
-  gh.factory<_i11.SigninViewModel>(() => _i11.SigninViewModel(
+  gh.factory<_i8.StoreProfileViewModel>(() => _i8.StoreProfileViewModel());
+  gh.lazySingleton<_i9.ToastService>(() => _i9.ToastService());
+  gh.factory<_i10.UploadLogoViewModel>(() => _i10.UploadLogoViewModel());
+  gh.factory<_i11.CategoryViewModel>(
+      () => _i11.CategoryViewModel(get<_i3.NavigationService>()));
+  gh.factory<_i12.MapViewModel>(
+      () => _i12.MapViewModel(get<_i3.NavigationService>()));
+  gh.factory<_i13.SigninViewModel>(() => _i13.SigninViewModel(
       navigationService: get<_i3.NavigationService>(),
       snackbarService: get<_i3.SnackbarService>(),
       dio: get<_i4.Dio>(),
       localStorageService: get<_i5.LocalStorageService>()));
-  gh.factory<_i12.SignupViewModel>(() => _i12.SignupViewModel(
+  gh.factory<_i14.SignupViewModel>(() => _i14.SignupViewModel(
       get<_i3.NavigationService>(),
       get<_i3.SnackbarService>(),
       get<_i4.Dio>()));
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i13.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i15.ThirdPartyServicesModule {
   @override
   _i3.BottomSheetService get bottomSheetService => _i3.BottomSheetService();
   @override

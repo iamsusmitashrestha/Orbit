@@ -37,6 +37,9 @@ dependencies:
   fluttericon: ^2.0.0
   oktoast: ^3.0.0
   image_picker: ^0.7.4
+  location: ^4.1.1
+  google_maps_flutter: ^2.0.5
+  provider: ^5.0.0
  
   device_preview:
   flutter_screenutil: ^5.0.0

@@ -36,7 +36,11 @@ class ProfileSetupView extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Expanded(child: KTextFormField(label: " Location")),
+                Expanded(
+                    child: KTextFormField(
+                  label: " Location",
+                  controller: model.locationController,
+                )),
                 mWidthSpan,
                 SizedBox(
                   width: 62,
@@ -50,7 +54,7 @@ class ProfileSetupView extends StatelessWidget {
                       iconFill: Icons.location_on,
                       filled: true,
                       fillColor: Colors.white,
-                      onPressed: model.onButtonClick,
+                      onPressed: model.onSelectMap,
                       size: IconButtonSize.LARGE,
                     ),
                   ),
