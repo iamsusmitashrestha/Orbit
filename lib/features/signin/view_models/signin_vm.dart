@@ -33,6 +33,7 @@ class SigninViewModel extends BaseViewModel {
 
   void onSignin() async {
     try {
+      setBusy(true);
       var response = await dio.post(
         "/user/",
         data: {
@@ -41,15 +42,21 @@ class SigninViewModel extends BaseViewModel {
         },
       );
       localStorageService.write("token", response.data['token']);
-      navigationService.replaceWith(Routes.profileSetupViewRoute);
-
-      goToProfileSetup();
+      setBusy(false);
+      print(response.data['message']);
+      snackbarService.showSnackbar(
+        message: response.data['message'],
+        duration: Duration(seconds: 1),
+      );
+      Future.delayed(const Duration(seconds: 1), () {
+        navigationService.replaceWith(Routes.splashViewRoute);
+      });
     } on DioError catch (e) {
       if (e.type == DioErrorType.other) {
         snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        String message = e.response?.data['message'];
+        String message = e.response!.data['message'];
         snackbarService.showSnackbar(message: message.trim());
       }
     }
@@ -62,13 +69,15 @@ class SigninViewModel extends BaseViewModel {
   onForgetPassword() async {
     try {
       print("f");
-      var response = await dio.post("/user/passwordResetToken",
-          data: {
-            'email': email,
-          },
-          options: Options(headers: {
-            "x-auth-token": "Bearer ${localStorageService.read('token')}"
-          }));
+      var response = await dio.post(
+        "/user/passwordResetToken",
+        data: {
+          'email': email,
+        },
+        options: Options(headers: {
+          "x-auth-token": "Bearer ${localStorageService.read('token')}"
+        }),
+      );
       print("g");
 
       localStorageService.write("token", response.data['token']);
@@ -78,7 +87,7 @@ class SigninViewModel extends BaseViewModel {
         snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        String message = e.response?.data['message'];
+        String message = e.response!.data['message'];
         snackbarService.showSnackbar(message: message.trim());
       }
     }

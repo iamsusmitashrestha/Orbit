@@ -5,7 +5,6 @@ import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_icon_button.dart';
 import 'package:orbit/common/widgets/k_text_form_field.dart';
-
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/profile_setup/view_models/profile_setup_vm.dart';
 import 'package:orbit/themes/app_themes.dart';
@@ -27,11 +26,15 @@ class ProfileSetupView extends StatelessWidget {
               width: 100,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            KTextFormField(label: "Store Name"),
+            KTextFormField(
+              label: "Store Name",
+              onChanged: model.onStoreNameChanged,
+            ),
             lHeightSpan,
-            KTextFormField(label: "Contact Number"),
-            lHeightSpan,
-            KTextFormField(label: "City"),
+            KTextFormField(
+              label: "Store Address",
+              onChanged: model.onStoreAddressChanged,
+            ),
             lHeightSpan,
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -63,7 +66,7 @@ class ProfileSetupView extends StatelessWidget {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.12),
             KButton(
-              onPressed: model.onButtonClick,
+              onPressed: model.onSaveButtonClick,
               child: Text("Save"),
               size: ButtonSize.LARGE,
             ),

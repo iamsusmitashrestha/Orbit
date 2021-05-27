@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
-import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/profile_setup/view_models/store_profile_vm.dart';
-import 'package:orbit/themes/app_themes.dart';
+import 'package:orbit/features/profile_setup/widgets/profile_container.dart';
 import 'package:stacked/stacked.dart';
 
 class StoreProfileView extends StatelessWidget {
@@ -46,96 +45,51 @@ class StoreProfileView extends StatelessWidget {
                 ),
               ],
             ),
-            KButton(
-              child: Text("Open"),
+            elHeightSpan,
+            ElevatedButton(
+              child: Text(
+                "OPEN",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(16),
+                ),
+                padding: mYPadding,
+              ),
               onPressed: () {},
             ),
-            mHeightSpan,
+            lHeightSpan,
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  child: Text(
-                    "Inventory",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                    color: PRIMARY_COLOR,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                InkWell(
+                  onTap: model.goToInventory,
+                  child: buildProfileContainer(context, "Inventory", "", false),
                 ),
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Store",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "Details",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: PRIMARY_COLOR,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                InkWell(
+                  onTap: model.goToPaymentMethod,
+                  child:
+                      buildProfileContainer(context, "Store", "Details", true),
                 ),
               ],
             ),
+            sHeightSpan,
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Payment",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        "Methods",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: PRIMARY_COLOR,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                InkWell(
+                  onTap: model.goToPaymentMethod,
+                  child: buildProfileContainer(
+                      context, "Payment", "Methods", true),
                 ),
-                Container(
-                  child: Text(
-                    "Settings",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  decoration: BoxDecoration(
-                    color: PRIMARY_COLOR,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                InkWell(
+                  onTap: model.goToCategories,
+                  child:
+                      buildProfileContainer(context, "Categories", "", false),
                 ),
               ],
             ),

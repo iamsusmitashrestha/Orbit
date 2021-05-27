@@ -19,6 +19,7 @@ class SignupViewModel extends BaseViewModel {
 
   void onSignup() async {
     try {
+      setBusy(true);
       var response = await _dio.post(
         "/user/register",
         data: {
@@ -28,8 +29,16 @@ class SignupViewModel extends BaseViewModel {
           'confirmPassword': confirmPassword,
         },
       );
+      setBusy(false);
+      print(response.data['message']);
 
-      goToLogin();
+      _snackbarService.showSnackbar(
+        message: response.data['message'],
+        duration: Duration(seconds: 1),
+      );
+      Future.delayed(const Duration(seconds: 1), () {
+        _navigationService.replaceWith(Routes.verifyCodeViewRoute);
+      });
     } on DioError catch (e) {
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
@@ -37,7 +46,7 @@ class SignupViewModel extends BaseViewModel {
       } else if (e.type == DioErrorType.response) {
         print("sus");
         String message = e.response?.data['message'];
-        _snackbarService.showSnackbar(message: message.trim());
+        _snackbarService.showSnackbar(message: message);
       }
     }
   }
@@ -60,6 +69,10 @@ class SignupViewModel extends BaseViewModel {
 
   onButtonClick() {
     _navigationService.navigateTo(Routes.profileSetupViewRoute);
+  }
+
+  goToCodeVerify() {
+    _navigationService.navigateTo(Routes.verifyCodeViewRoute);
   }
 
   goToLogin() {

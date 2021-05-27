@@ -4,11 +4,10 @@ import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_multi_select_chip_field.dart';
-import 'package:orbit/common/widgets/k_text_form_field.dart';
 
 import 'package:orbit/core/di/injection.dart';
+import 'package:orbit/features/categories/models/category.dart';
 import 'package:orbit/features/categories/view_models/category_vm.dart';
-import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
 class CategoryView extends StatelessWidget {
@@ -16,6 +15,7 @@ class CategoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<CategoryViewModel>.reactive(
       viewModelBuilder: () => locator<CategoryViewModel>(),
+      onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         body: ListView(
           padding: AppDimens.PAGE_PADDING,
@@ -35,23 +35,8 @@ class CategoryView extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                KMultiSelectChipField(
-                  items: [
-                    "Vegetable Shop",
-                    "Fruits",
-                    "Kirana",
-                    "Cosmetics",
-                    "Mobile Phone",
-                    "Clothes",
-                    "Furniture",
-                    "Car Showroom",
-                    "Bike Showroom",
-                    "Ornaments",
-                    "Utensils",
-                    "Electricals",
-                    "Dairy",
-                    "Stationary",
-                  ],
+                KMultiSelectChipField<CategoryModel>(
+                  items: model.categoryResponse,
                   selected: model.selectedCategories,
                   onSelectionChanged: model.onSelectionChanged,
                 ),

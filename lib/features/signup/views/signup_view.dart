@@ -81,6 +81,17 @@ class SignupView extends StatelessWidget {
                   ),
                   onTap: model.goToLogin,
                 ),
+                lHeightSpan,
+                InkWell(
+                  child: Text(
+                    "Verify Code",
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(color: SECONDARY_COLOR, fontSize: 16),
+                  ),
+                  onTap: model.goToCodeVerify,
+                ),
               ],
             ),
           ],

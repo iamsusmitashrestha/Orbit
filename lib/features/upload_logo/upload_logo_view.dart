@@ -41,7 +41,7 @@ class UploadLogoView extends StatelessWidget {
                   children: [
                     model.image != null
                         ? new CircleAvatar(
-                            backgroundImage: new FileImage(model.image),
+                            backgroundImage: new FileImage(model.image!),
                             radius: 100.0,
                           )
                         : Container(
@@ -72,7 +72,7 @@ class UploadLogoView extends StatelessWidget {
                 KButton(
                   child: Text("Upload"),
                   size: ButtonSize.LARGE,
-                  onPressed: model.uploadLogo,
+                  onPressed: model.goToStoreProfile,
                 ),
               ],
             ),
