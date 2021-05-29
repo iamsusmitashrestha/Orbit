@@ -10,4 +10,5 @@
     Store Home View,
     )
 - Categories API call
+- Upload logo API call
 - Started developing Store Profile views
