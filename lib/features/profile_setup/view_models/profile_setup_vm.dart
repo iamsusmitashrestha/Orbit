@@ -59,7 +59,7 @@ class ProfileSetupViewModel extends BaseViewModel {
           duration: Duration(seconds: 1),
         );
         Future.delayed(const Duration(seconds: 1), () {
-          _navigationService.replaceWith(Routes.categoryViewRoute);
+          _navigationService.replaceWith(Routes.splashViewRoute);
         });
       }
     } on DioError catch (e) {

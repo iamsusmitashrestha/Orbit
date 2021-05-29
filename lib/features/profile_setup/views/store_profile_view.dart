@@ -25,7 +25,18 @@ class StoreProfileView extends StatelessWidget {
             elHeightSpan,
             Row(
               children: [
-                // Image.asset(""),
+                InkWell(
+                  onTap: model.updateLogo,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.network(
+                      model.userDataService.logo!,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
                 Column(
                   children: [
                     Text(

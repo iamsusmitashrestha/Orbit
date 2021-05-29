@@ -1,10 +1,12 @@
 import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
+import 'package:orbit/core/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:http_parser/http_parser.dart';
 
 @injectable
 class UploadLogoViewModel extends BaseViewModel {
@@ -12,13 +14,11 @@ class UploadLogoViewModel extends BaseViewModel {
   final picker = ImagePicker();
 
   final NavigationService _navigationService;
-  UploadLogoViewModel(this._navigationService);
-  // FormData formdata = new FormData();
-  // final Dio? dio;
-
-  // UploadLogoViewModel({required this.dio});
-
-  // get image => _image;
+  final SnackbarService _snackbarService;
+  final Dio _dio;
+  final UserDataService _userDataService;
+  UploadLogoViewModel(this._navigationService, this._dio, this._userDataService,
+      this._snackbarService);
 
   Future getImage() async {
     final pickedFile = await picker.getImage(
@@ -26,13 +26,53 @@ class UploadLogoViewModel extends BaseViewModel {
     );
 
     image = File(pickedFile!.path);
+    notifyListeners();
   }
 
-  Future uploadLogo() async {
-    try {} catch (e) {}
+  void uploadLogo() async {
+    setBusy(true);
+    try {
+      if (image != null) {
+        print("image != null");
+        String filename = image!.path.split("/").last;
+        FormData formData = FormData.fromMap({
+          'logo': await MultipartFile.fromFile(
+            image!.path,
+            filename: filename,
+          ),
+        });
+        print(" before post");
+        var response = await _dio.post(
+          "/store/${_userDataService.storeId}/logo",
+          data: formData,
+        );
+        print("post");
+        _userDataService.logo = _dio.options.baseUrl + response.data['logo'];
+        _snackbarService.showSnackbar(
+            message: "Logo uploaded!", duration: Duration(seconds: 1));
+
+        await Future.delayed(
+          Duration(seconds: 1),
+        );
+        goToStoreProfile();
+      }
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        print("internet");
+        print(e);
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        print("no internet");
+
+        String message = e.response?.data['message'];
+        _snackbarService.showSnackbar(message: message);
+      }
+      setBusy(false);
+    }
   }
 
   goToStoreProfile() {
-    _navigationService.navigateTo(Routes.storeProfileViewRoute);
+    _navigationService.clearStackAndShow(Routes.storeProfileViewRoute);
   }
 }

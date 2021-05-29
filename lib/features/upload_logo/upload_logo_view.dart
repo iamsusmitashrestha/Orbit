@@ -70,9 +70,10 @@ class UploadLogoView extends StatelessWidget {
                 elHeightSpan,
                 // SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 KButton(
+                  isBusy: model.isBusy,
                   child: Text("Upload"),
                   size: ButtonSize.LARGE,
-                  onPressed: model.goToStoreProfile,
+                  onPressed: model.uploadLogo,
                 ),
               ],
             ),
