@@ -50,12 +50,11 @@ class CategoryViewModel extends BaseViewModel {
   onCategorySave() async {
     setBusy(true);
     try {
-      List<String> categories = selectedCategories
-          .map((categoryModel) => categoryModel.value)
-          .toList();
+      List<String> selectedCategories =
+          categoryResponse.map((categoryModel) => categoryModel.value).toList();
       var response = await _dio
           .post("/storecat/${_userDataService.storeId}/category", data: {
-        'category': categories,
+        'category': selectedCategories,
       });
       _navigationService.navigateTo(Routes.uploadLogoViewRoute);
     } on DioError catch (e) {

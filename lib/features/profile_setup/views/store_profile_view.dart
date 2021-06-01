@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
-import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/profile_setup/view_models/store_profile_vm.dart';
@@ -13,16 +12,102 @@ class StoreProfileView extends StatelessWidget {
     return ViewModelBuilder<StoreProfileViewModel>.reactive(
       viewModelBuilder: () => locator<StoreProfileViewModel>(),
       builder: (context, model, child) => Scaffold(
+        appBar: AppBar(),
+        drawer: Drawer(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Image.asset(
+                      "assets/images/store.jpg",
+                      fit: BoxFit.cover,
+                      height: 200,
+                      width: double.infinity,
+                    ),
+                    Container(
+                      color: Colors.white38,
+                      height: 200,
+                      width: double.infinity,
+                    ),
+                    Container(
+                      color: Colors.black38,
+                      height: 200,
+                      width: double.infinity,
+                    ),
+                    Column(
+                      children: [
+                        // Image.asset(
+                        //   logo_image,
+                        //   height: 80,
+                        //   width: 80,
+                        // ),
+                        Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.network(
+                                model.userDataService.logo!,
+                                loadingBuilder: (context, child,
+                                        loadingProgress) =>
+                                    loadingProgress == null
+                                        ? child
+                                        : Container(
+                                            width: 40,
+                                            height: 40,
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            sWidthSpan,
+                            Text(
+                              model.userDataService.storeName!,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                ListTile(
+                  onTap: model.logOut,
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.black,
+                  ),
+                  title: Text("Logout"),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.store,
+                    color: Colors.black,
+                  ),
+                  title: Text("View Stores Around"),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.delete,
+                    color: Colors.black,
+                  ),
+                  title: Text("Delete My Store"),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: ListView(
           padding: AppDimens.PAGE_PADDING,
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            Image.asset(
-              logo_image,
-              height: 100,
-              width: 100,
-            ),
-            elHeightSpan,
+            mHeightSpan,
             Row(
               children: [
                 InkWell(
@@ -31,22 +116,31 @@ class StoreProfileView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                     child: Image.network(
                       model.userDataService.logo!,
+                      loadingBuilder: (context, child, loadingProgress) =>
+                          loadingProgress == null
+                              ? child
+                              : Container(
+                                  width: 40,
+                                  height: 40,
+                                  child: CircularProgressIndicator(),
+                                ),
                       width: 60,
                       height: 60,
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
+                sWidthSpan,
                 Column(
                   children: [
                     Text(
-                      "Phalano Store",
+                      model.userDataService.storeName!,
                       style: TextStyle(
                         fontSize: 27,
                       ),
                     ),
                     Text(
-                      "Naagdhunga Chowk, Palung",
+                      model.userDataService.address!,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey,
@@ -59,19 +153,19 @@ class StoreProfileView extends StatelessWidget {
             elHeightSpan,
             ElevatedButton(
               child: Text(
-                "OPEN",
+                model.storeStatus ? "OPEN" : "CLOSE",
                 style: TextStyle(
                   fontSize: 18,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                primary: Colors.green,
+                primary: model.storeStatus ? Colors.green : Colors.red,
                 shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(16),
                 ),
                 padding: mYPadding,
               ),
-              onPressed: () {},
+              onPressed: model.storeStatusSelection,
             ),
             lHeightSpan,
             Row(

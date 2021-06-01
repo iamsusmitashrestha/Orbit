@@ -9,10 +9,12 @@ import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'core/routes/auto_router.gr.dart';
+import 'core/stacked_widgets/custom_stacked_setup.dart';
 
 void main() async {
   await GetStorage.init();
   configureDependencies();
+  customStackedSetup();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,

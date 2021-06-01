@@ -41,12 +41,10 @@ class UploadLogoViewModel extends BaseViewModel {
             filename: filename,
           ),
         });
-        print(" before post");
         var response = await _dio.post(
           "/store/${_userDataService.storeId}/logo",
           data: formData,
         );
-        print("post");
         _userDataService.logo = _dio.options.baseUrl + response.data['logo'];
         _snackbarService.showSnackbar(
             message: "Logo uploaded!", duration: Duration(seconds: 1));

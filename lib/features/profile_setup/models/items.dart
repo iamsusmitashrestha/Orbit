@@ -1,11 +1,16 @@
-class Item {
-  final String name;
-  final String price;
-  final String description;
+class ItemModel {
+  final String id;
+  final String title;
+  final num price;
 
-  Item(
-    this.name,
+  ItemModel(
+    this.title,
     this.price,
-    this.description,
+    this.id,
   );
+
+  ItemModel.fromJson(Map<String, dynamic> parsedJson)
+      : title = parsedJson['title'],
+        id = parsedJson['_id'],
+        price = parsedJson['price'];
 }

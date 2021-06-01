@@ -25,7 +25,9 @@ class SplashViewModel extends BaseViewModel {
     if (token.length > 0) {
       getData();
     } else {
-      _navigationService.replaceWith(Routes.roleSelectionViewRoute);
+      Future.delayed(Duration(seconds: 2), () {
+        _navigationService.replaceWith(Routes.roleSelectionViewRoute);
+      });
     }
   }
 
@@ -37,6 +39,9 @@ class SplashViewModel extends BaseViewModel {
       if (hasStore) {
         _userDataService.storeId = response.data[0]['_id'];
         _userDataService.userId = response.data[0]['owner'];
+        _userDataService.storeName = response.data[0]['storeName'];
+        _userDataService.address = response.data[0]['address'];
+        // _userDataService.storeStatus = response.data[0]['storeStatus'];
         if (response.data[0]['logo'] != null) {
           _userDataService.logo =
               _dio.options.baseUrl + response.data[0]['logo'];
@@ -55,7 +60,9 @@ class SplashViewModel extends BaseViewModel {
       } else {
         _navigationService.replaceWith(Routes.profileSetupViewRoute);
       }
-    } on DioError catch (e) {}
-    setBusy(false);
+    } on DioError catch (e) {
+      print(e);
+      setBusy(false);
+    }
   }
 }

@@ -17,6 +17,5 @@ class RoleSelectionViewModel extends BaseViewModel {
 
   void onButtonClick() {
     _navigationService.navigateTo(Routes.signinViewRoute);
-    notifyListeners();
   }
 }

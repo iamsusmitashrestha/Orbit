@@ -20,7 +20,7 @@ abstract class ThirdPartyServicesModule {
   Dio get dio {
     Dio dioInstance = new Dio();
     dioInstance.options.baseUrl = "https://orbit1.herokuapp.com";
-    String token = locator<LocalStorageService>().read('token')!;
+    String token = locator<LocalStorageService>().read('token') ?? "";
     print(token);
     dioInstance.interceptors
         .add(InterceptorsWrapper(onRequest: (options, handler) {

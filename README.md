@@ -3,6 +3,7 @@
 - splash screen
 - role selection view
 - Signin/Signup
+- Logout
 - Store Profile Setup Views(
     Map,
     Categories,
@@ -11,4 +12,7 @@
     )
 - Categories API call
 - Upload logo API call
-- Started developing Store Profile views
+- Started developing Store Profile views(
+    inventory views completed
+
+)

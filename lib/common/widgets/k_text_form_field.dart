@@ -4,7 +4,7 @@ import 'package:orbit/themes/app_themes.dart';
 
 class KTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
+  final void Function(dynamic)? onChanged;
   final TextEditingController? controller;
   final String? hint;
   final String? initialValue;
