@@ -48,6 +48,8 @@ class SplashViewModel extends BaseViewModel {
         }
         var categoryResponse =
             await _dio.get("/storecat/${response.data[0]['_id']}/getCategory");
+        _userDataService.categories =
+            List<String>.from(categoryResponse.data[0]['category']);
         if (categoryResponse.data.length > 0) {
           if (_userDataService.logo == null) {
             _navigationService.replaceWith(Routes.uploadLogoViewRoute);
@@ -61,7 +63,6 @@ class SplashViewModel extends BaseViewModel {
         _navigationService.replaceWith(Routes.profileSetupViewRoute);
       }
     } on DioError catch (e) {
-      print(e);
       setBusy(false);
     }
   }

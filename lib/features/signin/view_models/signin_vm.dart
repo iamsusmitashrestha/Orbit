@@ -43,7 +43,6 @@ class SigninViewModel extends BaseViewModel {
       );
       localStorageService.write("token", response.data['token']);
       setBusy(false);
-      print(response.data['message']);
       snackbarService.showSnackbar(
         message: response.data['message'],
         duration: Duration(seconds: 1),
@@ -68,7 +67,6 @@ class SigninViewModel extends BaseViewModel {
 
   onForgetPassword() async {
     try {
-      print("f");
       var response = await dio.post(
         "/user/passwordResetToken",
         data: {
@@ -78,7 +76,6 @@ class SigninViewModel extends BaseViewModel {
           "x-auth-token": "Bearer ${localStorageService.read('token')}"
         }),
       );
-      print("g");
 
       localStorageService.write("token", response.data['token']);
       navigationService.navigateTo(Routes.signinViewRoute);

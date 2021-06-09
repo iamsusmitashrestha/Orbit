@@ -8,4 +8,5 @@ class UserDataService {
   String? storeName;
   String? address;
   String? storeStatus;
+  List<String> categories = [];
 }

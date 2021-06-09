@@ -14,5 +14,5 @@
 - Upload logo API call
 - Started developing Store Profile views(
     inventory views completed
-
-)
+    store details view ui started
+    )

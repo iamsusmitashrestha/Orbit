@@ -34,7 +34,6 @@ class InventoryViewModel extends BaseViewModel {
   }
 
   getItem() async {
-    print("before try");
     setBusy(true);
     try {
       var response =
@@ -44,15 +43,11 @@ class InventoryViewModel extends BaseViewModel {
           .toList();
       setBusy(false);
     } on DioError catch (e) {
-      print("catch");
-
       setError("Something went wrong !");
-      print(e);
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        print(e.message);
         String message = "";
         _snackbarService.showSnackbar(message: message.trim());
       }

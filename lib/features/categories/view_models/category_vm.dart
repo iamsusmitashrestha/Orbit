@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
-import 'package:orbit/core/services/local_storage_service.dart';
 import 'package:orbit/core/services/user_data_service.dart';
 import 'package:orbit/features/categories/models/category.dart';
 import 'package:stacked/stacked.dart';
@@ -31,6 +30,10 @@ class CategoryViewModel extends BaseViewModel {
       categoryResponse = response.data
           .map<CategoryModel>((item) => CategoryModel.fromJson(item))
           .toList();
+      selectedCategories = categoryResponse
+          .where(
+              (element) => _userDataService.categories.contains(element.value))
+          .toList();
       setBusy(false);
     } on DioError catch (e) {
       if (e.type == DioErrorType.other) {
@@ -50,11 +53,12 @@ class CategoryViewModel extends BaseViewModel {
   onCategorySave() async {
     setBusy(true);
     try {
-      List<String> selectedCategories =
-          categoryResponse.map((categoryModel) => categoryModel.value).toList();
+      List<String> storeCategories = selectedCategories
+          .map((categoryModel) => categoryModel.value)
+          .toList();
       var response = await _dio
           .post("/storecat/${_userDataService.storeId}/category", data: {
-        'category': selectedCategories,
+        'category': storeCategories,
       });
       _navigationService.navigateTo(Routes.uploadLogoViewRoute);
     } on DioError catch (e) {

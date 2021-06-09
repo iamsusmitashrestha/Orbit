@@ -8,7 +8,7 @@ enum ChipVariant { FILLED, BORDERED }
 class KChip extends StatelessWidget {
   final String text;
   final ChipVariant variant;
-  final void Function()? onPressed;
+  final Function()? onPressed;
   final bool selected;
   final bool removable;
 

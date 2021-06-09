@@ -25,56 +25,50 @@ class StoreProfileView extends StatelessWidget {
                       height: 200,
                       width: double.infinity,
                     ),
-                    Container(
-                      color: Colors.white38,
-                      height: 200,
-                      width: double.infinity,
-                    ),
+                    // Container(
+                    //   color: Colors.white38,
+                    //   height: 200,
+                    //   width: double.infinity,
+                    // ),
                     Container(
                       color: Colors.black38,
                       height: 200,
                       width: double.infinity,
                     ),
-                    Column(
-                      children: [
-                        // Image.asset(
-                        //   logo_image,
-                        //   height: 80,
-                        //   width: 80,
-                        // ),
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.network(
-                                model.userDataService.logo!,
-                                loadingBuilder: (context, child,
-                                        loadingProgress) =>
-                                    loadingProgress == null
-                                        ? child
-                                        : Container(
-                                            width: 40,
-                                            height: 40,
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
+                    Positioned(
+                      bottom: 80,
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.network(
+                              model.userDataService.logo!,
+                              loadingBuilder: (context, child,
+                                      loadingProgress) =>
+                                  loadingProgress == null
+                                      ? child
+                                      : Container(
+                                          width: 40,
+                                          height: 40,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
                             ),
-                            sWidthSpan,
-                            Text(
-                              model.userDataService.storeName!,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                height: 1.4,
-                              ),
+                          ),
+                          sWidthSpan,
+                          Text(
+                            model.userDataService.storeName!,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              height: 1.4,
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -173,12 +167,13 @@ class StoreProfileView extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: model.goToInventory,
-                  child: buildProfileContainer(context, "Inventory", "", false),
+                  child: buildProfileContainer(
+                      context, "Inventory", "", false, "inventory-icon.svg"),
                 ),
                 InkWell(
-                  onTap: model.goToPaymentMethod,
-                  child:
-                      buildProfileContainer(context, "Store", "Details", true),
+                  onTap: model.goToStoreDetails,
+                  child: buildProfileContainer(
+                      context, "Store", "Details", true, "details.svg"),
                 ),
               ],
             ),
@@ -189,12 +184,12 @@ class StoreProfileView extends StatelessWidget {
                 InkWell(
                   onTap: model.goToPaymentMethod,
                   child: buildProfileContainer(
-                      context, "Payment", "Methods", true),
+                      context, "Payment", "Methods", true, "payment.svg"),
                 ),
                 InkWell(
                   onTap: model.goToCategories,
-                  child:
-                      buildProfileContainer(context, "Categories", "", false),
+                  child: buildProfileContainer(
+                      context, "Categories", "", false, "categories.svg"),
                 ),
               ],
             ),

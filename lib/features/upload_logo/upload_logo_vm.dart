@@ -6,7 +6,6 @@ import 'package:orbit/core/routes/auto_router.gr.dart';
 import 'package:orbit/core/services/user_data_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:http_parser/http_parser.dart';
 
 @injectable
 class UploadLogoViewModel extends BaseViewModel {
@@ -33,7 +32,6 @@ class UploadLogoViewModel extends BaseViewModel {
     setBusy(true);
     try {
       if (image != null) {
-        print("image != null");
         String filename = image!.path.split("/").last;
         FormData formData = FormData.fromMap({
           'logo': await MultipartFile.fromFile(
@@ -56,13 +54,9 @@ class UploadLogoViewModel extends BaseViewModel {
       }
     } on DioError catch (e) {
       if (e.type == DioErrorType.other) {
-        print("internet");
-        print(e);
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        print("no internet");
-
         String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message);
       }

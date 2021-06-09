@@ -30,7 +30,7 @@ class SignupViewModel extends BaseViewModel {
         },
       );
       setBusy(false);
-      print(response.data['message']);
+      (response.data['message']);
 
       _snackbarService.showSnackbar(
         message: response.data['message'],
@@ -44,7 +44,6 @@ class SignupViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        print("sus");
         String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message);
       }

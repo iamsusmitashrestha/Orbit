@@ -29,7 +29,6 @@ class AddItemBottomSheetViewModel extends BaseViewModel {
   void addItem() async {
     try {
       setBusy(true);
-      print(itemName);
       var response = await _dio.post(
         "/product/${_userDataService.storeId}/addProduct",
         data: {
@@ -38,11 +37,9 @@ class AddItemBottomSheetViewModel extends BaseViewModel {
         },
       );
       _navigationService.back(result: SheetResponse(confirmed: true));
-      print(response);
       setBusy(false);
     } on DioError catch (e) {
       setBusy(false);
-      print(e.response);
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
