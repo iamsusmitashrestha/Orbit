@@ -8,11 +8,15 @@
     Map,
     Categories,
     Upload logo,
-    Store Home View,
+    
     )
+- Store Home View,
 - Categories API call
 - Upload logo API call
 - Started developing Store Profile views(
     inventory views completed
-    store details view ui started
+    Store Details
+    Update location
+    Payment Methods
     )
+- User Home Page Ui

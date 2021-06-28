@@ -22,9 +22,9 @@ import 'package:orbit/features/upload_logo/upload_logo_view.dart';
       page: SplashView,
       initial: true,
     ),
-    // MaterialRoute(
-    //   page: HomeView,
-    // ),
+    MaterialRoute(
+      page: HomeView,
+    ),
     MaterialRoute(
       page: RoleSelectionView,
     ),

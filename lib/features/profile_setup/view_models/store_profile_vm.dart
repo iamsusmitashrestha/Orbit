@@ -26,9 +26,27 @@ class StoreProfileViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  postStoreStatus() async {
+    try {
+      setBusy(true);
+      var response = await _dio.post(
+        '/store/${userDataService.storeId}/storeStatus',
+        data: {},
+      );
+      print(response.data['message']);
+      setBusy(false);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   logOut() {
     localStorageService.clear('token');
     navigationService.clearStackAndShow(Routes.splashViewRoute);
+  }
+
+  goToHomeView() {
+    navigationService.navigateTo(Routes.homeViewRoute);
   }
 
   updateLogo() {

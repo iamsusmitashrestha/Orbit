@@ -53,7 +53,6 @@ class ProfileSetupViewModel extends BaseViewModel {
           },
         );
         setBusy(false);
-        // (response.data['message']);
         _snackbarService.showSnackbar(
           message: response.data['message'],
           duration: Duration(seconds: 1),

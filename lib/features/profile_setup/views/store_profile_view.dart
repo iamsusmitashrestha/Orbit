@@ -25,11 +25,6 @@ class StoreProfileView extends StatelessWidget {
                       height: 200,
                       width: double.infinity,
                     ),
-                    // Container(
-                    //   color: Colors.white38,
-                    //   height: 200,
-                    //   width: double.infinity,
-                    // ),
                     Container(
                       color: Colors.black38,
                       height: 200,
@@ -81,6 +76,7 @@ class StoreProfileView extends StatelessWidget {
                   title: Text("Logout"),
                 ),
                 ListTile(
+                  onTap: model.goToHomeView,
                   leading: Icon(
                     Icons.store,
                     color: Colors.black,
@@ -159,7 +155,7 @@ class StoreProfileView extends StatelessWidget {
                 ),
                 padding: mYPadding,
               ),
-              onPressed: model.storeStatusSelection,
+              onPressed: model.postStoreStatus,
             ),
             lHeightSpan,
             Row(

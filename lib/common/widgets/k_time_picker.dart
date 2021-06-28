@@ -1,12 +1,16 @@
-import 'package:orbit/common/constants/ui_helpers.dart';
-
 import 'package:flutter/material.dart';
 
 class KTimePicker extends StatefulWidget {
   final Function(TimeOfDay) onTimePicked;
   final String? labelText;
   final String? hintText;
-  KTimePicker({required this.onTimePicked, this.labelText, this.hintText});
+  final TimeOfDay? initialTime;
+  KTimePicker({
+    required this.onTimePicked,
+    this.labelText,
+    this.hintText,
+    this.initialTime,
+  });
   @override
   _KTimePickerState createState() => _KTimePickerState();
 }
@@ -17,7 +21,8 @@ class _KTimePickerState extends State<KTimePicker> {
   @override
   void initState() {
     Future.delayed(Duration.zero).then((value) {
-      var now = TimeOfDay.now();
+      var now = widget.initialTime ?? TimeOfDay.now();
+
       timeController.text = now.format(context);
       widget.onTimePicked(now);
     });
@@ -28,11 +33,13 @@ class _KTimePickerState extends State<KTimePicker> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Container(
+        width: MediaQuery.of(context).size.width * 0.45,
+        // constraints: BoxConstraints.expand(),
         child: TextField(
           controller: timeController,
           enabled: false,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+            contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 18),
             labelText: widget.labelText,
             hintText: widget.hintText,
             prefixIcon: Icon(Icons.timer),
@@ -48,7 +55,8 @@ class _KTimePickerState extends State<KTimePicker> {
       onTap: () async {
         FocusScope.of(context).requestFocus(new FocusNode());
         TimeOfDay? pickedTime = await showTimePicker(
-            context: context, initialTime: TimeOfDay.now());
+            context: context,
+            initialTime: widget.initialTime ?? TimeOfDay.now());
 
         if (pickedTime == null) return;
 

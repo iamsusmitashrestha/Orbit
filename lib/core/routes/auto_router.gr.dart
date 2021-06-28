@@ -10,6 +10,7 @@ import 'package:auto_route/legacy.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/categories/views/category_view.dart';
+import '../../features/home/views/home_view.dart';
 import '../../features/profile_setup/views/inventory_view.dart';
 import '../../features/profile_setup/views/map_view.dart';
 import '../../features/profile_setup/views/payment_method_view.dart';
@@ -27,6 +28,7 @@ import '../../features/upload_logo/upload_logo_view.dart';
 
 class Routes {
   static const String splashViewRoute = '/';
+  static const String homeViewRoute = '/home-view';
   static const String roleSelectionViewRoute = '/role-selection-view';
   static const String signinViewRoute = '/signin-view';
   static const String forgetPasswordViewRoute = '/forget-password-view';
@@ -43,6 +45,7 @@ class Routes {
   static const String settingsViewRoute = '/settings-view';
   static const all = <String>{
     splashViewRoute,
+    homeViewRoute,
     roleSelectionViewRoute,
     signinViewRoute,
     forgetPasswordViewRoute,
@@ -65,6 +68,7 @@ class AutoRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.splashViewRoute, page: SplashView),
+    RouteDef(Routes.homeViewRoute, page: HomeView),
     RouteDef(Routes.roleSelectionViewRoute, page: RoleSelectionView),
     RouteDef(Routes.signinViewRoute, page: SigninView),
     RouteDef(Routes.forgetPasswordViewRoute, page: ForgetPasswordView),
@@ -86,6 +90,14 @@ class AutoRouter extends RouterBase {
     SplashView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => SplashView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    HomeView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => HomeView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,
