@@ -148,22 +148,27 @@ class HomeView extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: AppDimens.CHIP_PADDING,
-                          decoration: BoxDecoration(
-                            color: PRIMARY_COLOR,
-                            border: Border.all(
-                                color: Theme.of(context).primaryColor),
-                            borderRadius: BorderRadius.circular(
-                                AppDimens.CHIP_BORDER_RADIUS),
-                          ),
-                          child: Text(
-                            "1.2 KMS",
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                ?.copyWith(color: Colors.white),
-                          ),
+                        Column(
+                          children: [
+                            Text(model.userDataService.storeStatus!),
+                            Container(
+                              padding: AppDimens.CHIP_PADDING,
+                              decoration: BoxDecoration(
+                                color: PRIMARY_COLOR,
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(
+                                    AppDimens.CHIP_BORDER_RADIUS),
+                              ),
+                              child: Text(
+                                "1.2 KMS",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),

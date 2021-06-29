@@ -32,6 +32,7 @@ class StoreProfileView extends StatelessWidget {
                     ),
                     Positioned(
                       bottom: 80,
+                      left: 4,
                       child: Row(
                         children: [
                           ClipRRect(
@@ -47,20 +48,34 @@ class StoreProfileView extends StatelessWidget {
                                           height: 40,
                                           child: CircularProgressIndicator(),
                                         ),
-                              width: 60,
-                              height: 60,
+                              width: 55,
+                              height: 55,
                               fit: BoxFit.cover,
                             ),
                           ),
                           sWidthSpan,
-                          Text(
-                            model.userDataService.storeName!,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              height: 1.4,
-                            ),
+                          Column(
+                            children: [
+                              Text(
+                                model.userDataService.storeName!,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.4,
+                                ),
+                              ),
+                              xxsHeightSpan,
+                              Text(
+                                model.userDataService.contactNumber.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.4,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -126,7 +141,7 @@ class StoreProfileView extends StatelessWidget {
                     Text(
                       model.userDataService.storeName!,
                       style: TextStyle(
-                        fontSize: 27,
+                        fontSize: 24,
                       ),
                     ),
                     Text(

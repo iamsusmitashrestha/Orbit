@@ -9,6 +9,7 @@ class UserDataService {
   String? logo;
   String? storeName;
   String? address;
+  num? contactNumber;
   String? storeDescription;
   TimeOfDay? closingTime;
   TimeOfDay? openingTime;

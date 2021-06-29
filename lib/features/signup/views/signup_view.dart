@@ -49,6 +49,11 @@ class SignupView extends StatelessWidget {
                 ),
                 lHeightSpan,
                 KTextFormField(
+                  label: "Contact Number",
+                  onChanged: model.onContactNoChanged,
+                ),
+                lHeightSpan,
+                KTextFormField(
                   label: "Password",
                   obscureText: true,
                   onChanged: model.onPasswordChanged,

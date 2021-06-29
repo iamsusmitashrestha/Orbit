@@ -42,6 +42,7 @@ class SplashViewModel extends BaseViewModel {
         _userDataService.storeId = response.data[0]['_id'];
         _userDataService.userId = response.data[0]['owner'];
         _userDataService.storeName = response.data[0]['storeName'];
+        _userDataService.contactNumber = response.data[0]['contactNumber'];
         _userDataService.address = response.data[0]['address'];
         _userDataService.location =
             latlngFromList(response.data[0]['location']);
@@ -70,9 +71,11 @@ class SplashViewModel extends BaseViewModel {
 
         var categoryResponse =
             await _dio.get("/storecat/${response.data[0]['_id']}/getCategory");
-        _userDataService.categories =
-            List<String>.from(categoryResponse.data[0]['category']);
+
         if (categoryResponse.data.length > 0) {
+          _userDataService.categories =
+              List<String>.from(categoryResponse.data[0]['category']);
+
           if (_userDataService.logo == null) {
             _navigationService.replaceWith(Routes.uploadLogoViewRoute);
           } else {

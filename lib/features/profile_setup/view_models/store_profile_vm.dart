@@ -33,6 +33,7 @@ class StoreProfileViewModel extends BaseViewModel {
         '/store/${userDataService.storeId}/storeStatus',
         data: {},
       );
+      storeStatusSelection();
       print(response.data['message']);
       setBusy(false);
     } catch (e) {
