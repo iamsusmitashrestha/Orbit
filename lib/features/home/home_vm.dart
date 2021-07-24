@@ -10,6 +10,7 @@ class HomeViewModel extends BaseViewModel {
   List<CategoryModel> categoryResponse = [];
   CategoryModel? selectedCategory;
   num? distance;
+  String? searchTitle;
 
   final Dio _dio;
   final UserDataService userDataService;
@@ -38,6 +39,23 @@ class HomeViewModel extends BaseViewModel {
           .map<CategoryModel>((item) => CategoryModel.fromJson(item))
           .toList();
       selectedCategory = categoryResponse[0];
+      setBusy(false);
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = e.response?.data['message'];
+        _snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+  }
+
+  getStores() async {
+    setBusy(true);
+    try {
+      var response = await _dio.get("/store/getStores");
+
       setBusy(false);
     } on DioError catch (e) {
       if (e.type == DioErrorType.other) {

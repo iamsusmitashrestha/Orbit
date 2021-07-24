@@ -23,6 +23,10 @@ class CategoryViewModel extends BaseViewModel {
     getCategory();
   }
 
+  void onSelectionChanged(List<CategoryModel> value) {
+    selectedCategories = value;
+  }
+
   getCategory() async {
     setBusy(true);
     try {
@@ -44,10 +48,6 @@ class CategoryViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
-  }
-
-  void onSelectionChanged(List<CategoryModel> value) {
-    selectedCategories = value;
   }
 
   onCategorySave() async {

@@ -32,6 +32,7 @@ class VerifyCodeView extends StatelessWidget {
             KButton(
               child: Text("Verify"),
               onPressed: model.onVerify,
+              isBusy: model.isBusy,
             ),
           ],
         ),

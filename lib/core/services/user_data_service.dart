@@ -9,13 +9,14 @@ class UserDataService {
   String? logo;
   String? storeName;
   String? address;
-  num? contactNumber;
+  num? phoneNumber;
   String? storeDescription;
   TimeOfDay? closingTime;
   TimeOfDay? openingTime;
   bool? deliveryOption;
   LatLng? location;
   String? hints;
-  String? storeStatus;
+
+  // String? storeStatus;
   List<String> categories = [];
 }

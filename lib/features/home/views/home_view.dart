@@ -20,14 +20,20 @@ class HomeView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(400),
-          child: Container(
-            padding: EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 32),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search store or products.',
-                prefixIcon: Icon(Icons.search),
+          child: Row(
+            children: [
+              Container(
+                padding:
+                    EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 32),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search store or products.',
+                    prefixIcon: Icon(Icons.search),
+                  ),
+                ),
               ),
-            ),
+              TextButton(onPressed: () {}, child: Text("Search"))
+            ],
           ),
         ),
         body: ListView(
@@ -95,7 +101,11 @@ class HomeView extends StatelessWidget {
                 ),
                 elWidthSpan,
                 Expanded(
-                  child: KButton(child: Text("Find"), onPressed: () {}),
+                  child: KButton(
+                    child: Text("Find"),
+                    onPressed: () {},
+                    isBusy: model.isBusy,
+                  ),
                 )
               ],
             ),
@@ -150,7 +160,7 @@ class HomeView extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Text(model.userDataService.storeStatus!),
+                            // Text(model.userDataService.storeStatus!),
                             Container(
                               padding: AppDimens.CHIP_PADDING,
                               decoration: BoxDecoration(

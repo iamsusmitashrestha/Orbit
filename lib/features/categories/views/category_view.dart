@@ -48,6 +48,7 @@ class CategoryView extends StatelessWidget {
             KButton(
               child: Text("Save"),
               onPressed: model.onCategorySave,
+              isBusy: model.isBusy,
             ),
             lHeightSpan,
           ],

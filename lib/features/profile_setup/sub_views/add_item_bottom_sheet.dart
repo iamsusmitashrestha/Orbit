@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_bottom_sheet.dart';
+import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_text_form_field.dart';
 import 'package:orbit/core/di/injection.dart';
@@ -36,11 +37,13 @@ class AddItemBottomSheetView extends StatelessWidget {
             onChanged: model.onPriceChanged,
           ),
           mHeightSpan,
-          KButton(
-            child: Text("Add item"),
-            onPressed: model.addItem,
-            isBusy: model.isBusy,
-          )
+          model.isBusy
+              ? KBusy()
+              : KButton(
+                  child: Text("Add item"),
+                  onPressed: model.addItem,
+                  isBusy: model.isBusy,
+                )
         ],
       ),
     );

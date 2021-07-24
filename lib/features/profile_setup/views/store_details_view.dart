@@ -123,12 +123,11 @@ class StoreDetailsView extends StatelessWidget {
                             )),
                       ),
                       lHeightSpan,
-                      model.isBusy
-                          ? KBusy()
-                          : KButton(
-                              child: Text("Save"),
-                              onPressed: model.save,
-                            ),
+                      KButton(
+                        child: Text("Save"),
+                        onPressed: model.save,
+                        isBusy: model.isBusy,
+                      ),
                     ],
                   ),
                 if (model.isLocationPressed)
@@ -184,12 +183,11 @@ class StoreDetailsView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(4.0))),
                       ),
                       lHeightSpan,
-                      model.isBusy
-                          ? KBusy()
-                          : KButton(
-                              onPressed: model.saveLocation,
-                              child: Text("Save"),
-                            )
+                      KButton(
+                        onPressed: model.saveLocation,
+                        child: Text("Save"),
+                        isBusy: model.isBusy,
+                      )
                     ],
                   )
               ],

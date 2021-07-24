@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/core/di/injection.dart';
+import 'package:orbit/features/profile_setup/models/payment.dart';
 import 'package:orbit/features/profile_setup/view_models/payment_methods_vm.dart';
 import 'package:orbit/features/profile_setup/widgets/payment_card.dart';
 import 'package:orbit/themes/app_themes.dart';
@@ -13,6 +15,7 @@ class PaymentMethodView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<PaymentMethodViewModel>.reactive(
       viewModelBuilder: () => locator<PaymentMethodViewModel>(),
+      onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -46,47 +49,74 @@ class PaymentMethodView extends StatelessWidget {
               fit: BoxFit.contain,
             ),
             lHeightSpan,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                PaymentCard(
-                  img: "esewa.png",
-                  onpressed: () {},
-                ),
-                PaymentCard(
-                  img: "khalti.png",
-                  onpressed: () {},
-                ),
-              ],
-            ),
-            mHeightSpan,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                PaymentCard(
-                  img: "fonepay.png",
-                  onpressed: () {},
-                ),
-                PaymentCard(
-                  img: "imepay.png",
-                  onpressed: () {},
-                ),
-              ],
-            ),
-            mHeightSpan,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                PaymentCard(
-                  img: "prabhupay.png",
-                  onpressed: () {},
-                ),
-                PaymentCard(
-                  img: "cash.png",
-                  onpressed: () {},
-                ),
-              ],
-            ),
+            model.isBusy
+                ? KBusy()
+                : GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5.0,
+                    mainAxisSpacing: 0.5,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    children: List.generate(
+                      model.paymentOptions.length,
+                      (index) {
+                        PaymentModel paymentOption =
+                            model.paymentOptions[index];
+
+                        return Column(
+                          children: [
+                            PaymentCard(
+                              img: paymentOption.image,
+                              onpressed: () {},
+                            ),
+                            Text(paymentOption.value),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     PaymentCard(
+            //       img: "esewa.png",
+            //       onpressed: () {},
+            //     ),
+            //     PaymentCard(
+            //       img: "khalti.png",
+            //       onpressed: () {},
+            //     ),
+            //   ],
+            // ),
+            // mHeightSpan,
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     PaymentCard(
+            //       img: "fonepay.png",
+            //       onpressed: () {},
+            //     ),
+            //     PaymentCard(
+            //       img: "imepay.png",
+            //       onpressed: () {},
+            //     ),
+            //   ],
+            // ),
+            // mHeightSpan,
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     PaymentCard(
+            //       img: "prabhupay.png",
+            //       onpressed: () {},
+            //     ),
+            //     PaymentCard(
+            //       img: "cash.png",
+            //       onpressed: () {},
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

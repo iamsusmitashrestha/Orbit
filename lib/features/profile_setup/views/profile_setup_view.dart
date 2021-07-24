@@ -68,6 +68,7 @@ class ProfileSetupView extends StatelessWidget {
             KButton(
               onPressed: model.onSaveButtonClick,
               child: Text("Save"),
+              isBusy: model.isBusy,
               size: ButtonSize.LARGE,
             ),
             mHeightSpan,

@@ -12,6 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 class SplashViewModel extends BaseViewModel {
   final LocalStorageService _localStorageService;
   final NavigationService _navigationService;
+  final SnackbarService _snackbarService;
   final UserDataService _userDataService;
   final Dio _dio;
 
@@ -20,6 +21,7 @@ class SplashViewModel extends BaseViewModel {
     this._dio,
     this._localStorageService,
     this._userDataService,
+    this._snackbarService,
   );
 
   void initialise() {
@@ -37,40 +39,41 @@ class SplashViewModel extends BaseViewModel {
     setBusy(true);
     try {
       var response = await _dio.get("/store/myStore");
-      bool hasStore = (response.data as List).length > 0;
-      if (hasStore) {
-        _userDataService.storeId = response.data[0]['_id'];
-        _userDataService.userId = response.data[0]['owner'];
-        _userDataService.storeName = response.data[0]['storeName'];
-        _userDataService.contactNumber = response.data[0]['contactNumber'];
-        _userDataService.address = response.data[0]['address'];
+      if (response.data.containsKey("store")) {
+        _userDataService.storeId = response.data['store']['_id'];
+        _userDataService.userId = response.data['store']['owner'];
+        _userDataService.storeName = response.data['store']['storeName'];
+        _userDataService.phoneNumber = response.data['phoneNumber'];
+        _userDataService.address = response.data['store']['address'];
         _userDataService.location =
-            latlngFromList(response.data[0]['location']);
-        if (response.data[0]['logo'] != null) {
+            latlngFromList(response.data['store']['location']);
+        if (response.data['store']['logo'] != null) {
           _userDataService.logo =
-              _dio.options.baseUrl + response.data[0]['logo'];
+              _dio.options.baseUrl + response.data['store']['logo'];
         }
 
-        if (response.data[0]['description'] != null) {
-          _userDataService.storeDescription = response.data[0]['description'];
+        if (response.data['store']['description'] != null) {
+          _userDataService.storeDescription =
+              response.data['store']['description'];
         }
-        if (response.data[0]['openingTime'] != null) {
+        if (response.data['store']['openingTime'] != null) {
           _userDataService.openingTime =
-              timeFromString(response.data[0]['openingTime']);
+              timeFromString(response.data['store']['openingTime']);
         }
-        if (response.data[0]['closingTime'] != null) {
+        if (response.data['store']['closingTime'] != null) {
           _userDataService.closingTime =
-              timeFromString(response.data[0]['closingTime']);
+              timeFromString(response.data['store']['closingTime']);
         }
-        if (response.data[0]['deliveryOption'] != null) {
-          _userDataService.deliveryOption = response.data[0]['deliveryOption'];
+        if (response.data['store']['deliveryOption'] != null) {
+          _userDataService.deliveryOption =
+              response.data['store']['deliveryOption'];
         }
-        if (response.data[0]['storeStatus'] != null) {
-          _userDataService.storeStatus = response.data[0]['storeStatus'];
-        }
+        // if (response.data['store']['storeStatus'] != null) {
+        //   _userDataService.storeStatus = response.data['store']['storeStatus'];
+        // }
 
-        var categoryResponse =
-            await _dio.get("/storecat/${response.data[0]['_id']}/getCategory");
+        var categoryResponse = await _dio
+            .get("/storecat/${response.data['store']['_id']}/getCategory");
 
         if (categoryResponse.data.length > 0) {
           _userDataService.categories =
@@ -89,6 +92,13 @@ class SplashViewModel extends BaseViewModel {
       }
     } on DioError catch (e) {
       setBusy(false);
+      if (e.type == DioErrorType.other) {
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = e.response!.data['message'];
+        _snackbarService.showSnackbar(message: message.trim());
+      }
     }
   }
 }

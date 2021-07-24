@@ -88,13 +88,12 @@ class _SigninViewState extends State<SigninView> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
                   ),
-                  model.isBusy
-                      ? KBusy()
-                      : KButton(
-                          child: Text("Login"),
-                          onPressed: model.onSignin,
-                          size: ButtonSize.LARGE,
-                        ),
+                  KButton(
+                    child: Text("Login"),
+                    onPressed: model.onSignin,
+                    size: ButtonSize.LARGE,
+                    isBusy: model.isBusy,
+                  ),
                   lHeightSpan,
                   InkWell(
                     child: Text(

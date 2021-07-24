@@ -67,7 +67,7 @@ class StoreProfileView extends StatelessWidget {
                               ),
                               xxsHeightSpan,
                               Text(
-                                model.userDataService.contactNumber.toString(),
+                                model.userDataService.phoneNumber.toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,

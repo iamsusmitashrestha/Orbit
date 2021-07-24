@@ -67,14 +67,12 @@ class SignupView extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
-                model.isBusy
-                    ? KBusy()
-                    : KButton(
-                        child: Text("Sign Up"),
-                        onPressed: model.onSignup,
-                        size: ButtonSize.LARGE,
-                        isBusy: model.isBusy,
-                      ),
+                KButton(
+                  child: Text("Sign Up"),
+                  onPressed: model.onSignup,
+                  size: ButtonSize.LARGE,
+                  isBusy: model.isBusy,
+                ),
                 lHeightSpan,
                 InkWell(
                   child: Text(

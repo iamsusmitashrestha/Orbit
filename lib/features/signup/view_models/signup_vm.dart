@@ -10,7 +10,7 @@ class SignupViewModel extends BaseViewModel {
   String email = "";
   String password = "";
   String confirmPassword = '';
-  num contactNumber = 0;
+  num phoneNumber = 0;
 
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
@@ -28,7 +28,7 @@ class SignupViewModel extends BaseViewModel {
           'email': email,
           'password': password,
           'confirmPassword': confirmPassword,
-          'contactNumber': contactNumber,
+          'phoneNumber': phoneNumber,
         },
       );
       setBusy(false);
@@ -60,7 +60,7 @@ class SignupViewModel extends BaseViewModel {
   }
 
   onContactNoChanged(value) {
-    contactNumber = value;
+    phoneNumber = value;
   }
 
   onPasswordChanged(value) {
