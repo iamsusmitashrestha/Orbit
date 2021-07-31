@@ -6,6 +6,9 @@ import 'package:orbit/features/profile/view_models/profile_vm.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileView extends StatelessWidget {
+  final String storeName;
+
+  ProfileView({required this.storeName});
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.reactive(

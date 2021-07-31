@@ -1,10 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
-import 'package:orbit/common/widgets/k_chip.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
@@ -22,17 +21,29 @@ class HomeView extends StatelessWidget {
           preferredSize: Size.fromHeight(400),
           child: Row(
             children: [
-              Container(
-                padding:
-                    EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 32),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search store or products.',
-                    prefixIcon: Icon(Icons.search),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding:
+                      EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 32),
+                  child: TextField(
+                    onChanged: model.onSearchChanged,
+                    decoration: InputDecoration(
+                      hintText: 'Search store or products.',
+                      prefixIcon: Icon(Icons.search),
+                    ),
                   ),
                 ),
               ),
-              TextButton(onPressed: () {}, child: Text("Search"))
+              model.isBusy
+                  ? KBusy()
+                  : Expanded(
+                      child: KButton(
+                        onPressed: model.search,
+                        child: Text("Search"),
+                        isBusy: model.isBusy,
+                      ),
+                    )
             ],
           ),
         ),
@@ -47,28 +58,27 @@ class HomeView extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            mHeightSpan,
+            sHeightSpan,
             Container(
-              height: 40,
-              child: ListView.builder(
-                itemCount: model.categoryResponse.length,
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(right: 8),
-                    child: KChip(
-                      text: model.categoryResponse[index].label,
-                      variant: ChipVariant.FILLED,
-                      onPressed: () {
-                        model.onSelectionChanged(index);
-                      },
-                      selected: model.categoryResponse[index].value ==
-                          model.selectedCategory!.value,
-                    ),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: LIGHT_GREY,
+                ),
+              ),
+              child: DropdownButton(
+                autofocus: true,
+                iconSize: 40,
+                isExpanded: true,
+                value: model.selectedCategory,
+                onChanged: model.onSelectionChanged,
+                items: model.categoryResponse.map((category) {
+                  return DropdownMenuItem(
+                    child: new Text(category.label),
+                    value: category,
                   );
-                },
+                }).toList(),
               ),
             ),
             lHeightSpan,
@@ -103,7 +113,7 @@ class HomeView extends StatelessWidget {
                 Expanded(
                   child: KButton(
                     child: Text("Find"),
-                    onPressed: () {},
+                    onPressed: model.getStoreByDistance,
                     isBusy: model.isBusy,
                   ),
                 )
@@ -119,73 +129,155 @@ class HomeView extends StatelessWidget {
               ),
             ),
             mHeightSpan,
-            Card(
-              child: Padding(
-                padding: lPadding,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.network(
-                            model.userDataService.logo!,
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        sWidthSpan,
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                model.userDataService.storeName!,
-                                style: TextStyle(
-                                  fontSize: 20,
+            model.storeResponse.isNotEmpty
+                ? Column(
+                    children: model.storeResponse
+                        .map((store) => Card(
+                              child: Padding(
+                                padding: lPadding,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          child: Image.network(
+                                            store.storedetails!.logo,
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        sWidthSpan,
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                store.storedetails!.storeName!,
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: Text(
+                                                  store.storedetails!.address!,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Column(
+                                          children: [
+                                            // Text(model.userDataService.storeStatus!),
+                                            Container(
+                                              padding: AppDimens.CHIP_PADDING,
+                                              decoration: BoxDecoration(
+                                                color: PRIMARY_COLOR,
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                                borderRadius: BorderRadius
+                                                    .circular(AppDimens
+                                                        .CHIP_BORDER_RADIUS),
+                                              ),
+                                              child: Text(
+                                                "${store.calculatedDistance!} KMs",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1
+                                                    ?.copyWith(
+                                                        color: Colors.white),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  model.userDataService.address!,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
+                            ))
+                        .toList(),
+                    // model.storeResponse.map((e) => )
+                  )
+                : Container(),
+            model.searchedStoreResponse.isNotEmpty
+                ? Column(
+                    children: model.searchedStoreResponse
+                        .map((store) => Card(
+                              child: Padding(
+                                padding: lPadding,
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          child: Image.network(
+                                            store.logo!,
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        sWidthSpan,
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                store.storeName!,
+                                                style: TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: Text(
+                                                  store.address!,
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: AppDimens.CHIP_PADDING,
+                                          decoration: BoxDecoration(
+                                            color: PRIMARY_COLOR,
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .primaryColor),
+                                            borderRadius: BorderRadius.circular(
+                                                AppDimens.CHIP_BORDER_RADIUS),
+                                          ),
+                                          child: Text(
+                                            store.storeStatus!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1
+                                                ?.copyWith(color: Colors.white),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            // Text(model.userDataService.storeStatus!),
-                            Container(
-                              padding: AppDimens.CHIP_PADDING,
-                              decoration: BoxDecoration(
-                                color: PRIMARY_COLOR,
-                                border: Border.all(
-                                    color: Theme.of(context).primaryColor),
-                                borderRadius: BorderRadius.circular(
-                                    AppDimens.CHIP_BORDER_RADIUS),
-                              ),
-                              child: Text(
-                                "1.2 KMS",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle1
-                                    ?.copyWith(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            )
+                            ))
+                        .toList(),
+                    // model.storeResponse.map((e) => )
+                  )
+                : Container(),
           ],
         ),
       ),
