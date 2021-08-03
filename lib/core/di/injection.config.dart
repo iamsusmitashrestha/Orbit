@@ -14,6 +14,7 @@ import '../../features/add_item/view_models/add_item_vm.dart' as _i3;
 import '../../features/categories/view_models/category_vm.dart' as _i14;
 import '../../features/home/home_vm.dart' as _i18;
 import '../../features/profile/view_models/profile_vm.dart' as _i23;
+import '../../features/profile/view_models/searched_profile_vm.dart' as _i24;
 import '../../features/profile_setup/sub_views/delete_item_bottom_sheet.dart'
     as _i5;
 import '../../features/profile_setup/view_models/add_item_bottom_sheet_vm.dart'
@@ -26,20 +27,20 @@ import '../../features/profile_setup/view_models/payment_methods_vm.dart'
     as _i21;
 import '../../features/profile_setup/view_models/profile_setup_vm.dart' as _i22;
 import '../../features/profile_setup/view_models/settings_vm.dart' as _i9;
-import '../../features/profile_setup/view_models/store_details_vm.dart' as _i27;
-import '../../features/profile_setup/view_models/store_profile_vm.dart' as _i28;
+import '../../features/profile_setup/view_models/store_details_vm.dart' as _i28;
+import '../../features/profile_setup/view_models/store_profile_vm.dart' as _i29;
 import '../../features/role/view_models/role_selection_vm.dart' as _i8;
 import '../../features/signin/view_models/forget_password_vm.dart' as _i17;
-import '../../features/signin/view_models/signin_vm.dart' as _i24;
-import '../../features/signup/view_models/signup_vm.dart' as _i25;
+import '../../features/signin/view_models/signin_vm.dart' as _i25;
+import '../../features/signup/view_models/signup_vm.dart' as _i26;
 import '../../features/signup/view_models/verify_code_vm.dart' as _i12;
-import '../../features/splash/splash_vm.dart' as _i26;
-import '../../features/upload_logo/upload_logo_vm.dart' as _i29;
+import '../../features/splash/splash_vm.dart' as _i27;
+import '../../features/upload_logo/upload_logo_vm.dart' as _i30;
 import '../services/local_storage_service.dart' as _i7;
 import '../services/toast_service.dart' as _i10;
 import '../services/user_data_service.dart' as _i11;
 import 'third_party_modules.dart'
-    as _i30; // ignore_for_file: unnecessary_lambdas
+    as _i31; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -90,7 +91,10 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       dio: get<_i6.Dio>(),
       localStorageService: get<_i7.LocalStorageService>()));
   gh.factory<_i18.HomeViewModel>(() => _i18.HomeViewModel(
-      get<_i6.Dio>(), get<_i4.SnackbarService>(), get<_i11.UserDataService>()));
+      get<_i6.Dio>(),
+      get<_i4.SnackbarService>(),
+      get<_i11.UserDataService>(),
+      get<_i4.NavigationService>()));
   gh.factory<_i19.InventoryViewModel>(() => _i19.InventoryViewModel(
       get<_i4.NavigationService>(),
       get<_i6.Dio>(),
@@ -110,32 +114,38 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i4.SnackbarService>(),
       get<_i11.UserDataService>(),
       get<_i4.NavigationService>()));
-  gh.factory<_i24.SigninViewModel>(() => _i24.SigninViewModel(
+  gh.factory<_i24.SearchedProfileViewModel>(() => _i24.SearchedProfileViewModel(
+      get<_i6.Dio>(),
+      get<_i4.SnackbarService>(),
+      get<_i11.UserDataService>(),
+      get<_i4.NavigationService>()));
+  gh.factory<_i25.SigninViewModel>(() => _i25.SigninViewModel(
       navigationService: get<_i4.NavigationService>(),
       snackbarService: get<_i4.SnackbarService>(),
       dio: get<_i6.Dio>(),
       localStorageService: get<_i7.LocalStorageService>()));
-  gh.factory<_i25.SignupViewModel>(() => _i25.SignupViewModel(
+  gh.factory<_i26.SignupViewModel>(() => _i26.SignupViewModel(
       get<_i4.NavigationService>(),
       get<_i4.SnackbarService>(),
       get<_i6.Dio>()));
-  gh.factory<_i26.SplashViewModel>(() => _i26.SplashViewModel(
+  gh.factory<_i27.SplashViewModel>(() => _i27.SplashViewModel(
       get<_i4.NavigationService>(),
       get<_i6.Dio>(),
       get<_i7.LocalStorageService>(),
       get<_i11.UserDataService>(),
       get<_i4.SnackbarService>()));
-  gh.factory<_i27.StoreDetailsViewModel>(() => _i27.StoreDetailsViewModel(
+  gh.factory<_i28.StoreDetailsViewModel>(() => _i28.StoreDetailsViewModel(
       get<_i11.UserDataService>(),
       get<_i4.NavigationService>(),
       get<_i4.SnackbarService>(),
       get<_i6.Dio>()));
-  gh.factory<_i28.StoreProfileViewModel>(() => _i28.StoreProfileViewModel(
+  gh.factory<_i29.StoreProfileViewModel>(() => _i29.StoreProfileViewModel(
       get<_i4.NavigationService>(),
       get<_i11.UserDataService>(),
       get<_i6.Dio>(),
-      get<_i7.LocalStorageService>()));
-  gh.factory<_i29.UploadLogoViewModel>(() => _i29.UploadLogoViewModel(
+      get<_i7.LocalStorageService>(),
+      get<_i4.SnackbarService>()));
+  gh.factory<_i30.UploadLogoViewModel>(() => _i30.UploadLogoViewModel(
       get<_i4.NavigationService>(),
       get<_i6.Dio>(),
       get<_i11.UserDataService>(),
@@ -143,7 +153,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i30.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i31.ThirdPartyServicesModule {
   @override
   _i4.BottomSheetService get bottomSheetService => _i4.BottomSheetService();
   @override

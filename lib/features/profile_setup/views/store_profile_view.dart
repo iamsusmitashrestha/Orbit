@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/profile_setup/view_models/store_profile_vm.dart';
 import 'package:orbit/features/profile_setup/widgets/profile_container.dart';
@@ -19,15 +20,18 @@ class StoreProfileView extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Image.asset(
-                      "assets/images/store.jpg",
-                      fit: BoxFit.cover,
-                      height: 200,
-                      width: double.infinity,
+                    Card(
+                      elevation: 10,
+                      child: Image.asset(
+                        "assets/images/store.jpg",
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: double.infinity,
+                      ),
                     ),
                     Container(
-                      color: Colors.black38,
-                      height: 200,
+                      color: Colors.black54,
+                      height: 210,
                       width: double.infinity,
                     ),
                     Positioned(
@@ -60,18 +64,17 @@ class StoreProfileView extends StatelessWidget {
                                 model.userDataService.storeName!,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   height: 1.4,
                                 ),
                               ),
-                              xxsHeightSpan,
                               Text(
                                 model.userDataService.phoneNumber.toString(),
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  // fontWeight: FontWeight.w500,
                                   height: 1.4,
                                 ),
                               ),
@@ -99,6 +102,7 @@ class StoreProfileView extends StatelessWidget {
                   title: Text("View Stores Around"),
                 ),
                 ListTile(
+                  onTap: model.deleteStore,
                   leading: Icon(
                     Icons.delete,
                     color: Colors.black,
@@ -156,22 +160,24 @@ class StoreProfileView extends StatelessWidget {
               ],
             ),
             elHeightSpan,
-            ElevatedButton(
-              child: Text(
-                model.storeStatus ? "OPEN" : "CLOSE",
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: model.storeStatus ? Colors.green : Colors.red,
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(16),
-                ),
-                padding: mYPadding,
-              ),
-              onPressed: model.postStoreStatus,
-            ),
+            model.isBusy
+                ? KBusy()
+                : ElevatedButton(
+                    child: Text(
+                      model.storeStatus ? "OPEN" : "CLOSE",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: model.storeStatus ? Colors.green : Colors.red,
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(16),
+                      ),
+                      padding: mYPadding,
+                    ),
+                    onPressed: model.postStoreStatus,
+                  ),
             lHeightSpan,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

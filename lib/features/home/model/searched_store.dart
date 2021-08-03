@@ -1,31 +1,60 @@
 class SearchedStoreModel {
-  bool? deliveryOption;
-  String? storeStatus;
+  StoreDetailsModel? storedetails;
+  num? contactNumber;
+
+  SearchedStoreModel({this.storedetails, this.contactNumber});
+
+  SearchedStoreModel.fromJson(Map<String, dynamic> json) {
+    storedetails = json['storedetails'] != null
+        ? new StoreDetailsModel.fromJson(json['storedetails'])
+        : null;
+    contactNumber = json['contactNumber'];
+  }
+}
+
+class StoreDetailsModel {
+  bool deliveryOption;
+  String status;
   List<num> location;
-  String? createdAt;
   String? sId;
-  String? storeName;
-  String? address;
-  String? logo;
+  String storeName;
+  String address;
+  String? owner;
+  String logo;
+  String? description;
   String? hints;
+  String? openingTime;
+  String? closingTime;
+  List<String>? paymentMethod;
 
-  SearchedStoreModel(
-      {this.deliveryOption,
-      this.storeStatus,
-      required this.location,
-      this.createdAt,
-      this.sId,
-      this.storeName,
-      this.address,
-      this.logo,
-      this.hints});
+  StoreDetailsModel({
+    this.deliveryOption = false,
+    this.status = "Open",
+    required this.location,
+    this.sId,
+    required this.storeName,
+    required this.address,
+    this.owner,
+    required this.logo,
+    this.description,
+    this.openingTime,
+    this.closingTime,
+    this.hints,
+    this.paymentMethod,
+  });
 
-  SearchedStoreModel.fromJson(Map<String, dynamic> json)
+  StoreDetailsModel.fromJson(Map<String, dynamic> json)
       : deliveryOption = json['deliveryOption'],
-        storeStatus = json['storeStatus'],
+        status = json['storeStatus'],
         location = List<num>.from(json['location']),
+        sId = json['_id'],
         storeName = json['storeName'],
         address = json['address'],
-        logo = json['logo'],
-        hints = json['hints'];
+        owner = json['owner'],
+        logo = "https://orbit1.herokuapp.com" + json['logo'],
+        description = json['description'],
+        openingTime = json['openingTime'],
+        closingTime = json['closingTime'],
+        hints = json['hints'],
+        paymentMethod = List<String>.from(json['paymentMethod']);
 }

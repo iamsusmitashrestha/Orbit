@@ -17,6 +17,7 @@ class VerifyCodeViewModel extends BaseViewModel {
 
   onVerify() async {
     try {
+      setBusy(true);
       var response = await _dio.post(
         "/user/verify",
         data: {
@@ -24,7 +25,10 @@ class VerifyCodeViewModel extends BaseViewModel {
         },
       );
       _navigationService.navigateTo(Routes.signinViewRoute);
+      setBusy(false);
     } on DioError catch (e) {
+      setBusy(false);
+
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");

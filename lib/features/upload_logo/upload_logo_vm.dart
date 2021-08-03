@@ -44,7 +44,6 @@ class UploadLogoViewModel extends BaseViewModel {
           data: formData,
         );
         _userDataService.logo = _dio.options.baseUrl + response.data['logo'];
-        // print(_userDataService.logo);
         _snackbarService.showSnackbar(
             message: "Logo uploaded!", duration: Duration(seconds: 1));
 

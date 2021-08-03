@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import '../../features/categories/views/category_view.dart';
 import '../../features/home/views/home_view.dart';
 import '../../features/profile/views/profile_view.dart';
+import '../../features/profile/views/searched_profile_view.dart';
 import '../../features/profile_setup/views/inventory_view.dart';
 import '../../features/profile_setup/views/map_view.dart';
 import '../../features/profile_setup/views/payment_method_view.dart';
@@ -45,6 +46,7 @@ class Routes {
   static const String paymentMethodViewRoute = '/payment-method-view';
   static const String settingsViewRoute = '/settings-view';
   static const String profileViewRoute = '/profile-view';
+  static const String searchedProfileViewRoute = '/searched-profile-view';
   static const all = <String>{
     splashViewRoute,
     homeViewRoute,
@@ -63,6 +65,7 @@ class Routes {
     paymentMethodViewRoute,
     settingsViewRoute,
     profileViewRoute,
+    searchedProfileViewRoute,
   };
 }
 
@@ -87,6 +90,7 @@ class AutoRouter extends RouterBase {
     RouteDef(Routes.paymentMethodViewRoute, page: PaymentMethodView),
     RouteDef(Routes.settingsViewRoute, page: SettingsView),
     RouteDef(Routes.profileViewRoute, page: ProfileView),
+    RouteDef(Routes.searchedProfileViewRoute, page: SearchedProfileView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -222,6 +226,14 @@ class AutoRouter extends RouterBase {
     ProfileView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ProfileView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    SearchedProfileView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SearchedProfileView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

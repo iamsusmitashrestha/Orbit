@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/core/di/injection.dart';
-import 'package:orbit/features/home/model/store.dart';
-import 'package:orbit/features/profile/view_models/profile_vm.dart';
-import 'package:orbit/features/profile/views/profile_map_view.dart';
-import 'package:orbit/features/profile/views/store_product_view.dart';
+import 'package:orbit/features/home/model/searched_store.dart';
+
+import 'package:orbit/features/profile/view_models/searched_profile_vm.dart';
+import 'package:orbit/features/profile/views/bottom_navigation_view.dart';
+import 'package:orbit/features/profile/views/searched_map_view.dart';
+import 'package:orbit/features/profile/views/searched_store_product_view.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
-import 'btm_navigation_view.dart';
-import 'details_view.dart';
 
-class ProfileView extends StatelessWidget {
+import 'searched_detail_view.dart';
+
+class SearchedProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final StoreModel store =
-        ModalRoute.of(context)!.settings.arguments as StoreModel;
+    final SearchedStoreModel store =
+        ModalRoute.of(context)!.settings.arguments as SearchedStoreModel;
 
-    return ViewModelBuilder<ProfileViewModel>.reactive(
-      viewModelBuilder: () => locator<ProfileViewModel>(),
+    return ViewModelBuilder<SearchedProfileViewModel>.reactive(
+      viewModelBuilder: () => locator<SearchedProfileViewModel>(),
       onModelReady: (model) => model.initialise(store),
       builder: (context, model, child) => Scaffold(
-        bottomNavigationBar: BtmNavigationView(),
+        bottomNavigationBar: BottomNavigationView(),
         body: ListView(
           children: [
             Align(
@@ -32,7 +34,7 @@ class ProfileView extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+              padding: const EdgeInsets.all(6.0),
               child: Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
@@ -64,22 +66,6 @@ class ProfileView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Icon(Icons.location_on, color: Colors.white),
-                        sWidthSpan,
-                        Text(
-                          "${store.calculatedDistance!} km away",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-                            height: 1.4,
-                          ),
-                        ),
-                      ],
-                    ),
-                    xsHeightSpan,
                     Row(
                       children: [
                         Icon(
@@ -186,14 +172,13 @@ class ProfileView extends StatelessWidget {
                     : PageView(
                         controller: model.btmNavigationPageController,
                         children: [
-                          StoreProductView(),
-                          ProfileMapView(
+                          SearchedStoreProductView(),
+                          SearchedMapView(
                             storeName: store.storedetails!.storeName,
                             latitude: store.storedetails!.location[1],
                             longitude: store.storedetails!.location[0],
                           ),
-                          // LocationView(),
-                          DetailView(
+                          SearchedDetailView(
                             description: store.storedetails?.description,
                             deliveryOption: store.storedetails!.deliveryOption,
                           ),

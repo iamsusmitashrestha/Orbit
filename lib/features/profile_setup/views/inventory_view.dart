@@ -88,11 +88,6 @@ class InventoryView extends StatelessWidget {
                               elWidthSpan,
                               Row(
                                 children: [
-                                  IconButton(
-                                    color: Colors.blue,
-                                    icon: Icon(Icons.edit),
-                                    onPressed: () {},
-                                  ),
                                   model.busy(index)
                                       ? CircularProgressIndicator()
                                       : IconButton(

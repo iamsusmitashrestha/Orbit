@@ -4,9 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/logo_image.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
-import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
-
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/role/view_models/role_selection_vm.dart';
 import 'package:orbit/themes/app_themes.dart';
@@ -22,102 +20,100 @@ class _RoleSelectionViewState extends State<RoleSelectionView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<RoleSelectionViewModel>.reactive(
       viewModelBuilder: () => locator<RoleSelectionViewModel>(),
-      builder: (context, model, child) => Scaffold(
-        body: ListView(
-          children: [
-            ClipPath(
-              clipper: Clipper(),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                padding: mYPagePadding,
-                color: SECONDARY_COLOR,
-                child: Center(
-                  child: SvgPicture.asset(
-                    "assets/images/choice.svg",
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                  ),
+      builder: (context, model, child) => ListView(
+        children: [
+          ClipPath(
+            clipper: Clipper(),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              padding: mYPagePadding,
+              color: SECONDARY_COLOR,
+              child: Center(
+                child: SvgPicture.asset(
+                  "assets/images/choice.svg",
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.8,
                 ),
               ),
             ),
-            Image.asset(
-              logo_image,
-              height: 100,
-              width: 100,
-            ),
-            lHeightSpan,
-            Padding(
-              padding: AppDimens.PAGE_PADDING,
-              child: ListView(
-                shrinkWrap: true,
-                padding: sXPadding,
-                children: [
-                  Container(
-                    child: Text(
-                      "orbit you like to use our platform?",
+          ),
+          Image.asset(
+            logo_image,
+            height: 100,
+            width: 100,
+          ),
+          lHeightSpan,
+          Padding(
+            padding: AppDimens.PAGE_PADDING,
+            child: ListView(
+              shrinkWrap: true,
+              padding: sXPadding,
+              children: [
+                Container(
+                  child: Text(
+                    "orbit you like to use our platform?",
+                    style:
+                        TextStyle(fontSize: AppDimens.HEADLINE_FONT_SIZE_SMALL),
+                  ),
+                ),
+                mHeightSpan,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: model.role == "user"
+                            ? PRIMARY_COLOR
+                            : INPUT_BORDER_COLOR),
+                    borderRadius: AppDimens.INPUT_BORDER_RADIUS,
+                    color: Colors.white,
+                  ),
+                  child: RadioListTile<String>(
+                    title: Text(
+                      'I want to browse local stores.',
                       style: TextStyle(
-                          fontSize: AppDimens.HEADLINE_FONT_SIZE_SMALL),
-                    ),
-                  ),
-                  mHeightSpan,
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: model.role == "user"
-                              ? PRIMARY_COLOR
-                              : INPUT_BORDER_COLOR),
-                      borderRadius: AppDimens.INPUT_BORDER_RADIUS,
-                      color: Colors.white,
-                    ),
-                    child: RadioListTile<String>(
-                      title: Text(
-                        'I want to browse local stores.',
-                        style: TextStyle(
-                          color: model.role == "user" ? PRIMARY_COLOR : null,
-                        ),
+                        color: model.role == "user" ? PRIMARY_COLOR : null,
                       ),
-                      value: "user",
-                      groupValue: model.role,
-                      onChanged: model.onRoleChanged,
                     ),
+                    value: "user",
+                    groupValue: model.role,
+                    onChanged: model.onRoleChanged,
                   ),
-                  mHeightSpan,
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: model.role == "vendor"
-                              ? PRIMARY_COLOR
-                              : INPUT_BORDER_COLOR),
-                      borderRadius: AppDimens.INPUT_BORDER_RADIUS,
-                      color: Colors.white,
-                    ),
-                    child: RadioListTile<String>(
-                      title: Text(
-                        'I want to register my store.',
-                        style: TextStyle(
-                          color: model.role == "vendor" ? PRIMARY_COLOR : null,
-                        ),
+                ),
+                mHeightSpan,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: model.role == "vendor"
+                            ? PRIMARY_COLOR
+                            : INPUT_BORDER_COLOR),
+                    borderRadius: AppDimens.INPUT_BORDER_RADIUS,
+                    color: Colors.white,
+                  ),
+                  child: RadioListTile<String>(
+                    title: Text(
+                      'I want to register my store.',
+                      style: TextStyle(
+                        color: model.role == "vendor" ? PRIMARY_COLOR : null,
                       ),
-                      value: "vendor",
-                      groupValue: model.role,
-                      onChanged: model.onRoleChanged,
-                      activeColor: PRIMARY_COLOR,
                     ),
+                    value: "vendor",
+                    groupValue: model.role,
+                    onChanged: model.onRoleChanged,
+                    activeColor: PRIMARY_COLOR,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.15,
-                  ),
-                  KButton(
-                    onPressed: model.onButtonClick,
-                    child: Text("Continue"),
-                    size: ButtonSize.LARGE,
-                  ),
-                  mHeightSpan,
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                ),
+                KButton(
+                  onPressed: model.onButtonClick,
+                  child: Text("Continue"),
+                  size: ButtonSize.LARGE,
+                ),
+                mHeightSpan,
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

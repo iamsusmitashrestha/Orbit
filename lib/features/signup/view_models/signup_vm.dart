@@ -31,7 +31,6 @@ class SignupViewModel extends BaseViewModel {
           'phoneNumber': phoneNumber,
         },
       );
-      setBusy(false);
 
       _snackbarService.showSnackbar(
         message: response.data['message'],
@@ -40,7 +39,10 @@ class SignupViewModel extends BaseViewModel {
       Future.delayed(const Duration(seconds: 1), () {
         _navigationService.replaceWith(Routes.verifyCodeViewRoute);
       });
+      setBusy(false);
     } on DioError catch (e) {
+      setBusy(false);
+
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");

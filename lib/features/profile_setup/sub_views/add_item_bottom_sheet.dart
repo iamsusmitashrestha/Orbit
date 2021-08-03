@@ -32,7 +32,7 @@ class AddItemBottomSheetView extends StatelessWidget {
           ),
           sHeightSpan,
           KTextFormField(
-            label: "Price",
+            label: "Price (Rs.)",
             keyboardType: TextInputType.number,
             onChanged: model.onPriceChanged,
           ),

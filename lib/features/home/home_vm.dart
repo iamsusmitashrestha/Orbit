@@ -47,9 +47,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getCurrentUserLocation() async {
-    setBusy(true);
     clearErrors();
     try {
+      setBusy(true);
+
       locData = await Location().getLocation();
     } catch (e) {
       setError("Unable to get Location");
@@ -69,6 +70,8 @@ class HomeViewModel extends BaseViewModel {
       selectedCategory = categoryResponse[0];
       setBusy(false);
     } on DioError catch (e) {
+      setBusy(false);
+
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -80,6 +83,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   search() async {
+    storeResponse = [];
     setBusy(true);
     try {
       var response = await _dio.get("/store/search?title=$searchTitle");
@@ -88,6 +92,8 @@ class HomeViewModel extends BaseViewModel {
           .toList();
       setBusy(false);
     } on DioError catch (e) {
+      setBusy(false);
+
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -99,6 +105,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   getStoreByDistance() async {
+    searchedStoreResponse = [];
     setBusy(true);
 
     try {
@@ -107,15 +114,21 @@ class HomeViewModel extends BaseViewModel {
           currentLocation.longitude,
           currentLocation.latitude
         ],
-        'distancewithin': distance,
+        'distancewithin': distance * 1000,
         'categoryGiven': selectedCategory?.value,
       });
+      print(selectedCategory?.value);
+      print(distance);
+      print(currentLocation.longitude);
+      print(currentLocation.latitude);
 
       storeResponse = response.data
           .map<StoreModel>((item) => StoreModel.fromJson(item))
           .toList();
       setBusy(false);
     } on DioError catch (e) {
+      setBusy(false);
+
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -126,7 +139,12 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  goToProfileView() {
-    _navigationService.navigateTo(Routes.profileViewRoute);
+  goToProfileView(StoreModel store) {
+    _navigationService.navigateTo(Routes.profileViewRoute, arguments: store);
+  }
+
+  goToSearchedProfileView(SearchedStoreModel store) {
+    _navigationService.navigateTo(Routes.searchedProfileViewRoute,
+        arguments: store);
   }
 }

@@ -33,12 +33,14 @@ class PaymentMethodView extends StatelessWidget {
           ),
           elevation: 0.0,
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: PRIMARY_COLOR,
-          onPressed: () {},
-          icon: Icon(Icons.save),
-          label: Text("Save"),
-        ),
+        floatingActionButton: model.isBusy
+            ? KBusy()
+            : FloatingActionButton.extended(
+                backgroundColor: PRIMARY_COLOR,
+                onPressed: model.addPayment,
+                icon: Icon(Icons.save),
+                label: Text("Save"),
+              ),
         body: ListView(
           padding: AppDimens.PAGE_PADDING,
           children: [
@@ -67,7 +69,10 @@ class PaymentMethodView extends StatelessWidget {
                           children: [
                             PaymentCard(
                               img: paymentOption.image,
-                              onpressed: () {},
+                              isPaymentSelected: model.selectedPayments
+                                  .contains(paymentOption),
+                              onpressed: () =>
+                                  model.selectPayment(paymentOption),
                             ),
                             Text(paymentOption.value),
                           ],
@@ -75,48 +80,6 @@ class PaymentMethodView extends StatelessWidget {
                       },
                     ),
                   ),
-
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     PaymentCard(
-            //       img: "esewa.png",
-            //       onpressed: () {},
-            //     ),
-            //     PaymentCard(
-            //       img: "khalti.png",
-            //       onpressed: () {},
-            //     ),
-            //   ],
-            // ),
-            // mHeightSpan,
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     PaymentCard(
-            //       img: "fonepay.png",
-            //       onpressed: () {},
-            //     ),
-            //     PaymentCard(
-            //       img: "imepay.png",
-            //       onpressed: () {},
-            //     ),
-            //   ],
-            // ),
-            // mHeightSpan,
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     PaymentCard(
-            //       img: "prabhupay.png",
-            //       onpressed: () {},
-            //     ),
-            //     PaymentCard(
-            //       img: "cash.png",
-            //       onpressed: () {},
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

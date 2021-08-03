@@ -17,6 +17,7 @@ class UserDataService {
   LatLng? location;
   String? hints;
 
-  // String? storeStatus;
+  String? storeStatus;
   List<String> categories = [];
+  List<String> paymentMethod = [];
 }

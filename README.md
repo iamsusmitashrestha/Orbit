@@ -3,22 +3,27 @@
 - splash screen
 - role selection view
 - Signin/Signup
-- Logout
 - Store Profile Setup Views(
     Map,
     Categories,
     Upload logo,
-    
+    Add Payment method
+    Update Store Details,
+    Update location,
+    Add inventory of the store
     )
 - Store Home View,
-- Categories API call
-- Upload logo API call
-- Started developing Store Profile views(
-    inventory views completed
-    Store Details
-    Update location
-    Payment Methods
-    )
+- Delete store
+- Logout
+
+
 
 # Dipesh Baral
-- User Home Page Ui
+- User Home Page
+- Profile View of the store seen by the user(
+    Search by item,
+    find store by distance,
+    View inventory of the store,
+    View location,
+    View store details
+)

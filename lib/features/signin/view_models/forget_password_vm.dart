@@ -21,4 +21,10 @@ class ForgetPasswordViewModel extends BaseViewModel {
   onEmailChanged(value) {
     email = value;
   }
+
+  onPasswordChanged(value) {
+    password = value;
+  }
+
+  resetPassword() {}
 }

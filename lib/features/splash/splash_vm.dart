@@ -38,6 +38,7 @@ class SplashViewModel extends BaseViewModel {
   getData() async {
     setBusy(true);
     try {
+      print(_localStorageService.read("token"));
       var response = await _dio.get("/store/myStore");
       if (response.data.containsKey("store")) {
         _userDataService.storeId = response.data['store']['_id'];
@@ -68,9 +69,13 @@ class SplashViewModel extends BaseViewModel {
           _userDataService.deliveryOption =
               response.data['store']['deliveryOption'];
         }
-        // if (response.data['store']['storeStatus'] != null) {
-        //   _userDataService.storeStatus = response.data['store']['storeStatus'];
-        // }
+        if (response.data['store']['storeStatus'] != null) {
+          _userDataService.storeStatus = response.data['store']['storeStatus'];
+        }
+        if (response.data['store']['paymentMethod'] != null) {
+          _userDataService.paymentMethod =
+              List<String>.from(response.data['store']['paymentMethod']);
+        }
 
         var categoryResponse = await _dio
             .get("/storecat/${response.data['store']['_id']}/getCategory");

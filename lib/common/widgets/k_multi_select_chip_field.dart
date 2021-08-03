@@ -47,7 +47,6 @@ class _KMultiSelectChipFieldState<T> extends State<KMultiSelectChipField<T>> {
         selectedList.removeAt(selectedIndex);
       });
     }
-
     widget.onSelectionChanged(selectedList);
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
-import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_chip.dart';
 import 'package:orbit/common/widgets/k_icon_button.dart';
@@ -177,10 +176,12 @@ class StoreDetailsView extends StatelessWidget {
                         maxLength: 250,
                         onChanged: model.onHintsChanged,
                         decoration: InputDecoration(
-                            labelText: 'Hints to your store location',
-                            counterText: "",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4.0))),
+                          labelText: 'Hints to your store location',
+                          counterText: "",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                        ),
                       ),
                       lHeightSpan,
                       KButton(
@@ -189,7 +190,7 @@ class StoreDetailsView extends StatelessWidget {
                         isBusy: model.isBusy,
                       )
                     ],
-                  )
+                  ),
               ],
             ),
           ),

@@ -17,7 +17,7 @@ class RoleSelectionViewModel extends BaseViewModel {
 
   void onButtonClick() {
     role == "user"
-        ? _navigationService.navigateTo(Routes.homeViewRoute)
-        : _navigationService.navigateTo(Routes.signinViewRoute);
+        ? _navigationService.replaceWith(Routes.homeViewRoute)
+        : _navigationService.replaceWith(Routes.signinViewRoute);
   }
 }

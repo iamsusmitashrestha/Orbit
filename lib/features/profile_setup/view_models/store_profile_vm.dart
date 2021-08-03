@@ -12,11 +12,12 @@ class StoreProfileViewModel extends BaseViewModel {
 
   final NavigationService navigationService;
   final UserDataService userDataService;
+  final SnackbarService _snackbarService;
   final LocalStorageService localStorageService;
   final Dio _dio;
 
   StoreProfileViewModel(this.navigationService, this.userDataService, this._dio,
-      this.localStorageService);
+      this.localStorageService, this._snackbarService);
 
   void initialise() {}
 
@@ -34,16 +35,40 @@ class StoreProfileViewModel extends BaseViewModel {
         data: {},
       );
       storeStatusSelection();
-      print(response.data['message']);
       setBusy(false);
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   logOut() {
     localStorageService.clear('token');
     navigationService.clearStackAndShow(Routes.splashViewRoute);
+  }
+
+  deleteStore() async {
+    try {
+      setBusy(true);
+      var response = await _dio.delete("/store/deleteStore");
+      _snackbarService.showSnackbar(
+        message: response.data['message'],
+        duration: Duration(seconds: 1),
+      );
+      localStorageService.clear('token');
+      navigationService.replaceWith(Routes.splashViewRoute);
+
+      setBusy(false);
+    } on DioError catch (e) {
+      setBusy(false);
+
+      if (e.type == DioErrorType.other) {
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        if (e.response != null) {
+          String message = e.response?.data['message'];
+          _snackbarService.showSnackbar(message: message);
+        }
+      }
+    }
   }
 
   goToHomeView() {
