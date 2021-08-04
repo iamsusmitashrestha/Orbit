@@ -30,13 +30,25 @@ class StoreProfileViewModel extends BaseViewModel {
   postStoreStatus() async {
     try {
       setBusy(true);
+      storeStatusSelection();
+
       var response = await _dio.post(
         '/store/${userDataService.storeId}/storeStatus',
-        data: {},
       );
-      storeStatusSelection();
       setBusy(false);
-    } catch (e) {}
+    } on DioError catch (e) {
+      setBusy(false);
+
+      if (e.type == DioErrorType.other) {
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        if (e.response != null) {
+          String message = e.response?.data['message'];
+          _snackbarService.showSnackbar(message: message);
+        }
+      }
+    }
   }
 
   logOut() {
@@ -47,11 +59,11 @@ class StoreProfileViewModel extends BaseViewModel {
   deleteStore() async {
     try {
       setBusy(true);
-      var response = await _dio.delete("/store/deleteStore");
-      _snackbarService.showSnackbar(
-        message: response.data['message'],
-        duration: Duration(seconds: 1),
-      );
+      var response = await _dio.delete("/user/deleteuser");
+      // _snackbarService.showSnackbar(
+      //   message: response.data['message'],
+      //   duration: Duration(seconds: 1),
+      // );
       localStorageService.clear('token');
       navigationService.replaceWith(Routes.splashViewRoute);
 

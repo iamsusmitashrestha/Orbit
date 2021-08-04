@@ -40,6 +40,8 @@ class CategoryViewModel extends BaseViewModel {
           .toList();
       setBusy(false);
     } on DioError catch (e) {
+      setBusy(false);
+
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -60,16 +62,26 @@ class CategoryViewModel extends BaseViewModel {
           .post("/storecat/${_userDataService.storeId}/category", data: {
         'category': storeCategories,
       });
-      _navigationService.navigateTo(Routes.uploadLogoViewRoute);
+      setBusy(false);
+
+      print(storeCategories);
+      _snackbarService.showSnackbar(
+        message: response.data['message'],
+        duration: Duration(seconds: 1),
+      );
+      Future.delayed(const Duration(seconds: 2), () {
+        _navigationService.replaceWith(Routes.uploadLogoViewRoute);
+      });
     } on DioError catch (e) {
+      setBusy(false);
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
-        String message = e.response!.data['message'];
+        // String message = "";
+        String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
-    setBusy(false);
   }
 }

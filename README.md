@@ -15,7 +15,8 @@
 - Store Home View,
 - Delete store
 - Logout
-
+- Search by item API call,
+- Find Store By distace API call,
 
 
 # Dipesh Baral

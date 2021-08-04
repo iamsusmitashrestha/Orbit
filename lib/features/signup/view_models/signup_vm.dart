@@ -10,7 +10,7 @@ class SignupViewModel extends BaseViewModel {
   String email = "";
   String password = "";
   String confirmPassword = '';
-  num phoneNumber = 0;
+  String phoneNumber = "";
 
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
@@ -28,7 +28,7 @@ class SignupViewModel extends BaseViewModel {
           'email': email,
           'password': password,
           'confirmPassword': confirmPassword,
-          'phoneNumber': phoneNumber,
+          'contactNumber': phoneNumber,
         },
       );
 

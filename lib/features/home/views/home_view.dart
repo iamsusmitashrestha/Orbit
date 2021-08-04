@@ -143,6 +143,8 @@ class HomeView extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   store.storedetails!.storeName,

@@ -38,10 +38,11 @@ class SplashViewModel extends BaseViewModel {
   getData() async {
     setBusy(true);
     try {
-      print(_localStorageService.read("token"));
+      // print(_localStorageService.read("token"));
       var response = await _dio.get("/store/myStore");
       if (response.data.containsKey("store")) {
         _userDataService.storeId = response.data['store']['_id'];
+        print(_userDataService.storeId);
         _userDataService.userId = response.data['store']['owner'];
         _userDataService.storeName = response.data['store']['storeName'];
         _userDataService.phoneNumber = response.data['phoneNumber'];
@@ -95,6 +96,11 @@ class SplashViewModel extends BaseViewModel {
       } else {
         _navigationService.replaceWith(Routes.profileSetupViewRoute);
       }
+      // _snackbarService.showSnackbar(
+      //   message: response.data['message'],
+      //   duration: Duration(seconds: 1),
+      // );
+      setBusy(false);
     } on DioError catch (e) {
       setBusy(false);
       if (e.type == DioErrorType.other) {

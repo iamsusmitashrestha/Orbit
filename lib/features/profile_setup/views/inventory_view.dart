@@ -82,7 +82,7 @@ class InventoryView extends StatelessWidget {
                                     ),
                                   ),
                                   xsHeightSpan,
-                                  Text(item.price.toString()),
+                                  Text("Rs. ${item.price}".toString()),
                                 ],
                               ),
                               elWidthSpan,

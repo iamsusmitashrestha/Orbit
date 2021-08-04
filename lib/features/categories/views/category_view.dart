@@ -44,12 +44,14 @@ class CategoryView extends StatelessWidget {
                       ),
                     ],
                   ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.25),
-            KButton(
-              child: Text("Save"),
-              onPressed: model.onCategorySave,
-              isBusy: model.isBusy,
-            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+            model.isBusy
+                ? KBusy()
+                : KButton(
+                    child: Text("Save"),
+                    onPressed: model.onCategorySave,
+                    isBusy: model.isBusy,
+                  ),
             lHeightSpan,
           ],
         ),
