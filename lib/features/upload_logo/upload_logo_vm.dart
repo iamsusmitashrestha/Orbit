@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as DIO;
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
@@ -14,13 +14,13 @@ class UploadLogoViewModel extends BaseViewModel {
 
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
-  final Dio _dio;
+  final DIO.Dio _dio;
   final UserDataService _userDataService;
   UploadLogoViewModel(this._navigationService, this._dio, this._userDataService,
       this._snackbarService);
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(
+    final pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
     );
 
@@ -33,8 +33,8 @@ class UploadLogoViewModel extends BaseViewModel {
     try {
       if (image != null) {
         String filename = image!.path.split("/").last;
-        FormData formData = FormData.fromMap({
-          'logo': await MultipartFile.fromFile(
+        DIO.FormData formData = DIO.FormData.fromMap({
+          'logo': await DIO.MultipartFile.fromFile(
             image!.path,
             filename: filename,
           ),
@@ -52,11 +52,11 @@ class UploadLogoViewModel extends BaseViewModel {
         );
         goToStoreProfile();
       }
-    } on DioError catch (e) {
-      if (e.type == DioErrorType.other) {
+    } on DIO.DioError catch (e) {
+      if (e.type == DIO.DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
-      } else if (e.type == DioErrorType.response) {
+      } else if (e.type == DIO.DioErrorType.response) {
         String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message);
       }

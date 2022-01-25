@@ -5,10 +5,11 @@ import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/core/di/injection.dart';
+import 'package:orbit/features/home/views/cart_view.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
-import '../home_vm.dart';
+import '../view_models/home_vm.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -17,39 +18,53 @@ class HomeView extends StatelessWidget {
       viewModelBuilder: () => locator<HomeViewModel>(),
       onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(400),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding:
-                      EdgeInsets.only(left: 12, right: 10, bottom: 12, top: 28),
-                  child: TextField(
-                    onChanged: model.onSearchChanged,
-                    decoration: InputDecoration(
-                      hintText: 'Search products.',
-                      prefixIcon: Icon(Icons.search),
-                    ),
-                  ),
-                ),
+        appBar: AppBar(
+          actions: [
+            Text(
+              "(${model.cart.length})",
+              style: TextStyle(color: Colors.white),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                size: 30,
+                color: Colors.white,
               ),
-              model.isBusy
-                  ? KBusy()
-                  : Expanded(
-                      child: KButton(
-                        onPressed: model.search,
-                        child: Text("Search"),
-                        isBusy: model.isBusy,
-                      ),
-                    )
-            ],
-          ),
+              onPressed: () {},
+            ),
+          ],
+          backgroundColor: PRIMARY_COLOR,
         ),
         body: ListView(
           padding: mPadding,
           children: [
+            Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        left: 12, right: 10, bottom: 12, top: 28),
+                    child: TextField(
+                      onChanged: model.onSearchChanged,
+                      decoration: InputDecoration(
+                        hintText: 'Search products.',
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                ),
+                model.isBusy
+                    ? KBusy()
+                    : Expanded(
+                        child: KButton(
+                          onPressed: model.search,
+                          child: Text("Search"),
+                          isBusy: model.isBusy,
+                        ),
+                      )
+              ],
+            ),
             Text(
               "Categories",
               style: TextStyle(

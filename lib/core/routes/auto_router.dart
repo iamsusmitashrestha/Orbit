@@ -3,6 +3,7 @@ import 'package:orbit/features/categories/views/category_view.dart';
 import 'package:orbit/features/home/views/home_view.dart';
 import 'package:orbit/features/profile/views/profile_view.dart';
 import 'package:orbit/features/profile/views/searched_profile_view.dart';
+import 'package:orbit/features/profile_setup/views/add_item_view.dart';
 import 'package:orbit/features/profile_setup/views/map_view.dart';
 import 'package:orbit/features/profile_setup/views/profile_setup_view.dart';
 import 'package:orbit/features/profile_setup/views/store_profile_view.dart';
@@ -59,6 +60,9 @@ import 'package:orbit/features/upload_logo/upload_logo_view.dart';
     ),
     MaterialRoute(
       page: InventoryView,
+    ),
+    MaterialRoute(
+      page: AddItemView,
     ),
     MaterialRoute(
       page: StoreDetailsView,

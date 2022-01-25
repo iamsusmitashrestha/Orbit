@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:orbit/core/routes/auto_router.gr.dart';
 import 'package:orbit/core/services/user_data_service.dart';
 import 'package:orbit/features/profile_setup/models/items.dart';
 import 'package:orbit/features/profile_setup/sub_views/delete_item_bottom_sheet.dart';
-import '../sub_views/add_item_bottom_sheet.dart';
 import '../../../core/utils/show_custom_bottom_sheet.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -25,12 +25,7 @@ class InventoryViewModel extends BaseViewModel {
   }
 
   addItem() async {
-    SheetResponse? response = await showCustomBottomSheet(
-      widget: AddItemBottomSheetView(),
-    );
-    if (response != null && response.confirmed) {
-      getItem();
-    }
+    _navigationService.navigateTo(Routes.addItemViewRoute);
   }
 
   getItem() async {

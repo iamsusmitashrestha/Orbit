@@ -4,43 +4,40 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:dio/dio.dart' as _i6;
+import 'package:dio/dio.dart' as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:stacked_services/stacked_services.dart' as _i4;
+import 'package:stacked_services/stacked_services.dart' as _i3;
 
-import '../../common/dio_error.dart' as _i16;
-import '../../features/add_item/view_models/add_item_vm.dart' as _i3;
-import '../../features/categories/view_models/category_vm.dart' as _i14;
-import '../../features/home/home_vm.dart' as _i18;
-import '../../features/profile/view_models/profile_vm.dart' as _i23;
-import '../../features/profile/view_models/searched_profile_vm.dart' as _i24;
+import '../../features/categories/view_models/category_vm.dart' as _i13;
+import '../../features/home/view_models/home_vm.dart' as _i16;
+import '../../features/profile/view_models/profile_vm.dart' as _i21;
+import '../../features/profile/view_models/searched_profile_vm.dart' as _i22;
 import '../../features/profile_setup/sub_views/delete_item_bottom_sheet.dart'
-    as _i5;
-import '../../features/profile_setup/view_models/add_item_bottom_sheet_vm.dart'
-    as _i13;
+    as _i4;
+import '../../features/profile_setup/view_models/add_item_vm.dart' as _i12;
 import '../../features/profile_setup/view_models/delete_item_view_model.dart'
-    as _i15;
-import '../../features/profile_setup/view_models/inventory_vm.dart' as _i19;
-import '../../features/profile_setup/view_models/map_vm.dart' as _i20;
+    as _i14;
+import '../../features/profile_setup/view_models/inventory_vm.dart' as _i17;
+import '../../features/profile_setup/view_models/map_vm.dart' as _i18;
 import '../../features/profile_setup/view_models/payment_methods_vm.dart'
-    as _i21;
-import '../../features/profile_setup/view_models/profile_setup_vm.dart' as _i22;
-import '../../features/profile_setup/view_models/settings_vm.dart' as _i9;
-import '../../features/profile_setup/view_models/store_details_vm.dart' as _i28;
-import '../../features/profile_setup/view_models/store_profile_vm.dart' as _i29;
-import '../../features/role/view_models/role_selection_vm.dart' as _i8;
-import '../../features/signin/view_models/forget_password_vm.dart' as _i17;
-import '../../features/signin/view_models/signin_vm.dart' as _i25;
-import '../../features/signup/view_models/signup_vm.dart' as _i26;
-import '../../features/signup/view_models/verify_code_vm.dart' as _i12;
-import '../../features/splash/splash_vm.dart' as _i27;
-import '../../features/upload_logo/upload_logo_vm.dart' as _i30;
-import '../services/local_storage_service.dart' as _i7;
-import '../services/toast_service.dart' as _i10;
-import '../services/user_data_service.dart' as _i11;
+    as _i19;
+import '../../features/profile_setup/view_models/profile_setup_vm.dart' as _i20;
+import '../../features/profile_setup/view_models/settings_vm.dart' as _i8;
+import '../../features/profile_setup/view_models/store_details_vm.dart' as _i26;
+import '../../features/profile_setup/view_models/store_profile_vm.dart' as _i27;
+import '../../features/role/view_models/role_selection_vm.dart' as _i7;
+import '../../features/signin/view_models/forget_password_vm.dart' as _i15;
+import '../../features/signin/view_models/signin_vm.dart' as _i23;
+import '../../features/signup/view_models/signup_vm.dart' as _i24;
+import '../../features/signup/view_models/verify_code_vm.dart' as _i11;
+import '../../features/splash/splash_vm.dart' as _i25;
+import '../../features/upload_logo/upload_logo_vm.dart' as _i28;
+import '../services/local_storage_service.dart' as _i6;
+import '../services/toast_service.dart' as _i9;
+import '../services/user_data_service.dart' as _i10;
 import 'third_party_modules.dart'
-    as _i31; // ignore_for_file: unnecessary_lambdas
+    as _i29; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -48,118 +45,115 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
     {String? environment, _i2.EnvironmentFilter? environmentFilter}) {
   final gh = _i2.GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  gh.factory<_i3.AddItemViewModel>(() => _i3.AddItemViewModel());
-  gh.lazySingleton<_i4.BottomSheetService>(
+  gh.lazySingleton<_i3.BottomSheetService>(
       () => thirdPartyServicesModule.bottomSheetService);
-  gh.factory<_i5.DeleteItemBottomSheetView>(
-      () => _i5.DeleteItemBottomSheetView());
-  gh.lazySingleton<_i4.DialogService>(
+  gh.factory<_i4.DeleteItemBottomSheetView>(
+      () => _i4.DeleteItemBottomSheetView());
+  gh.lazySingleton<_i3.DialogService>(
       () => thirdPartyServicesModule.dialogService);
-  gh.factory<_i6.Dio>(() => thirdPartyServicesModule.dio);
-  gh.factory<_i7.LocalStorageService>(() => _i7.LocalStorageService());
-  gh.lazySingleton<_i4.NavigationService>(
+  gh.factory<_i5.Dio>(() => thirdPartyServicesModule.dio);
+  gh.factory<_i6.LocalStorageService>(() => _i6.LocalStorageService());
+  gh.lazySingleton<_i3.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  gh.factory<_i8.RoleSelectionViewModel>(
-      () => _i8.RoleSelectionViewModel(get<_i4.NavigationService>()));
-  gh.factory<_i9.SettingsViewModel>(() => _i9.SettingsViewModel());
-  gh.lazySingleton<_i4.SnackbarService>(
+  gh.factory<_i7.RoleSelectionViewModel>(
+      () => _i7.RoleSelectionViewModel(get<_i3.NavigationService>()));
+  gh.factory<_i8.SettingsViewModel>(() => _i8.SettingsViewModel());
+  gh.lazySingleton<_i3.SnackbarService>(
       () => thirdPartyServicesModule.snackBarService);
-  gh.lazySingleton<_i10.ToastService>(() => _i10.ToastService());
-  gh.lazySingleton<_i11.UserDataService>(() => _i11.UserDataService());
-  gh.factory<_i12.VerifyCodeViewModel>(() => _i12.VerifyCodeViewModel(
-      get<_i6.Dio>(),
-      get<_i4.NavigationService>(),
-      get<_i4.SnackbarService>()));
-  gh.factory<_i13.AddItemBottomSheetViewModel>(() =>
-      _i13.AddItemBottomSheetViewModel(
-          get<_i6.Dio>(),
-          get<_i4.SnackbarService>(),
-          get<_i4.NavigationService>(),
-          get<_i11.UserDataService>()));
-  gh.factory<_i14.CategoryViewModel>(() => _i14.CategoryViewModel(
-      get<_i4.NavigationService>(),
-      get<_i6.Dio>(),
-      get<_i4.SnackbarService>(),
-      get<_i11.UserDataService>()));
-  gh.factory<_i15.DeleteItemBottomSheetViewModel>(
-      () => _i15.DeleteItemBottomSheetViewModel(get<_i4.NavigationService>()));
-  gh.lazySingleton<_i16.DioErrorService>(
-      () => _i16.DioErrorService(get<_i6.Dio>(), get<_i4.SnackbarService>()));
-  gh.factory<_i17.ForgetPasswordViewModel>(() => _i17.ForgetPasswordViewModel(
-      navigationService: get<_i4.NavigationService>(),
-      snackbarService: get<_i4.SnackbarService>(),
-      dio: get<_i6.Dio>(),
-      localStorageService: get<_i7.LocalStorageService>()));
-  gh.factory<_i18.HomeViewModel>(() => _i18.HomeViewModel(
-      get<_i6.Dio>(),
-      get<_i4.SnackbarService>(),
-      get<_i11.UserDataService>(),
-      get<_i4.NavigationService>()));
-  gh.factory<_i19.InventoryViewModel>(() => _i19.InventoryViewModel(
-      get<_i4.NavigationService>(),
-      get<_i6.Dio>(),
-      get<_i11.UserDataService>(),
-      get<_i4.SnackbarService>()));
-  gh.factory<_i20.MapViewModel>(
-      () => _i20.MapViewModel(get<_i4.NavigationService>()));
-  gh.factory<_i21.PaymentMethodViewModel>(() => _i21.PaymentMethodViewModel(
-      get<_i11.UserDataService>(), get<_i4.SnackbarService>(), get<_i6.Dio>()));
-  gh.factory<_i22.ProfileSetupViewModel>(() => _i22.ProfileSetupViewModel(
-      get<_i4.NavigationService>(),
-      get<_i4.SnackbarService>(),
-      get<_i6.Dio>(),
-      get<_i7.LocalStorageService>()));
-  gh.factory<_i23.ProfileViewModel>(() => _i23.ProfileViewModel(
-      get<_i6.Dio>(),
-      get<_i4.SnackbarService>(),
-      get<_i11.UserDataService>(),
-      get<_i4.NavigationService>()));
-  gh.factory<_i24.SearchedProfileViewModel>(() => _i24.SearchedProfileViewModel(
-      get<_i6.Dio>(),
-      get<_i4.SnackbarService>(),
-      get<_i11.UserDataService>(),
-      get<_i4.NavigationService>()));
-  gh.factory<_i25.SigninViewModel>(() => _i25.SigninViewModel(
-      navigationService: get<_i4.NavigationService>(),
-      snackbarService: get<_i4.SnackbarService>(),
-      dio: get<_i6.Dio>(),
-      localStorageService: get<_i7.LocalStorageService>()));
-  gh.factory<_i26.SignupViewModel>(() => _i26.SignupViewModel(
-      get<_i4.NavigationService>(),
-      get<_i4.SnackbarService>(),
-      get<_i6.Dio>()));
-  gh.factory<_i27.SplashViewModel>(() => _i27.SplashViewModel(
-      get<_i4.NavigationService>(),
-      get<_i6.Dio>(),
-      get<_i7.LocalStorageService>(),
-      get<_i11.UserDataService>(),
-      get<_i4.SnackbarService>()));
-  gh.factory<_i28.StoreDetailsViewModel>(() => _i28.StoreDetailsViewModel(
-      get<_i11.UserDataService>(),
-      get<_i4.NavigationService>(),
-      get<_i4.SnackbarService>(),
-      get<_i6.Dio>()));
-  gh.factory<_i29.StoreProfileViewModel>(() => _i29.StoreProfileViewModel(
-      get<_i4.NavigationService>(),
-      get<_i11.UserDataService>(),
-      get<_i6.Dio>(),
-      get<_i7.LocalStorageService>(),
-      get<_i4.SnackbarService>()));
-  gh.factory<_i30.UploadLogoViewModel>(() => _i30.UploadLogoViewModel(
-      get<_i4.NavigationService>(),
-      get<_i6.Dio>(),
-      get<_i11.UserDataService>(),
-      get<_i4.SnackbarService>()));
+  gh.lazySingleton<_i9.ToastService>(() => _i9.ToastService());
+  gh.lazySingleton<_i10.UserDataService>(() => _i10.UserDataService());
+  gh.factory<_i11.VerifyCodeViewModel>(() => _i11.VerifyCodeViewModel(
+      get<_i5.Dio>(),
+      get<_i3.NavigationService>(),
+      get<_i3.SnackbarService>()));
+  gh.factory<_i12.AddItemViewModel>(() => _i12.AddItemViewModel(
+      get<_i5.Dio>(),
+      get<_i3.SnackbarService>(),
+      get<_i3.NavigationService>(),
+      get<_i10.UserDataService>()));
+  gh.factory<_i13.CategoryViewModel>(() => _i13.CategoryViewModel(
+      get<_i3.NavigationService>(),
+      get<_i5.Dio>(),
+      get<_i3.SnackbarService>(),
+      get<_i10.UserDataService>(),
+      get<_i6.LocalStorageService>()));
+  gh.factory<_i14.DeleteItemBottomSheetViewModel>(
+      () => _i14.DeleteItemBottomSheetViewModel(get<_i3.NavigationService>()));
+  gh.factory<_i15.ForgetPasswordViewModel>(() => _i15.ForgetPasswordViewModel(
+      navigationService: get<_i3.NavigationService>(),
+      snackbarService: get<_i3.SnackbarService>(),
+      dio: get<_i5.Dio>(),
+      localStorageService: get<_i6.LocalStorageService>()));
+  gh.factory<_i16.HomeViewModel>(() => _i16.HomeViewModel(
+      get<_i5.Dio>(),
+      get<_i3.SnackbarService>(),
+      get<_i10.UserDataService>(),
+      get<_i3.NavigationService>()));
+  gh.factory<_i17.InventoryViewModel>(() => _i17.InventoryViewModel(
+      get<_i3.NavigationService>(),
+      get<_i5.Dio>(),
+      get<_i10.UserDataService>(),
+      get<_i3.SnackbarService>()));
+  gh.factory<_i18.MapViewModel>(
+      () => _i18.MapViewModel(get<_i3.NavigationService>()));
+  gh.factory<_i19.PaymentMethodViewModel>(() => _i19.PaymentMethodViewModel(
+      get<_i10.UserDataService>(), get<_i3.SnackbarService>(), get<_i5.Dio>()));
+  gh.factory<_i20.ProfileSetupViewModel>(() => _i20.ProfileSetupViewModel(
+      get<_i3.NavigationService>(),
+      get<_i3.SnackbarService>(),
+      get<_i5.Dio>(),
+      get<_i6.LocalStorageService>()));
+  gh.factory<_i21.ProfileViewModel>(() => _i21.ProfileViewModel(
+      get<_i5.Dio>(),
+      get<_i3.SnackbarService>(),
+      get<_i10.UserDataService>(),
+      get<_i3.NavigationService>()));
+  gh.factory<_i22.SearchedProfileViewModel>(() => _i22.SearchedProfileViewModel(
+      get<_i5.Dio>(),
+      get<_i3.SnackbarService>(),
+      get<_i10.UserDataService>(),
+      get<_i3.NavigationService>()));
+  gh.factory<_i23.SigninViewModel>(() => _i23.SigninViewModel(
+      navigationService: get<_i3.NavigationService>(),
+      snackbarService: get<_i3.SnackbarService>(),
+      dio: get<_i5.Dio>(),
+      localStorageService: get<_i6.LocalStorageService>()));
+  gh.factory<_i24.SignupViewModel>(() => _i24.SignupViewModel(
+      get<_i3.NavigationService>(),
+      get<_i3.SnackbarService>(),
+      get<_i5.Dio>()));
+  gh.factory<_i25.SplashViewModel>(() => _i25.SplashViewModel(
+      get<_i3.NavigationService>(),
+      get<_i5.Dio>(),
+      get<_i6.LocalStorageService>(),
+      get<_i10.UserDataService>(),
+      get<_i3.SnackbarService>()));
+  gh.factory<_i26.StoreDetailsViewModel>(() => _i26.StoreDetailsViewModel(
+      get<_i10.UserDataService>(),
+      get<_i3.NavigationService>(),
+      get<_i3.SnackbarService>(),
+      get<_i5.Dio>()));
+  gh.factory<_i27.StoreProfileViewModel>(() => _i27.StoreProfileViewModel(
+      get<_i3.NavigationService>(),
+      get<_i10.UserDataService>(),
+      get<_i5.Dio>(),
+      get<_i6.LocalStorageService>(),
+      get<_i3.SnackbarService>()));
+  gh.factory<_i28.UploadLogoViewModel>(() => _i28.UploadLogoViewModel(
+      get<_i3.NavigationService>(),
+      get<_i5.Dio>(),
+      get<_i10.UserDataService>(),
+      get<_i3.SnackbarService>()));
   return get;
 }
 
-class _$ThirdPartyServicesModule extends _i31.ThirdPartyServicesModule {
+class _$ThirdPartyServicesModule extends _i29.ThirdPartyServicesModule {
   @override
-  _i4.BottomSheetService get bottomSheetService => _i4.BottomSheetService();
+  _i3.BottomSheetService get bottomSheetService => _i3.BottomSheetService();
   @override
-  _i4.DialogService get dialogService => _i4.DialogService();
+  _i3.DialogService get dialogService => _i3.DialogService();
   @override
-  _i4.NavigationService get navigationService => _i4.NavigationService();
+  _i3.NavigationService get navigationService => _i3.NavigationService();
   @override
-  _i4.SnackbarService get snackBarService => _i4.SnackbarService();
+  _i3.SnackbarService get snackBarService => _i3.SnackbarService();
 }

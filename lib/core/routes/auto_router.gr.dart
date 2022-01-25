@@ -13,6 +13,7 @@ import '../../features/categories/views/category_view.dart';
 import '../../features/home/views/home_view.dart';
 import '../../features/profile/views/profile_view.dart';
 import '../../features/profile/views/searched_profile_view.dart';
+import '../../features/profile_setup/views/add_item_view.dart';
 import '../../features/profile_setup/views/inventory_view.dart';
 import '../../features/profile_setup/views/map_view.dart';
 import '../../features/profile_setup/views/payment_method_view.dart';
@@ -42,6 +43,7 @@ class Routes {
   static const String uploadLogoViewRoute = '/upload-logo-view';
   static const String storeProfileViewRoute = '/store-profile-view';
   static const String inventoryViewRoute = '/inventory-view';
+  static const String addItemViewRoute = '/add-item-view';
   static const String storeDetailsViewRoute = '/store-details-view';
   static const String paymentMethodViewRoute = '/payment-method-view';
   static const String settingsViewRoute = '/settings-view';
@@ -61,6 +63,7 @@ class Routes {
     uploadLogoViewRoute,
     storeProfileViewRoute,
     inventoryViewRoute,
+    addItemViewRoute,
     storeDetailsViewRoute,
     paymentMethodViewRoute,
     settingsViewRoute,
@@ -86,6 +89,7 @@ class AutoRouter extends RouterBase {
     RouteDef(Routes.uploadLogoViewRoute, page: UploadLogoView),
     RouteDef(Routes.storeProfileViewRoute, page: StoreProfileView),
     RouteDef(Routes.inventoryViewRoute, page: InventoryView),
+    RouteDef(Routes.addItemViewRoute, page: AddItemView),
     RouteDef(Routes.storeDetailsViewRoute, page: StoreDetailsView),
     RouteDef(Routes.paymentMethodViewRoute, page: PaymentMethodView),
     RouteDef(Routes.settingsViewRoute, page: SettingsView),
@@ -194,6 +198,14 @@ class AutoRouter extends RouterBase {
     InventoryView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => InventoryView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    AddItemView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddItemView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

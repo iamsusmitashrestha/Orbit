@@ -6,6 +6,7 @@ import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/profile_setup/models/items.dart';
 import 'package:orbit/features/profile_setup/view_models/inventory_vm.dart';
+import 'package:orbit/features/profile_setup/views/add_item_view.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
@@ -18,7 +19,14 @@ class InventoryView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: model.addItem,
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddItemView(),
+              ),
+            );
+          },
+          // onPressed: model.addItem,
           backgroundColor: PRIMARY_COLOR,
         ),
         body: ListView(

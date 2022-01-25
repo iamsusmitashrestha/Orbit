@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 
 class KBottomSheet extends StatelessWidget {
   final List<Widget> children;
-  KBottomSheet({required this.children});
+  final maxHeight;
+  final bool hasHeight;
+  KBottomSheet(
+      {required this.children, this.maxHeight, this.hasHeight = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.7,
+        maxHeight: hasHeight
+            ? MediaQuery.of(context).size.height * maxHeight
+            : MediaQuery.of(context).size.height * 0.7,
       ),
       child: SingleChildScrollView(
         child: Column(

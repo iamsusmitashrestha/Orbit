@@ -122,7 +122,7 @@ class StoreProfileView extends StatelessWidget {
                 InkWell(
                   onTap: model.updateLogo,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(40),
                     child: Image.network(
                       model.userDataService.logo!,
                       loadingBuilder: (context, child, loadingProgress) =>
@@ -133,8 +133,8 @@ class StoreProfileView extends StatelessWidget {
                                   height: 40,
                                   child: CircularProgressIndicator(),
                                 ),
-                      width: 60,
-                      height: 60,
+                      width: 80,
+                      height: 80,
                       fit: BoxFit.cover,
                     ),
                   ),

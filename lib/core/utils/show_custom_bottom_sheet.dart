@@ -8,7 +8,7 @@ Future<SheetResponse?> showCustomBottomSheet(
   BottomSheetService _bottomSheetService = locator<BottomSheetService>();
 
   return _bottomSheetService.showCustomSheet(
-    customData: widget,
+    data: widget,
     variant: BottomSheetType.custom,
     barrierDismissible: isDismissible,
     isScrollControlled: true,

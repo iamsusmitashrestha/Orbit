@@ -18,12 +18,15 @@ class VerifyCodeViewModel extends BaseViewModel {
   onVerify() async {
     try {
       setBusy(true);
+      print(" Before code:$code");
+
       var response = await _dio.post(
         "/user/verify",
         data: {
           'confirmationCode': code,
         },
       );
+      print("code:$code");
       _navigationService.navigateTo(Routes.signinViewRoute);
       setBusy(false);
     } on DioError catch (e) {

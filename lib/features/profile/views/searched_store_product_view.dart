@@ -21,32 +21,35 @@ class SearchedStoreProductView
               physics: NeverScrollableScrollPhysics(),
               itemCount: model.items.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  padding: sPadding,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Table(
-                    border: TableBorder(
-                      verticalInside: BorderSide(
-                        color: SHUTTLE_GREY,
-                        width: 2,
-                      ),
-                      horizontalInside: BorderSide(
-                        color: SHUTTLE_GREY,
-                        width: 2,
-                      ),
+                return InkWell(
+                  child: Container(
+                    padding: sPadding,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    children: [
-                      TableRow(
-                        children: [
-                          TableText(text: (index + 1).toString()),
-                          TableText(text: model.items[index].title),
-                          TableText(text: model.items[index].price.toString()),
-                        ],
-                      )
-                    ],
+                    child: Table(
+                      border: TableBorder(
+                        verticalInside: BorderSide(
+                          color: SHUTTLE_GREY,
+                          width: 2,
+                        ),
+                        horizontalInside: BorderSide(
+                          color: SHUTTLE_GREY,
+                          width: 2,
+                        ),
+                      ),
+                      children: [
+                        TableRow(
+                          children: [
+                            TableText(text: (index + 1).toString()),
+                            TableText(text: model.items[index].title),
+                            TableText(
+                                text: model.items[index].price.toString()),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 );
               }),

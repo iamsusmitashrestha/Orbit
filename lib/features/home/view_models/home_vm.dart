@@ -6,6 +6,7 @@ import 'package:orbit/core/services/user_data_service.dart';
 import 'package:orbit/features/categories/models/category.dart';
 import 'package:orbit/features/home/model/searched_store.dart';
 import 'package:orbit/features/home/model/store.dart';
+import 'package:orbit/features/profile_setup/models/items.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -15,6 +16,8 @@ class HomeViewModel extends BaseViewModel {
   List<StoreModel> storeResponse = [];
   CategoryModel? selectedCategory;
   List<SearchedStoreModel> searchedStoreResponse = [];
+  List<ItemModel> cart = [];
+
   num distance = 0;
   String? searchTitle;
   LocationData? locData;

@@ -71,19 +71,19 @@ class _SigninViewState extends State<SigninView> {
                     obscureText: true,
                     onChanged: model.onPasswordChanged,
                   ),
-                  // InkWell(
-                  //   onTap: model.goToForgetPassword,
-                  //   child: Align(
-                  //     alignment: Alignment.bottomRight,
-                  //     child: Text(
-                  //       "Forget Password?",
-                  //       style: TextStyle(
-                  //         color: PRIMARY_COLOR,
-                  //         fontSize: 16,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  InkWell(
+                    onTap: model.goToForgetPassword,
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        "Forget Password?",
+                        style: TextStyle(
+                          color: PRIMARY_COLOR,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.1,
                   ),

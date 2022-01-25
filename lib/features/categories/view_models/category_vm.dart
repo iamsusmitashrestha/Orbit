@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
+import 'package:orbit/core/services/local_storage_service.dart';
 import 'package:orbit/core/services/user_data_service.dart';
 import 'package:orbit/features/categories/models/category.dart';
 import 'package:stacked/stacked.dart';
@@ -14,10 +15,11 @@ class CategoryViewModel extends BaseViewModel {
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
   final UserDataService _userDataService;
+  final LocalStorageService _localStorageService;
   final Dio _dio;
 
   CategoryViewModel(this._navigationService, this._dio, this._snackbarService,
-      this._userDataService);
+      this._userDataService, this._localStorageService);
 
   void initialise() {
     getCategory();
@@ -63,6 +65,8 @@ class CategoryViewModel extends BaseViewModel {
         'category': storeCategories,
       });
       setBusy(false);
+
+      print(_localStorageService.read("token"));
 
       print(storeCategories);
       _snackbarService.showSnackbar(
