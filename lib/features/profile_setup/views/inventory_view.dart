@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
-
 import 'package:orbit/core/di/injection.dart';
-import 'package:orbit/features/profile_setup/models/items.dart';
 import 'package:orbit/features/profile_setup/view_models/inventory_vm.dart';
 import 'package:orbit/features/profile_setup/views/add_item_view.dart';
 import 'package:orbit/themes/app_themes.dart';
@@ -64,10 +62,11 @@ class InventoryView extends StatelessWidget {
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     padding: sPagePadding,
-                    itemCount: model.items.length,
+                    itemCount: 1,
+                    // itemCount: model.items.length,
                     separatorBuilder: (context, index) => sHeightSpan,
                     itemBuilder: (context, index) {
-                      ItemModel item = model.items[index];
+                      // ItemModel item = model.items[index];
                       return Card(
                         margin: sPadding,
                         shape: RoundedRectangleBorder(
@@ -83,14 +82,19 @@ class InventoryView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item.title,
+                                    "Carrot",
+                                    // item.title,
                                     style: TextStyle(
                                       fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   xsHeightSpan,
-                                  Text("Rs. ${item.price}".toString()),
+                                  // Text("Rs. ${item.price}".toString()),
+                                  Text("100")
+                                  // Image.network(
+                                  //     _dio.options.baseUrl + response.data['store']['logo']
+                                  // ),
                                 ],
                               ),
                               elWidthSpan,

@@ -1,7 +1,6 @@
-import 'package:dio/dio.dart';
 import 'dart:io';
 
-import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:dio/dio.dart' as DIO;
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/services/user_data_service.dart';
@@ -16,8 +15,7 @@ class AddItemViewModel extends BaseViewModel {
 
   List<XFile>? imageFileList = [];
   final ImagePicker imagePicker = ImagePicker();
-
-  final Dio _dio;
+  final DIO.Dio _dio;
   final SnackbarService _snackbarService;
   final NavigationService _navigationService;
   final UserDataService _userDataService;
@@ -47,31 +45,32 @@ class AddItemViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // Future getImage() async {
-  //   final pickedFileList = await _picker.pickMultiImage();
-
-  //   imageFileList = pickedFileList;
-  //   notifyListeners();
-  // }
-
   void addItem() async {
     try {
       setBusy(true);
+      DIO.FormData data = DIO.FormData.fromMap({
+        "title": itemName,
+        "price": price,
+        "images": imageFileList
+            ?.map((e) => DIO.MultipartFile.fromFile(e.path, filename: e.name))
+            .toList()
+      });
+      print("Data:${data}");
+
       var response = await _dio.post(
         "/product/${_userDataService.storeId}/addProduct",
-        data: {
-          'title': itemName,
-          'price': price,
-        },
+        data: data,
       );
-      _navigationService.back(result: SheetResponse(confirmed: true));
+      print("Error:${response.data.printError()}");
+
+      _navigationService.back();
       setBusy(false);
-    } on DioError catch (e) {
+    } on DIO.DioError catch (e) {
       setBusy(false);
-      if (e.type == DioErrorType.other) {
+      if (e.type == DIO.DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
-      } else if (e.type == DioErrorType.response) {
+      } else if (e.type == DIO.DioErrorType.response) {
         String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message);
       }

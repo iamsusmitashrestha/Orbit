@@ -9,13 +9,13 @@ class DeleteItemBottomSheetViewModel extends BaseViewModel {
 
   void confirm() {
     _navigationService.back(
-      result: SheetResponse(confirmed: true, responseData: "Deleted todo"),
+      result: SheetResponse(confirmed: true, data: "Deleted item"),
     );
   }
 
   void cancel() {
     _navigationService.back(
-      result: SheetResponse(confirmed: false, responseData: "Deleted todo"),
+      result: SheetResponse(confirmed: false, data: "Deleted item"),
     );
   }
 }
