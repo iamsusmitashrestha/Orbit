@@ -41,7 +41,6 @@ dependencies:
   location: ^4.1.1
   google_maps_flutter: ^2.0.5
   provider: ^6.0.1
-  multi_image_picker2: ^5.0.2
 
   device_preview:
   flutter_screenutil: ^5.0.0

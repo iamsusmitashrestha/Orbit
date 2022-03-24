@@ -12,7 +12,8 @@ class BottomNavigationView extends ViewModelWidget<SearchedProfileViewModel> {
         children: [
           Expanded(
             child: InkWell(
-              onTap: () => model.setTabIndex(0),
+              onTap: () {},
+              // onTap: () => model.setTabIndex(0),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                 color: model.currentIndex == 0 ? PRIMARY_COLOR : SHUTTLE_GREY,
@@ -30,7 +31,8 @@ class BottomNavigationView extends ViewModelWidget<SearchedProfileViewModel> {
           ),
           Expanded(
             child: InkWell(
-              onTap: () => model.setTabIndex(1),
+              onTap: () {},
+              // onTap: () => model.setTabIndex(1),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                 color: model.currentIndex == 1 ? PRIMARY_COLOR : SHUTTLE_GREY,
@@ -48,7 +50,8 @@ class BottomNavigationView extends ViewModelWidget<SearchedProfileViewModel> {
           ),
           Expanded(
             child: InkWell(
-              onTap: () => model.setTabIndex(2),
+              onTap: () {},
+              // onTap: () => model.setTabIndex(2),
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                 color: model.currentIndex == 2 ? PRIMARY_COLOR : SHUTTLE_GREY,

@@ -9,6 +9,7 @@ import 'package:stacked_services/stacked_services.dart';
 class SigninViewModel extends BaseViewModel {
   String email = "";
   String password = "";
+  String role = "";
   final NavigationService navigationService;
   final SnackbarService snackbarService;
   final LocalStorageService localStorageService;
@@ -18,6 +19,11 @@ class SigninViewModel extends BaseViewModel {
       required this.snackbarService,
       required this.dio,
       required this.localStorageService});
+
+  initialise() {
+    role = localStorageService.read("role")!;
+    notifyListeners();
+  }
 
   onEmailChanged(value) {
     email = value;
@@ -35,14 +41,13 @@ class SigninViewModel extends BaseViewModel {
     try {
       setBusy(true);
       var response = await dio.post(
-        "/user/",
+        role == "vendor" ? "/user/" : "/customer/login",
         data: {
           'email': email,
           'password': password,
         },
       );
       localStorageService.write("token", response.data['token']);
-      setBusy(false);
       snackbarService.showSnackbar(
         message: response.data['message'],
         duration: Duration(seconds: 1),
@@ -59,6 +64,7 @@ class SigninViewModel extends BaseViewModel {
         snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusy(false);
   }
 
   goToProfileSetup() {

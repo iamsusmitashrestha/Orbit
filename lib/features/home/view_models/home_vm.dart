@@ -87,6 +87,7 @@ class HomeViewModel extends BaseViewModel {
 
   search() async {
     storeResponse = [];
+    print("Ank:$searchTitle");
     setBusy(true);
     try {
       var response = await _dio.get("/store/search?title=$searchTitle");

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
+import 'package:orbit/core/services/local_storage_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,18 +12,26 @@ class SignupViewModel extends BaseViewModel {
   String password = "";
   String confirmPassword = '';
   String phoneNumber = "";
+  String role = "";
 
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
+  final LocalStorageService localStorageService;
   final Dio _dio;
 
-  SignupViewModel(this._navigationService, this._snackbarService, this._dio);
+  SignupViewModel(this._navigationService, this._snackbarService, this._dio,
+      this.localStorageService);
+
+  initialise() {
+    role = localStorageService.read("role")!;
+    notifyListeners();
+  }
 
   void onSignup() async {
     try {
       setBusy(true);
       var response = await _dio.post(
-        "/user/register",
+        role == "vendor" ? "/user/register" : "/customer/register",
         data: {
           'name': name,
           'email': email,

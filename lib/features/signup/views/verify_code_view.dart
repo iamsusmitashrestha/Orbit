@@ -13,6 +13,7 @@ class VerifyCodeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<VerifyCodeViewModel>.reactive(
       viewModelBuilder: () => locator<VerifyCodeViewModel>(),
+      onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         body: ListView(
           padding: AppDimens.PAGE_PADDING,

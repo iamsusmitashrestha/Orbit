@@ -16,6 +16,7 @@ class SignupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignupViewModel>.reactive(
       viewModelBuilder: () => locator<SignupViewModel>(),
+      onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         body: ListView(
           padding: AppDimens.PAGE_PADDING,

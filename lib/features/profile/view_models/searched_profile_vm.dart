@@ -15,6 +15,10 @@ class SearchedProfileViewModel extends BaseViewModel {
   num? distance;
   int currentIndex = 0;
   List<ItemModel> items = [];
+  int carouselIndex = 0;
+  String? searchTitle;
+  List<ItemModel> searchedProductResponse = [];
+
   late SearchedStoreModel store;
   PageController btmNavigationPageController = PageController(initialPage: 0);
 
@@ -31,10 +35,20 @@ class SearchedProfileViewModel extends BaseViewModel {
     getProducts();
   }
 
+  void onSearchChanged(value) {
+    searchTitle = value;
+    notifyListeners();
+  }
+
   setTabIndex(int index) {
     currentIndex = index;
     btmNavigationPageController.animateToPage(index,
         duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    notifyListeners();
+  }
+
+  setCarouselIndex(index) {
+    carouselIndex = index;
     notifyListeners();
   }
 
@@ -47,7 +61,8 @@ class SearchedProfileViewModel extends BaseViewModel {
       var response = await _dio
           .get("/store/${store.storedetails?.sId}/getProductwithoutauth");
       items = response.data
-          .map<ItemModel>((item) => ItemModel.fromJson(item))
+          .map<ItemModel>(
+              (item) => ItemModel.fromJson(item, _dio.options.baseUrl))
           .toList();
 
       setBusy(false);
@@ -60,6 +75,31 @@ class SearchedProfileViewModel extends BaseViewModel {
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
         String message = e.response!.data['message'];
+        _snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+  }
+
+  search() async {
+    print("Ank:$searchTitle");
+    setBusy(true);
+    try {
+      var response = await _dio
+          .get("/search/${userDataService.storeId}?title=$searchTitle");
+      searchedProductResponse = response.data
+          .map<ItemModel>(
+              (item) => ItemModel.fromJson(item, _dio.options.baseUrl))
+          .toList();
+      setBusy(false);
+      print("Ank:$searchTitle called");
+    } on DioError catch (e) {
+      setBusy(false);
+
+      if (e.type == DioErrorType.other) {
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message.trim());
       }
     }

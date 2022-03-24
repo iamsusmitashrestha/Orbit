@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/features/profile/view_models/profile_vm.dart';
-import 'package:orbit/features/profile/views/table_view.dart';
-import 'package:orbit/features/profile/widgets/table_text.dart';
-import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
 class StoreProductView extends ViewModelWidget<ProfileViewModel> {
@@ -24,37 +21,53 @@ class StoreProductView extends ViewModelWidget<ProfileViewModel> {
               ),
             ),
           ),
-          TableView(),
-          ListView.builder(
+          GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: model.items.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  padding: sPadding,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+              physics: ScrollPhysics(),
+              itemCount: 2,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              // itemCount: model.items.length,
+              // separatorBuilder: (context, index) => sHeightSpan,
+              itemBuilder: (context, index) {
+                // ItemModel item = model.items[index];
+                return Card(
+                  margin: sPadding,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Table(
-                    border: TableBorder(
-                      verticalInside: BorderSide(
-                        color: SHUTTLE_GREY,
-                        width: 2,
-                      ),
-                      horizontalInside: BorderSide(
-                        color: SHUTTLE_GREY,
-                        width: 2,
-                      ),
-                    ),
+                  child: Column(
                     children: [
-                      TableRow(
+                      Image.asset("assets/images/store.jpg"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TableText(text: (index + 1).toString()),
-                          TableText(text: model.items[index].title),
-                          TableText(text: model.items[index].price.toString()),
+                          Padding(
+                            padding: sPadding,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Carrot",
+                                  // item.title,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                xsHeightSpan,
+                                // Text("Rs. ${item.price}".toString()),
+                                Text("RS. 100")
+                                // Image.network(
+                                //     _dio.options.baseUrl + response.data['store']['logo']
+                                // ),
+                              ],
+                            ),
+                          ),
+                          elWidthSpan,
                         ],
-                      )
+                      ),
                     ],
                   ),
                 );

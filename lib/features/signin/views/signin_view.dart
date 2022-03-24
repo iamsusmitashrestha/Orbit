@@ -23,6 +23,7 @@ class _SigninViewState extends State<SigninView> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<SigninViewModel>.reactive(
       viewModelBuilder: () => locator<SigninViewModel>(),
+      onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         body: ListView(
           children: [

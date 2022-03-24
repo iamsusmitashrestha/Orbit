@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/carousel.dart';
 import 'package:orbit/features/profile/view_models/searched_profile_vm.dart';
-import 'package:orbit/features/profile/views/table_view.dart';
-import 'package:orbit/features/profile/widgets/table_text.dart';
-import 'package:orbit/themes/app_themes.dart';
+import 'package:orbit/features/profile_setup/models/items.dart';
 import 'package:stacked/stacked.dart';
 
 class SearchedStoreProductView
@@ -11,50 +10,76 @@ class SearchedStoreProductView
   @override
   Widget build(BuildContext context, SearchedProfileViewModel model) {
     if (model.items.isNotEmpty) {
-      return ListView(
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          TableView(),
-          ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: model.items.length,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  child: Container(
-                    padding: sPadding,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Table(
-                      border: TableBorder(
-                        verticalInside: BorderSide(
-                          color: SHUTTLE_GREY,
-                          width: 2,
-                        ),
-                        horizontalInside: BorderSide(
-                          color: SHUTTLE_GREY,
-                          width: 2,
+      return GridView.builder(
+          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemCount: model.items.length,
+          // separatorBuilder: (context, index) => sHeightSpan,
+          itemBuilder: (context, index) {
+            ItemModel item = model.items[index];
+            return Card(
+              margin: sPadding,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  Carousel(
+                    carouselHeight: MediaQuery.of(context).size.width * 0.3,
+                    itemCount: item.image.length,
+                    onPageChanged: model.setCarouselIndex,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Image.network(
+                        item.image[index],
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return Center(
+                              child: Icon(
+                            Icons.error_outline,
+                            color: Colors.red,
+                          ));
+                        },
+                        fit: BoxFit.cover,
+                        width: 100,
+                        height: 50,
+                      );
+                    },
+                    carouselIndex: model.carouselIndex,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: sPadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item.title,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            xsHeightSpan,
+                            // Text("Rs. ${item.price}".toString()),
+                            Text(item.price.toString())
+                            // Image.network(
+                            //     _dio.options.baseUrl + response.data['store']['logo']
+                            // ),
+                          ],
                         ),
                       ),
-                      children: [
-                        TableRow(
-                          children: [
-                            TableText(text: (index + 1).toString()),
-                            TableText(text: model.items[index].title),
-                            TableText(
-                                text: model.items[index].price.toString()),
-                          ],
-                        )
-                      ],
-                    ),
+                      elWidthSpan,
+                    ],
                   ),
-                );
-              }),
-        ],
-      );
+                ],
+              ),
+            );
+          });
     }
     return Container();
   }

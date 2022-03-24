@@ -51,7 +51,9 @@ class StoreDetailsModel {
         storeName = json['storeName'],
         address = json['address'],
         owner = json['owner'],
-        logo = "https://orbit1.herokuapp.com" + json['logo'],
+        logo = json["logo"] != null
+            ? "https://orbit1.herokuapp.com" + json['logo']
+            : "",
         description = json['description'],
         openingTime = json['openingTime'],
         closingTime = json['closingTime'],

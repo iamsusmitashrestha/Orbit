@@ -88,7 +88,8 @@ class StoreDetailsViewModel extends BaseViewModel {
   }
 
   Future<void> onSelectMap() async {
-    pickedLocation = await _navigationService.navigateTo(Routes.mapViewRoute);
+    pickedLocation =
+        await _navigationService.navigateTo(Routes.mapViewRoute) as LatLng?;
     if (pickedLocation != null) {
       locationController.text =
           "${pickedLocation!.latitude}, ${pickedLocation!.longitude}";

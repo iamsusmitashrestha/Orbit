@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/carousel.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
+import 'package:orbit/common/widgets/k_text_form_field.dart';
 import 'package:orbit/core/di/injection.dart';
+import 'package:orbit/features/profile_setup/models/items.dart';
 import 'package:orbit/features/profile_setup/view_models/inventory_vm.dart';
 import 'package:orbit/features/profile_setup/views/add_item_view.dart';
 import 'package:orbit/themes/app_themes.dart';
@@ -28,7 +31,7 @@ class InventoryView extends StatelessWidget {
           backgroundColor: PRIMARY_COLOR,
         ),
         body: ListView(
-          padding: sPagePadding,
+          padding: sPadding,
           children: [
             sHeightSpan,
             Align(
@@ -39,79 +42,111 @@ class InventoryView extends StatelessWidget {
                 onPressed: model.goToStoreProfile,
               ),
             ),
-            mHeightSpan,
+            sHeightSpan,
             SvgPicture.asset(
               "assets/images/inventory.svg",
-              height: 220,
+              height: 180,
               width: 100,
               fit: BoxFit.contain,
             ),
             lHeightSpan,
+            KTextFormField(
+              hint: "Search Products",
+            ),
+            mHeightSpan,
             Text(
-              "Inventory",
+              "Products Available",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
-            lHeightSpan,
             model.isBusy
                 ? KBusy()
-                : ListView.separated(
+                : GridView.builder(
                     shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    padding: sPagePadding,
-                    itemCount: 1,
-                    // itemCount: model.items.length,
-                    separatorBuilder: (context, index) => sHeightSpan,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: model.items.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                    ),
                     itemBuilder: (context, index) {
-                      // ItemModel item = model.items[index];
+                      ItemModel item = model.items[index];
                       return Card(
                         margin: sPadding,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 14, vertical: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Carrot",
-                                    // item.title,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  xsHeightSpan,
-                                  // Text("Rs. ${item.price}".toString()),
-                                  Text("100")
-                                  // Image.network(
-                                  //     _dio.options.baseUrl + response.data['store']['logo']
-                                  // ),
-                                ],
-                              ),
-                              elWidthSpan,
-                              Row(
-                                children: [
-                                  model.busy(index)
-                                      ? CircularProgressIndicator()
-                                      : IconButton(
-                                          color: Colors.red,
-                                          icon: Icon(Icons.delete),
-                                          onPressed: () =>
-                                              model.deleteItem(index),
+                        child: Column(
+                          children: [
+                            Carousel(
+                              carouselHeight:
+                                  MediaQuery.of(context).size.width * 0.3,
+                              itemCount: item.image.length,
+                              onPageChanged: model.setCarouselIndex,
+                              itemBuilder: (BuildContext context, int index) {
+                                print(item.image[index]);
+                                return Image.network(
+                                  item.image[index],
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Center(
+                                        child: Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red,
+                                    ));
+                                  },
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 50,
+                                );
+                              },
+                              carouselIndex: model.carouselIndex,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: sPadding,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item.title,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                      ),
+                                      xsHeightSpan,
+                                      // Text("Rs. ${item.price}".toString()),
+                                      Text(item.price.toString())
+                                      // Image.network(
+                                      //     _dio.options.baseUrl + response.data['store']['logo']
+                                      // ),
+                                    ],
+                                  ),
+                                ),
+                                elWidthSpan,
+                                // Row(
+                                //   children: [
+                                //     model.busy(index)
+                                //         ? CircularProgressIndicator()
+                                //         : IconButton(
+                                //             color: Colors.red,
+                                //             icon: Icon(Icons.delete),
+                                //             onPressed: () =>
+                                //                 model.deleteItem(index),
+                                //           ),
+                                //   ],
+                                // ),
+                              ],
+                            ),
+                          ],
                         ),
                       );
                     }),

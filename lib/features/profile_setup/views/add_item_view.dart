@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/carousel.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
@@ -42,11 +41,12 @@ class AddItemView extends StatelessWidget {
               ),
               mHeightSpan,
               Carousel(
-                itemCount: model.imageFileList!.length,
+                carouselHeight: MediaQuery.of(context).size.width * 0.8,
+                itemCount: model.imageFileList.length,
                 onPageChanged: model.setCarouselIndex,
                 itemBuilder: (BuildContext context, int index) {
                   return Image.file(
-                    File(model.imageFileList![index].path),
+                    File(model.imageFileList[index].path),
                     fit: BoxFit.cover,
                   );
                 },

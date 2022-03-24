@@ -55,8 +55,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i6.LocalStorageService>(() => _i6.LocalStorageService());
   gh.lazySingleton<_i3.NavigationService>(
       () => thirdPartyServicesModule.navigationService);
-  gh.factory<_i7.RoleSelectionViewModel>(
-      () => _i7.RoleSelectionViewModel(get<_i3.NavigationService>()));
+  gh.factory<_i7.RoleSelectionViewModel>(() => _i7.RoleSelectionViewModel(
+      get<_i3.NavigationService>(), get<_i6.LocalStorageService>()));
   gh.factory<_i8.SettingsViewModel>(() => _i8.SettingsViewModel());
   gh.lazySingleton<_i3.SnackbarService>(
       () => thirdPartyServicesModule.snackBarService);
@@ -65,7 +65,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i11.VerifyCodeViewModel>(() => _i11.VerifyCodeViewModel(
       get<_i5.Dio>(),
       get<_i3.NavigationService>(),
-      get<_i3.SnackbarService>()));
+      get<_i3.SnackbarService>(),
+      get<_i6.LocalStorageService>()));
   gh.factory<_i12.AddItemViewModel>(() => _i12.AddItemViewModel(
       get<_i5.Dio>(),
       get<_i3.SnackbarService>(),
@@ -121,7 +122,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i24.SignupViewModel>(() => _i24.SignupViewModel(
       get<_i3.NavigationService>(),
       get<_i3.SnackbarService>(),
-      get<_i5.Dio>()));
+      get<_i5.Dio>(),
+      get<_i6.LocalStorageService>()));
   gh.factory<_i25.SplashViewModel>(() => _i25.SplashViewModel(
       get<_i3.NavigationService>(),
       get<_i5.Dio>(),

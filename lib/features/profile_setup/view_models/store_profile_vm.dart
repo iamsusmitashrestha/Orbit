@@ -60,10 +60,10 @@ class StoreProfileViewModel extends BaseViewModel {
     try {
       setBusy(true);
       var response = await _dio.delete("/user/deleteuser");
-      // _snackbarService.showSnackbar(
-      //   message: response.data['message'],
-      //   duration: Duration(seconds: 1),
-      // );
+      _snackbarService.showSnackbar(
+        message: response.data['message'],
+        duration: Duration(seconds: 1),
+      );
       localStorageService.clear('token');
       navigationService.replaceWith(Routes.splashViewRoute);
 

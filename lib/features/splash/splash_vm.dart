@@ -10,6 +10,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 @injectable
 class SplashViewModel extends BaseViewModel {
+  String role = "";
   final LocalStorageService _localStorageService;
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
@@ -25,14 +26,27 @@ class SplashViewModel extends BaseViewModel {
   );
 
   void initialise() {
+    role = _localStorageService.read("role") ?? "";
     String token = _localStorageService.read('token') ?? "";
     if (token.length > 0) {
-      getData();
+      role == "vendor"
+          ? getData()
+          : Future.delayed(Duration(seconds: 2), () {
+              _navigationService.replaceWith(Routes.homeViewRoute);
+            });
     } else {
       Future.delayed(Duration(seconds: 2), () {
         _navigationService.replaceWith(Routes.roleSelectionViewRoute);
       });
     }
+    // String token = _localStorageService.read('token') ?? "";
+    // if (token.length > 0) {
+    //   getData();
+    // } else {
+    //   Future.delayed(Duration(seconds: 2), () {
+    //     _navigationService.replaceWith(Routes.roleSelectionViewRoute);
+    //   });
+    // }
   }
 
   getData() async {

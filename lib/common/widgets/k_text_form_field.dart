@@ -8,7 +8,7 @@ class KTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final String? hint;
   final String? initialValue;
-  final String label;
+  final String? label;
   final bool obscureText;
   final TextInputType keyboardType;
   final int maxLines;
@@ -17,7 +17,7 @@ class KTextFormField extends StatefulWidget {
       {this.validator,
       this.onChanged,
       this.hint,
-      required this.label,
+      this.label,
       this.keyboardType = TextInputType.text,
       this.obscureText = false,
       this.maxLines = 1,
@@ -49,13 +49,13 @@ class _KTextFormFieldState extends State<KTextFormField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        if (widget.label.isNotEmpty)
+        if (widget.label != null)
           Column(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  widget.label,
+                  widget.label!,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         fontWeight: FontWeight.w500,
                       ),

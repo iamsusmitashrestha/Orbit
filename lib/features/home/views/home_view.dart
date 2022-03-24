@@ -65,75 +65,91 @@ class HomeView extends StatelessWidget {
                       )
               ],
             ),
-            Text(
-              "Categories",
-              style: TextStyle(
-                fontSize: 22,
-                fontFamily: FONT_FAMILY,
-                fontWeight: FontWeight.w500,
-              ),
+            Divider(
+              height: 40,
+              thickness: 1,
             ),
-            sHeightSpan,
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: LIGHT_GREY,
+            Card(
+              elevation: 8,
+              child: Padding(
+                padding: mPadding,
+                child: Column(
+                  children: [
+                    Text(
+                      "Categories",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: FONT_FAMILY,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    sHeightSpan,
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: LIGHT_GREY,
+                        ),
+                      ),
+                      child: DropdownButton(
+                        autofocus: true,
+                        iconSize: 40,
+                        isExpanded: true,
+                        value: model.selectedCategory,
+                        onChanged: model.onSelectionChanged,
+                        items: model.categoryResponse.map((category) {
+                          return DropdownMenuItem(
+                            child: new Text(category.label),
+                            value: category,
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    lHeightSpan,
+                    Row(
+                      children: [
+                        Text(
+                          "Max Distance",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        sWidthSpan,
+                        Expanded(
+                          child: Container(
+                            height: 50,
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              onChanged: model.onDistanceChanged,
+                            ),
+                          ),
+                        ),
+                        sWidthSpan,
+                        Text(
+                          "KMs",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        mWidthSpan,
+                        Expanded(
+                          child: KButton(
+                            child: Text("Find"),
+                            onPressed: model.getStoreByDistance,
+                            isBusy: model.isBusy,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              child: DropdownButton(
-                autofocus: true,
-                iconSize: 40,
-                isExpanded: true,
-                value: model.selectedCategory,
-                onChanged: model.onSelectionChanged,
-                items: model.categoryResponse.map((category) {
-                  return DropdownMenuItem(
-                    child: new Text(category.label),
-                    value: category,
-                  );
-                }).toList(),
-              ),
-            ),
-            lHeightSpan,
-            Text(
-              "Max Distance",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
               ),
             ),
             xsHeightSpan,
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 50,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      onChanged: model.onDistanceChanged,
-                    ),
-                  ),
-                ),
-                mWidthSpan,
-                Text(
-                  "KMs",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                elWidthSpan,
-                Expanded(
-                  child: KButton(
-                    child: Text("Find"),
-                    onPressed: model.getStoreByDistance,
-                    isBusy: model.isBusy,
-                  ),
-                )
-              ],
-            ),
             lHeightSpan,
             Text(
               "Results",

@@ -11,17 +11,23 @@ import 'package:stacked_services/stacked_services.dart';
 @injectable
 class InventoryViewModel extends BaseViewModel {
   List<ItemModel> items = [];
+  int carouselIndex = 0;
 
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
-  final Dio _dio;
+  final Dio dio;
   final UserDataService _userDataService;
 
-  InventoryViewModel(this._navigationService, this._dio, this._userDataService,
+  InventoryViewModel(this._navigationService, this.dio, this._userDataService,
       this._snackbarService);
 
   void initialise() {
     getItem();
+  }
+
+  setCarouselIndex(index) {
+    carouselIndex = index;
+    notifyListeners();
   }
 
   addItem() async {
@@ -31,11 +37,17 @@ class InventoryViewModel extends BaseViewModel {
   getItem() async {
     setBusy(true);
     try {
+      print("sus get");
       var response =
-          await _dio.get("/store/${_userDataService.storeId}/getProduct");
+          await dio.get("/store/${_userDataService.storeId}/getProduct");
+      print("sus call");
+
       items = response.data
-          .map<ItemModel>((item) => ItemModel.fromJson(item))
+          .map<ItemModel>(
+              (item) => ItemModel.fromJson(item, dio.options.baseUrl))
           .toList();
+      print("sus called");
+
       setBusy(false);
     } on DioError catch (e) {
       setError("Something went wrong !");
@@ -57,7 +69,7 @@ class InventoryViewModel extends BaseViewModel {
     try {
       setBusy(true);
       if (response != null && response.confirmed) {
-        var response = await _dio.delete("/product/${items[index].id}");
+        var response = await dio.delete("/product/${items[index].id}");
         items.removeAt(index);
         notifyListeners();
       }

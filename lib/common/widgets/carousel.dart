@@ -4,6 +4,7 @@ import 'package:orbit/common/constants/ui_helpers.dart';
 class Carousel extends StatelessWidget {
   final int itemCount;
   final int carouselIndex;
+  final double carouselHeight;
   final Function(void) onPageChanged;
   final Widget Function(BuildContext, int) itemBuilder;
 
@@ -12,6 +13,7 @@ class Carousel extends StatelessWidget {
     required this.onPageChanged,
     required this.carouselIndex,
     required this.itemBuilder,
+    required this.carouselHeight,
   });
 
   @override
@@ -20,7 +22,7 @@ class Carousel extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.width * 0.8,
+          height: carouselHeight,
           child: PageView.builder(
             itemCount: itemCount,
             onPageChanged: onPageChanged,

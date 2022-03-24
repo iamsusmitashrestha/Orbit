@@ -43,9 +43,9 @@ class ProfileViewModel extends BaseViewModel {
       setBusy(true);
       var response = await _dio
           .get("/store/${store.storedetails?.sId}/getProductwithoutauth");
-      items = response.data
-          .map<ItemModel>((item) => ItemModel.fromJson(item))
-          .toList();
+      // items = response.data
+      //     .map<ItemModel>((item) => ItemModel.fromJson(item))
+      //     .toList();
 
       setBusy(false);
     } on DioError catch (e) {

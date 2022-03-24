@@ -1,27 +1,34 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
+import 'package:orbit/core/services/local_storage_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 @injectable
 class VerifyCodeViewModel extends BaseViewModel {
   String code = "";
+  String role = "";
 
   final Dio _dio;
   final NavigationService _navigationService;
   final SnackbarService _snackbarService;
+  final LocalStorageService localStorageService;
 
-  VerifyCodeViewModel(
-      this._dio, this._navigationService, this._snackbarService);
+  VerifyCodeViewModel(this._dio, this._navigationService, this._snackbarService,
+      this.localStorageService);
+
+  initialise() {
+    role = localStorageService.read("role")!;
+    notifyListeners();
+  }
 
   onVerify() async {
     try {
       setBusy(true);
-      print(" Before code:$code");
 
       var response = await _dio.post(
-        "/user/verify",
+        role == "vendor" ? "/user/verify" : "/customer/verify",
         data: {
           'confirmationCode': code,
         },
