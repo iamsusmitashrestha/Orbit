@@ -5,7 +5,7 @@ class KBusy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: CircularProgressIndicator(
-        strokeWidth: 3,
+        strokeWidth: 2,
       ),
     );
   }

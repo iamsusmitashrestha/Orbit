@@ -13,8 +13,6 @@ class StoreProfileView extends StatelessWidget {
     return ViewModelBuilder<StoreProfileViewModel>.reactive(
         viewModelBuilder: () => locator<StoreProfileViewModel>(),
         builder: (context, model, child) {
-          print("Susmi:${model.userDataService.logo}");
-
           return Scaffold(
             appBar: AppBar(),
             drawer: Drawer(

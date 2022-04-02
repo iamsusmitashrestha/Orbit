@@ -15,6 +15,7 @@ class ProfileViewModel extends BaseViewModel {
   num? distance;
   int currentIndex = 0;
   List<ItemModel> items = [];
+  int carouselIndex = 0;
   late StoreModel store;
   PageController btmNavigationPageController = PageController(initialPage: 0);
 
@@ -28,6 +29,11 @@ class ProfileViewModel extends BaseViewModel {
   initialise(StoreModel store) {
     this.store = store;
     getProducts();
+  }
+
+  setCarouselIndex(index) {
+    carouselIndex = index;
+    notifyListeners();
   }
 
   setTabIndex(int index) {

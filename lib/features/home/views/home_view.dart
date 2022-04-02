@@ -1,11 +1,8 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
-import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/core/di/injection.dart';
-import 'package:orbit/features/home/views/cart_view.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
@@ -18,6 +15,20 @@ class HomeView extends StatelessWidget {
       viewModelBuilder: () => locator<HomeViewModel>(),
       onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              ListTile(
+                onTap: model.logOut,
+                title: Text("Logout"),
+                leading: Icon(
+                  Icons.logout,
+                  color: Colors.black,
+                ),
+              )
+            ],
+          ),
+        ),
         appBar: AppBar(
           actions: [
             Text(
@@ -30,7 +41,7 @@ class HomeView extends StatelessWidget {
                 size: 30,
                 color: Colors.white,
               ),
-              onPressed: () {},
+              onPressed: model.goToCartView,
             ),
           ],
           backgroundColor: PRIMARY_COLOR,
@@ -54,15 +65,13 @@ class HomeView extends StatelessWidget {
                     ),
                   ),
                 ),
-                model.isBusy
-                    ? KBusy()
-                    : Expanded(
-                        child: KButton(
-                          onPressed: model.search,
-                          child: Text("Search"),
-                          isBusy: model.isBusy,
-                        ),
-                      )
+                Expanded(
+                  child: KButton(
+                    onPressed: model.search,
+                    child: Text("Search"),
+                    isBusy: model.busy(model.searchedStoreResponse),
+                  ),
+                )
               ],
             ),
             Divider(
@@ -72,7 +81,7 @@ class HomeView extends StatelessWidget {
             Card(
               elevation: 8,
               child: Padding(
-                padding: mPadding,
+                padding: lPadding,
                 child: Column(
                   children: [
                     Text(
@@ -131,20 +140,19 @@ class HomeView extends StatelessWidget {
                         Text(
                           "KMs",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         mWidthSpan,
-                        Expanded(
-                          child: KButton(
-                            child: Text("Find"),
-                            onPressed: model.getStoreByDistance,
-                            isBusy: model.isBusy,
-                          ),
-                        )
                       ],
                     ),
+                    sHeightSpan,
+                    KButton(
+                      child: Text("Find"),
+                      onPressed: model.getStoreByDistance,
+                      isBusy: model.busy(model.storeResponse),
+                    )
                   ],
                 ),
               ),

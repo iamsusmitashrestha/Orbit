@@ -45,7 +45,7 @@ class SearchedProfileView extends StatelessWidget {
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   shrinkWrap: true,
-                  physics: ScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   children: [
                     Text(
                       store.storedetails!.storeName,
@@ -171,12 +171,12 @@ class SearchedProfileView extends StatelessWidget {
               child: Container(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 height: 500,
-                child: model.isBusy
+                child: model.busy(model.items)
                     ? KBusy()
                     : PageView(
                         controller: model.btmNavigationPageController,
                         children: [
-                          Column(
+                          ListView(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -193,100 +193,18 @@ class SearchedProfileView extends StatelessWidget {
                                       child: KButton(
                                         child: Text("Search"),
                                         onPressed: model.search,
+                                        isBusy: model.busy(
+                                            model.searchedProductResponse),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               lHeightSpan,
-                              model.searchedProductResponse.isNotEmpty
-                                  ? GridView.builder(
-                                      shrinkWrap: true,
-                                      physics: ScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                      ),
-                                      itemCount:
-                                          model.searchedProductResponse.length,
-                                      itemBuilder: (context, index) {
-                                        ItemModel item = model
-                                            .searchedProductResponse[index];
-                                        return Card(
-                                          margin: sPadding,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              Carousel(
-                                                carouselHeight:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.3,
-                                                itemCount: item.image.length,
-                                                onPageChanged:
-                                                    model.setCarouselIndex,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return Image.network(
-                                                    item.image[index],
-                                                    errorBuilder:
-                                                        (BuildContext context,
-                                                            Object exception,
-                                                            StackTrace?
-                                                                stackTrace) {
-                                                      return Center(
-                                                          child: Icon(
-                                                        Icons.error_outline,
-                                                        color: Colors.red,
-                                                      ));
-                                                    },
-                                                    fit: BoxFit.cover,
-                                                    width: 100,
-                                                    height: 50,
-                                                  );
-                                                },
-                                                carouselIndex:
-                                                    model.carouselIndex,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Padding(
-                                                    padding: sPadding,
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          item.title,
-                                                          style: TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                          ),
-                                                        ),
-                                                        xsHeightSpan,
-                                                        Text(item.price
-                                                            .toString())
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  elWidthSpan,
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      })
-                                  : SearchedStoreProductView(),
+                              SearchedStoreProductView(
+                                  items: model.searchedProductResponse.isEmpty
+                                      ? model.items
+                                      : model.searchedProductResponse)
                             ],
                           ),
                           SearchedMapView(

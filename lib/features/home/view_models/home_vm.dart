@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
+import 'package:orbit/core/services/local_storage_service.dart';
 import 'package:orbit/core/services/user_data_service.dart';
 import 'package:orbit/features/categories/models/category.dart';
 import 'package:orbit/features/home/model/searched_store.dart';
@@ -25,9 +26,10 @@ class HomeViewModel extends BaseViewModel {
   final Dio _dio;
   final UserDataService userDataService;
   final SnackbarService _snackbarService;
+  final LocalStorageService localStorageService;
   final NavigationService _navigationService;
   HomeViewModel(this._dio, this._snackbarService, this.userDataService,
-      this._navigationService);
+      this._navigationService, this.localStorageService);
 
   initialise() {
     getCategory();
@@ -64,17 +66,14 @@ class HomeViewModel extends BaseViewModel {
   LocationData get currentLocation => locData!;
 
   getCategory() async {
-    setBusy(true);
+    setBusyForObject(categoryResponse, true);
     try {
       var response = await _dio.get("/storecat/sendCategory");
       categoryResponse = response.data
           .map<CategoryModel>((item) => CategoryModel.fromJson(item))
           .toList();
       selectedCategory = categoryResponse[0];
-      setBusy(false);
     } on DioError catch (e) {
-      setBusy(false);
-
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -83,21 +82,18 @@ class HomeViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusyForObject(categoryResponse, false);
   }
 
   search() async {
     storeResponse = [];
-    print("Ank:$searchTitle");
-    setBusy(true);
+    setBusyForObject(searchedStoreResponse, true);
     try {
       var response = await _dio.get("/store/search?title=$searchTitle");
       searchedStoreResponse = response.data
           .map<SearchedStoreModel>((item) => SearchedStoreModel.fromJson(item))
           .toList();
-      setBusy(false);
     } on DioError catch (e) {
-      setBusy(false);
-
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -106,11 +102,12 @@ class HomeViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusyForObject(searchedStoreResponse, false);
   }
 
   getStoreByDistance() async {
     searchedStoreResponse = [];
-    setBusy(true);
+    setBusyForObject(storeResponse, true);
 
     try {
       var response = await _dio.post("/store/distance", data: {
@@ -125,14 +122,12 @@ class HomeViewModel extends BaseViewModel {
       print(distance);
       print(currentLocation.longitude);
       print(currentLocation.latitude);
+      print(response.data);
 
       storeResponse = response.data
           .map<StoreModel>((item) => StoreModel.fromJson(item))
           .toList();
-      setBusy(false);
     } on DioError catch (e) {
-      setBusy(false);
-
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -141,14 +136,24 @@ class HomeViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusyForObject(storeResponse, false);
   }
 
   goToProfileView(StoreModel store) {
     _navigationService.navigateTo(Routes.profileViewRoute, arguments: store);
   }
 
+  goToCartView() {
+    _navigationService.navigateTo(Routes.cartViewRoute);
+  }
+
   goToSearchedProfileView(SearchedStoreModel store) {
     _navigationService.navigateTo(Routes.searchedProfileViewRoute,
         arguments: store);
+  }
+
+  logOut() {
+    localStorageService.clear('token');
+    _navigationService.clearStackAndShow(Routes.splashViewRoute);
   }
 }

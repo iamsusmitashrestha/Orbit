@@ -113,7 +113,7 @@ class KButton extends StatelessWidget {
                       valueColor: AlwaysStoppedAnimation(Colors.white),
                     ),
                   ),
-                  lWidthSpan,
+                  sWidthSpan,
                 ],
               ),
             child,

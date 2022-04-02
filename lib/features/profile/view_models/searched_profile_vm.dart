@@ -52,23 +52,13 @@ class SearchedProfileViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  getProducts() async {
+  addToCart(ItemModel item) async {
+    setBusyForObject(item, true);
+
     try {
-      clearErrors();
-      setBusy(true);
-      print(store.storedetails?.sId);
-
-      var response = await _dio
-          .get("/store/${store.storedetails?.sId}/getProductwithoutauth");
-      items = response.data
-          .map<ItemModel>(
-              (item) => ItemModel.fromJson(item, _dio.options.baseUrl))
-          .toList();
-
-      setBusy(false);
+      var response = await _dio.post("/cart/addItemToCart/${item.id}");
+      _snackbarService.showSnackbar(message: response.data['message']);
     } on DioError catch (e) {
-      setBusy(false);
-
       setError("Something went wrong !");
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
@@ -78,31 +68,54 @@ class SearchedProfileViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusyForObject(item, false);
   }
 
-  search() async {
-    print("Ank:$searchTitle");
-    setBusy(true);
+  getProducts() async {
+    setBusyForObject(items, true);
     try {
+      clearErrors();
+      print(store.storedetails?.sId);
+
       var response = await _dio
-          .get("/search/${userDataService.storeId}?title=$searchTitle");
-      searchedProductResponse = response.data
+          .get("/store/${store.storedetails?.sId}/getProductwithoutauth");
+      items = response.data
           .map<ItemModel>(
               (item) => ItemModel.fromJson(item, _dio.options.baseUrl))
           .toList();
-      setBusy(false);
-      print("Ank:$searchTitle called");
     } on DioError catch (e) {
-      setBusy(false);
-
+      setError("Something went wrong !");
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
       } else if (e.type == DioErrorType.response) {
+        String message = e.response!.data['message'];
+        _snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+    setBusyForObject(items, false);
+  }
+
+  search() async {
+    setBusyForObject(searchedProductResponse, true);
+    try {
+      var response = await _dio
+          .get("/search/${store.storedetails!.sId}?title=$searchTitle");
+      searchedProductResponse = response.data
+          .map<ItemModel>(
+              (item) => ItemModel.fromJson(item, _dio.options.baseUrl))
+          .toList();
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        _snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        print(e.response?.data);
         String message = e.response?.data['message'];
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusyForObject(searchedProductResponse, false);
   }
 
   goBack() {

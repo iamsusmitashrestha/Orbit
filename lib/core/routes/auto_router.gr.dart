@@ -9,6 +9,7 @@
 import 'package:auto_route/legacy.dart';
 import 'package:flutter/material.dart';
 
+import '../../features/cart/views/cart_view.dart';
 import '../../features/categories/views/category_view.dart';
 import '../../features/home/views/home_view.dart';
 import '../../features/profile/views/profile_view.dart';
@@ -49,6 +50,7 @@ class Routes {
   static const String settingsViewRoute = '/settings-view';
   static const String profileViewRoute = '/profile-view';
   static const String searchedProfileViewRoute = '/searched-profile-view';
+  static const String cartViewRoute = '/cart-view';
   static const all = <String>{
     splashViewRoute,
     homeViewRoute,
@@ -69,6 +71,7 @@ class Routes {
     settingsViewRoute,
     profileViewRoute,
     searchedProfileViewRoute,
+    cartViewRoute,
   };
 }
 
@@ -95,6 +98,7 @@ class AutoRouter extends RouterBase {
     RouteDef(Routes.settingsViewRoute, page: SettingsView),
     RouteDef(Routes.profileViewRoute, page: ProfileView),
     RouteDef(Routes.searchedProfileViewRoute, page: SearchedProfileView),
+    RouteDef(Routes.cartViewRoute, page: CartView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -246,6 +250,14 @@ class AutoRouter extends RouterBase {
     SearchedProfileView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => SearchedProfileView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    CartView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => CartView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

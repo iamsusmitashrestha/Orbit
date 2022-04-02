@@ -28,8 +28,8 @@ class SignupViewModel extends BaseViewModel {
   }
 
   void onSignup() async {
+    setBusy(true);
     try {
-      setBusy(true);
       var response = await _dio.post(
         role == "vendor" ? "/user/register" : "/customer/register",
         data: {
@@ -48,10 +48,7 @@ class SignupViewModel extends BaseViewModel {
       Future.delayed(const Duration(seconds: 1), () {
         _navigationService.replaceWith(Routes.verifyCodeViewRoute);
       });
-      setBusy(false);
     } on DioError catch (e) {
-      setBusy(false);
-
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -60,6 +57,7 @@ class SignupViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message);
       }
     }
+    setBusy(false);
   }
 
   onNameChanged(value) {

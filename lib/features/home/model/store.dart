@@ -46,17 +46,17 @@ class StoreDetailsModel {
   });
 
   StoreDetailsModel.fromJson(Map<String, dynamic> json)
-      : deliveryOption = json['deliveryOption'],
-        status = json['storeStatus'],
-        location = List<num>.from(json['location']),
-        sId = json['_id'],
-        storeName = json['storeName'],
-        address = json['address'],
-        owner = json['owner'],
-        logo = "https://orbit1.herokuapp.com" + json['logo'],
-        description = json['description'],
-        openingTime = json['openingTime'],
-        closingTime = json['closingTime'],
-        hints = json['hints'],
-        paymentMethod = List<String>.from(json['paymentMethod']);
+      : deliveryOption = json['store']['deliveryOption'],
+        status = json['store']['storeStatus'],
+        location = List<num>.from(json['store']['location']),
+        sId = json['store']['_id'],
+        storeName = json['store']['storeName'],
+        address = json['store']['address'],
+        owner = json['store']['owner'],
+        logo = "https://orbit1.herokuapp.com" + json['store']['logo'],
+        description = json['store']['description'],
+        openingTime = json['store']['openingTime'],
+        closingTime = json['store']['closingTime'],
+        hints = json['store']['hints'],
+        paymentMethod = List<String>.from(json['store']['paymentMethod']);
 }

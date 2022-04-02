@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:orbit/features/cart/views/cart_view.dart';
 import 'package:orbit/features/categories/views/category_view.dart';
 import 'package:orbit/features/home/views/home_view.dart';
 import 'package:orbit/features/profile/views/profile_view.dart';
@@ -78,6 +79,9 @@ import 'package:orbit/features/upload_logo/upload_logo_view.dart';
     ),
     MaterialRoute(
       page: SearchedProfileView,
+    ),
+    MaterialRoute(
+      page: CartView,
     ),
   ],
   usesLegacyGenerator: true,
