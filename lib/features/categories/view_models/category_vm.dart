@@ -42,8 +42,6 @@ class CategoryViewModel extends BaseViewModel {
           .toList();
       setBusy(false);
     } on DioError catch (e) {
-      setBusy(false);
-
       if (e.type == DioErrorType.other) {
         _snackbarService.showSnackbar(
             message: "Please check your internet connection.");
@@ -52,6 +50,7 @@ class CategoryViewModel extends BaseViewModel {
         _snackbarService.showSnackbar(message: message.trim());
       }
     }
+    setBusy(false);
   }
 
   onCategorySave() async {

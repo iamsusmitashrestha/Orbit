@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,17 +7,86 @@ import 'package:stacked_services/stacked_services.dart';
 class CartViewModel extends BaseViewModel {
   final Dio dio;
   final NavigationService navigationService;
+  final SnackbarService snackbarService;
+  Map<String, dynamic> cart = {};
 
-  CartViewModel({required this.dio, required this.navigationService});
+  CartViewModel(this.snackbarService, this.dio, this.navigationService);
 
-  initialise() {}
+  initialise() {
+    getCart();
+  }
 
   getCart() async {
     setBusy(true);
     try {
-      var response = dio.get("");
-    } catch (e) {}
+      var response = await dio.get("/cart/getItems");
+      cart = response.data;
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = e.response?.data['message'];
+        snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+    setBusy(false);
   }
 
-  deleteCart() async {}
+  calculateTotalPrice() {}
+
+  deleteCart(String id) async {
+    setBusyForObject(cart[id], true);
+    try {
+      print("/cart/removeFromCart/$id");
+      var response = await dio.patch("/cart/removeFromCart/$id");
+      getCart();
+      notifyListeners();
+      // cart.remove(id);
+      // notifyListeners();
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = "";
+
+        snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+    setBusyForObject(cart[id], false);
+  }
+
+  clearCart() async {
+    try {
+      var response = await dio.delete("/cart/clearCart");
+      getCart();
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = "";
+
+        snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+  }
+
+  order(String storeId) async {
+    setBusy(true);
+    try {
+      var response = await dio.post("/order/$storeId");
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.other) {
+        snackbarService.showSnackbar(
+            message: "Please check your internet connection.");
+      } else if (e.type == DioErrorType.response) {
+        String message = "";
+
+        snackbarService.showSnackbar(message: message.trim());
+      }
+    }
+    setBusy(false);
+  }
 }

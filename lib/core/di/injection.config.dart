@@ -74,7 +74,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i3.NavigationService>(),
       get<_i10.UserDataService>()));
   gh.factory<_i13.CartViewModel>(() => _i13.CartViewModel(
-      dio: get<_i5.Dio>(), navigationService: get<_i3.NavigationService>()));
+      get<_i3.SnackbarService>(),
+      get<_i5.Dio>(),
+      get<_i3.NavigationService>()));
   gh.factory<_i14.CategoryViewModel>(() => _i14.CategoryViewModel(
       get<_i3.NavigationService>(),
       get<_i5.Dio>(),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
+import 'package:orbit/common/widgets/k_busy.dart';
+import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/cart/view_models/cart_vm.dart';
 import 'package:orbit/themes/app_themes.dart';
@@ -12,71 +14,123 @@ class CartView extends StatelessWidget {
         viewModelBuilder: () => locator<CartViewModel>(),
         onModelReady: (model) => model.initialise(),
         builder: (context, model, child) => Scaffold(
-            appBar: AppBar(
-              title: Text("My Cart"),
-              actions: [
-                Text(
-                  "Clear Cart",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            body: ListView.builder(
-                padding: EdgeInsets.all(12),
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/cash.png",
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Carrot",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      xsHeightSpan,
-                                      Text(
-                                        "Rs. 100",
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                  onPressed: model.deleteCart,
-                                  icon: Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                    size: 30,
-                                  ))
-                            ],
+              appBar: AppBar(
+                title: Text("My Cart"),
+              ),
+              body: ListView(
+                padding: sPadding,
+                children: [
+                  model.isBusy
+                      ? KBusy()
+                      : TextButton(
+                          onPressed: model.clearCart,
+                          child: Text(
+                            "Clear Cart",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                  for (var key in model.cart.keys)
+                    ListView(
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      children: [
+                        Card(
+                          color: LIGHT_PRIMARY_COLOR,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: ListView(
+                              shrinkWrap: true,
+                              physics: ScrollPhysics(),
+                              children: [
+                                for (var product in model.cart[key])
+                                  Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/images/cash.png",
+                                                    height: 100,
+                                                    width: 100,
+                                                  ),
+                                                  Column(
+                                                    children: [
+                                                      Text(
+                                                        product["productName"],
+                                                        style: TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      xsHeightSpan,
+                                                      Text(
+                                                        product["price"]
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 18,
+                                                        ),
+                                                      ),
+                                                      xsHeightSpan,
+                                                      Text(
+                                                        " Quantity: ${product["quantity"].toString()}",
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              model.busy(
+                                                      model.cart["productId"])
+                                                  ? KBusy()
+                                                  : IconButton(
+                                                      onPressed: () {
+                                                        model.deleteCart(
+                                                            product[
+                                                                "productId"]);
+                                                      },
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                        size: 30,
+                                                      ))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                mHeightSpan,
+                                KButton(
+                                    child: Text("Place Order"),
+                                    onPressed: () {
+                                      model.order(key[0]);
+                                    }),
+                              ],
+                            ),
+                          ),
+                        ),
+                        elHeightSpan,
+                      ],
                     ),
-                  );
-                })));
+                ],
+              ),
+            ));
   }
 }
