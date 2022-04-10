@@ -147,6 +147,10 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.cartViewRoute);
   }
 
+  goToOrderView() {
+    _navigationService.navigateTo(Routes.orderViewRoute);
+  }
+
   goToSearchedProfileView(SearchedStoreModel store) {
     _navigationService.navigateTo(Routes.searchedProfileViewRoute,
         arguments: store);

@@ -19,13 +19,21 @@ class HomeView extends StatelessWidget {
           child: ListView(
             children: [
               ListTile(
+                onTap: model.goToOrderView,
+                title: Text("My Orders"),
+                leading: Icon(
+                  Icons.shopping_bag,
+                  color: Colors.black,
+                ),
+              ),
+              ListTile(
                 onTap: model.logOut,
                 title: Text("Logout"),
                 leading: Icon(
                   Icons.logout,
                   color: Colors.black,
                 ),
-              )
+              ),
             ],
           ),
         ),

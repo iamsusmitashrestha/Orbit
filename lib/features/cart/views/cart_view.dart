@@ -67,6 +67,9 @@ class CartView extends StatelessWidget {
                                                     width: 100,
                                                   ),
                                                   Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                         product["productName"],
@@ -77,20 +80,45 @@ class CartView extends StatelessWidget {
                                                         ),
                                                       ),
                                                       xsHeightSpan,
-                                                      Text(
-                                                        product["price"]
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 18,
-                                                        ),
-                                                      ),
-                                                      xsHeightSpan,
-                                                      Text(
-                                                        " Quantity: ${product["quantity"].toString()}",
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                        ),
+                                                      Wrap(
+                                                        children: [
+                                                          Text(
+                                                            "NPR " +
+                                                                product["price"]
+                                                                    .toString(),
+                                                            style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Text(" x "),
+                                                          Text(
+                                                            product["quantity"]
+                                                                .toString(),
+                                                            style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          Text(" = "),
+                                                          Text(
+                                                            "NPR " +
+                                                                (product["quantity"] *
+                                                                        product[
+                                                                            "price"])
+                                                                    .toString(),
+                                                            style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ],
                                                   ),
@@ -116,6 +144,29 @@ class CartView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
+                                mHeightSpan,
+                                Wrap(
+                                  children: [
+                                    Text("Grand Total: ",
+                                        style: TextStyle(fontSize: 18)),
+                                    Text(
+                                        "NPR " +
+                                            (model.cart[key] as List)
+                                                .fold<num>(
+                                                    0.0,
+                                                    (previousValue, element) =>
+                                                        previousValue +
+                                                        ((element['quantity'] *
+                                                                element[
+                                                                    'price'])
+                                                            as num))
+                                                .toString(),
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
                                 mHeightSpan,
                                 KButton(
                                     child: Text("Place Order"),
