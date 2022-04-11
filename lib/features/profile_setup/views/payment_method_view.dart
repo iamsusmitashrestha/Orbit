@@ -37,9 +37,9 @@ class PaymentMethodView extends StatelessWidget {
             ? KBusy()
             : FloatingActionButton.extended(
                 backgroundColor: PRIMARY_COLOR,
-                onPressed: model.addPayment,
-                icon: Icon(Icons.save),
-                label: Text("Save"),
+                onPressed: () => model.addQR(context),
+                icon: Icon(Icons.upload_file),
+                label: Text("Upload QR"),
               ),
         body: ListView(
           padding: AppDimens.PAGE_PADDING,
@@ -51,35 +51,11 @@ class PaymentMethodView extends StatelessWidget {
               fit: BoxFit.contain,
             ),
             lHeightSpan,
-            model.isBusy
-                ? KBusy()
-                : GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 5.0,
-                    mainAxisSpacing: 0.5,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: List.generate(
-                      model.paymentOptions.length,
-                      (index) {
-                        PaymentModel paymentOption =
-                            model.paymentOptions[index];
-
-                        return Column(
-                          children: [
-                            PaymentCard(
-                              img: paymentOption.image,
-                              isPaymentSelected: model.selectedPayments
-                                  .contains(paymentOption),
-                              onpressed: () =>
-                                  model.selectPayment(paymentOption),
-                            ),
-                            Text(paymentOption.value),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+            model.paymentOptions.isEmpty
+                ? Text("Upload a QR. No QR FOUND!")
+                : Image.network(
+                    model.dio.options.baseUrl + model.paymentOptions[0],
+                    width: double.infinity)
           ],
         ),
       ),

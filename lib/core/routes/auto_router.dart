@@ -3,6 +3,7 @@ import 'package:orbit/features/cart/views/cart_view.dart';
 import 'package:orbit/features/categories/views/category_view.dart';
 import 'package:orbit/features/home/views/home_view.dart';
 import 'package:orbit/features/order/views/order_view.dart';
+import 'package:orbit/features/order/views/store_order_view.dart';
 import 'package:orbit/features/profile/views/profile_view.dart';
 import 'package:orbit/features/profile/views/searched_profile_view.dart';
 import 'package:orbit/features/profile_setup/views/add_item_view.dart';
@@ -86,6 +87,9 @@ import 'package:orbit/features/upload_logo/upload_logo_view.dart';
     ),
     MaterialRoute(
       page: OrderView,
+    ),
+    MaterialRoute(
+      page: StoreOrderView,
     ),
   ],
   usesLegacyGenerator: true,

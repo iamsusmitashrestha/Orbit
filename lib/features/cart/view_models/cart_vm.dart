@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:orbit/features/payment/payment_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -73,10 +74,13 @@ class CartViewModel extends BaseViewModel {
     }
   }
 
-  order(String storeId) async {
+  order(String storeId, String total) async {
     setBusy(true);
     try {
       var response = await dio.post("/order/$storeId");
+      getCart();
+      navigationService
+          .navigateToView(PaymentView(storeId: storeId, total: total));
     } on DioError catch (e) {
       if (e.type == DioErrorType.other) {
         snackbarService.showSnackbar(

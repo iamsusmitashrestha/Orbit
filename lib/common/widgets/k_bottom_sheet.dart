@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orbit/common/constants/ui_helpers.dart';
 
 class KBottomSheet extends StatelessWidget {
   final List<Widget> children;
@@ -10,6 +11,7 @@ class KBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: mPadding,
       width: MediaQuery.of(context).size.width,
       constraints: BoxConstraints(
         maxHeight: hasHeight

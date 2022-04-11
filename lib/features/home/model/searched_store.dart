@@ -8,7 +8,7 @@ class SearchedStoreModel {
     storedetails = json['storedetails'] != null
         ? new StoreDetailsModel.fromJson(json['storedetails'])
         : null;
-    contactNumber = json['contactNumber'];
+    contactNumber = json['contactNumber'] ?? "N/A";
   }
 }
 

@@ -114,20 +114,6 @@ class ProfileView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Wrap(
-                      children: [
-                        Icon(Icons.payment, color: PRIMARY_COLOR),
-                        sWidthSpan,
-                        Text(
-                          store.storedetails!.paymentMethod!.join(", "),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            height: 1.4,
-                          ),
-                        ),
-                      ],
-                    ),
                     sHeightSpan,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

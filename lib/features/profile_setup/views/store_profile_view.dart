@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
+import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/core/di/injection.dart';
+import 'package:orbit/core/routes/auto_router.gr.dart';
 import 'package:orbit/features/profile_setup/view_models/store_profile_vm.dart';
 import 'package:orbit/features/profile_setup/widgets/profile_container.dart';
 import 'package:stacked/stacked.dart';
@@ -214,6 +216,12 @@ class StoreProfileView extends StatelessWidget {
                     ),
                   ],
                 ),
+                KButton(
+                    child: Text("View Orders"),
+                    onPressed: () {
+                      model.navigationService
+                          .navigateTo(Routes.storeOrderViewRoute);
+                    }),
               ],
             ),
           );

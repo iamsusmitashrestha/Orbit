@@ -5,6 +5,7 @@ class OrderModel {
   late String id;
   late String storeId;
   late List<CartModel> items;
+  late CustomerModel customer;
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
@@ -12,6 +13,7 @@ class OrderModel {
     items = (json['products'] as List)
         .map<CartModel>((e) => CartModel.fromJson(e))
         .toList();
+    customer = CustomerModel.fromJson(json['customer']);
   }
 }
 

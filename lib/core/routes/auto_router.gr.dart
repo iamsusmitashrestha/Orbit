@@ -13,6 +13,7 @@ import '../../features/cart/views/cart_view.dart';
 import '../../features/categories/views/category_view.dart';
 import '../../features/home/views/home_view.dart';
 import '../../features/order/views/order_view.dart';
+import '../../features/order/views/store_order_view.dart';
 import '../../features/profile/views/profile_view.dart';
 import '../../features/profile/views/searched_profile_view.dart';
 import '../../features/profile_setup/views/add_item_view.dart';
@@ -53,6 +54,7 @@ class Routes {
   static const String searchedProfileViewRoute = '/searched-profile-view';
   static const String cartViewRoute = '/cart-view';
   static const String orderViewRoute = '/order-view';
+  static const String storeOrderViewRoute = '/store-order-view';
   static const all = <String>{
     splashViewRoute,
     homeViewRoute,
@@ -75,6 +77,7 @@ class Routes {
     searchedProfileViewRoute,
     cartViewRoute,
     orderViewRoute,
+    storeOrderViewRoute,
   };
 }
 
@@ -103,6 +106,7 @@ class AutoRouter extends RouterBase {
     RouteDef(Routes.searchedProfileViewRoute, page: SearchedProfileView),
     RouteDef(Routes.cartViewRoute, page: CartView),
     RouteDef(Routes.orderViewRoute, page: OrderView),
+    RouteDef(Routes.storeOrderViewRoute, page: StoreOrderView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -270,6 +274,14 @@ class AutoRouter extends RouterBase {
     OrderView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => OrderView(),
+        settings: data,
+        fullscreenDialog: false,
+        maintainState: true,
+      );
+    },
+    StoreOrderView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => StoreOrderView(),
         settings: data,
         fullscreenDialog: false,
         maintainState: true,

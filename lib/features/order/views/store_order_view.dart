@@ -5,14 +5,15 @@ import 'package:orbit/common/widgets/k_busy.dart';
 import 'package:orbit/common/widgets/k_headline.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/order/view_models/order_vm.dart';
+import 'package:orbit/features/order/view_models/store_order_vm.dart';
 import 'package:orbit/themes/app_themes.dart';
 import 'package:stacked/stacked.dart';
 
-class OrderView extends StatelessWidget {
+class StoreOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<OrderViewModel>.reactive(
-      viewModelBuilder: () => locator<OrderViewModel>(),
+    return ViewModelBuilder<StoreOrderViewModel>.reactive(
+      viewModelBuilder: () => locator<StoreOrderViewModel>(),
       onModelReady: (model) => model.initialise(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
@@ -43,6 +44,13 @@ class OrderView extends StatelessWidget {
                             children: [
                               KHeadline("ORDER ID: "),
                               KHeadline(order.id),
+                            ],
+                          ),
+                          xsHeightSpan,
+                          Wrap(
+                            children: [
+                              KHeadline("Customer Email: "),
+                              KHeadline(order.customer.email),
                             ],
                           ),
                           xsHeightSpan,

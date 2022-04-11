@@ -171,7 +171,17 @@ class CartView extends StatelessWidget {
                                 KButton(
                                     child: Text("Place Order"),
                                     onPressed: () {
-                                      model.order(key[0]);
+                                      model.order(
+                                          key,
+                                          (model.cart[key] as List)
+                                              .fold<num>(
+                                                  0.0,
+                                                  (previousValue, element) =>
+                                                      previousValue +
+                                                      ((element['quantity'] *
+                                                              element['price'])
+                                                          as num))
+                                              .toString());
                                     }),
                               ],
                             ),
