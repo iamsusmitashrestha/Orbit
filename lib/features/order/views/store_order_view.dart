@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orbit/common/constants/app_dimens.dart';
 import 'package:orbit/common/constants/ui_helpers.dart';
 import 'package:orbit/common/widgets/k_busy.dart';
+import 'package:orbit/common/widgets/k_button.dart';
 import 'package:orbit/common/widgets/k_headline.dart';
 import 'package:orbit/core/di/injection.dart';
 import 'package:orbit/features/order/view_models/order_vm.dart';
@@ -84,6 +85,7 @@ class StoreOrderView extends StatelessWidget {
                                               width: 100,
                                               height: 100,
                                             ),
+                                            sWidthSpan,
                                             Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -163,6 +165,12 @@ class StoreOrderView extends StatelessWidget {
                                       fontWeight: FontWeight.bold)),
                             ],
                           ),
+                          sHeightSpan,
+                          KButton(
+                              child: Text("Shipped"),
+                              onPressed: () {
+                                model.shipOrder(order.id);
+                              })
                         ],
                       ),
                     ),

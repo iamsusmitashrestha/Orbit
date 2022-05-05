@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:orbit/core/routes/auto_router.gr.dart';
 import 'package:orbit/core/services/user_data_service.dart';
@@ -34,6 +36,13 @@ class InventoryViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.addItemViewRoute);
   }
 
+  String search = "";
+
+  onSearchChange(value) {
+    search = value;
+    notifyListeners();
+  }
+
   getItem() async {
     setBusy(true);
     try {
@@ -61,30 +70,56 @@ class InventoryViewModel extends BaseViewModel {
     }
   }
 
-  void deleteItem(int index) async {
-    SheetResponse? response = await showCustomBottomSheet(
-      widget: DeleteItemBottomSheetView(),
+  Future<void> showMyDialog(int index, BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Are you sure you want to delete this product?'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('This will remove the product permanently.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () async {
+                try {
+                  setBusy(true);
+                  var response =
+                      await dio.delete("/product/${items[index].id}");
+                  items.removeAt(index);
+                  notifyListeners();
+                  Navigator.of(context).pop();
+
+                  setBusy(false);
+                } on DioError catch (e) {
+                  setBusy(false);
+                  if (e.type == DioErrorType.other) {
+                    _snackbarService.showSnackbar(
+                        message: "Please check your internet connection.");
+                  } else if (e.type == DioErrorType.response) {
+                    String message = "";
+
+                    _snackbarService.showSnackbar(message: message.trim());
+                  }
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
-
-    try {
-      setBusy(true);
-      if (response != null && response.confirmed) {
-        var response = await dio.delete("/product/${items[index].id}");
-        items.removeAt(index);
-        notifyListeners();
-      }
-      setBusy(false);
-    } on DioError catch (e) {
-      setBusy(false);
-      if (e.type == DioErrorType.other) {
-        _snackbarService.showSnackbar(
-            message: "Please check your internet connection.");
-      } else if (e.type == DioErrorType.response) {
-        String message = "";
-
-        _snackbarService.showSnackbar(message: message.trim());
-      }
-    }
   }
 
   goToStoreProfile() {

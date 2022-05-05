@@ -28,7 +28,8 @@ class OrderView extends StatelessWidget {
                 physics: ScrollPhysics(),
                 children: [
                   Card(
-                    color: LIGHT_PRIMARY_COLOR,
+                    color:
+                        order.shipped ? Colors.green[200] : Colors.orange[200],
                     elevation: 4,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
@@ -43,6 +44,13 @@ class OrderView extends StatelessWidget {
                             children: [
                               KHeadline("ORDER ID: "),
                               KHeadline(order.id),
+                            ],
+                          ),
+                          xsHeightSpan,
+                          Wrap(
+                            children: [
+                              KHeadline("Order Status: "),
+                              KHeadline(order.shipped ? "Shipped" : "Pending"),
                             ],
                           ),
                           xsHeightSpan,

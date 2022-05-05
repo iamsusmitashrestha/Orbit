@@ -39,14 +39,6 @@ class SplashViewModel extends BaseViewModel {
         _navigationService.replaceWith(Routes.roleSelectionViewRoute);
       });
     }
-    // String token = _localStorageService.read('token') ?? "";
-    // if (token.length > 0) {
-    //   getData();
-    // } else {
-    //   Future.delayed(Duration(seconds: 2), () {
-    //     _navigationService.replaceWith(Routes.roleSelectionViewRoute);
-    //   });
-    // }
   }
 
   getData() async {

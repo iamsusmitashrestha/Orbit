@@ -4,12 +4,14 @@ import 'package:orbit/core/di/injection.dart';
 class OrderModel {
   late String id;
   late String storeId;
+  late bool shipped;
   late List<CartModel> items;
   late CustomerModel customer;
 
   OrderModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     storeId = json['storeId'];
+    shipped = json['shipped'] != null ? json['shipped'] : false;
     items = (json['products'] as List)
         .map<CartModel>((e) => CartModel.fromJson(e))
         .toList();

@@ -52,6 +52,8 @@ class InventoryView extends StatelessWidget {
             lHeightSpan,
             KTextFormField(
               hint: "Search Products",
+              initialValue: model.search,
+              onChanged: model.onSearchChange,
             ),
             mHeightSpan,
             Text(
@@ -67,13 +69,22 @@ class InventoryView extends StatelessWidget {
                 : GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: model.items.length,
+                    itemCount: model.items
+                        .where((element) =>
+                            model.search.isEmpty ||
+                            element.title.contains(model.search))
+                        .toList()
+                        .length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) {
-                      ItemModel item = model.items[index];
+                      ItemModel item = model.items
+                          .where((element) =>
+                              model.search.isEmpty ||
+                              element.title.contains(model.search))
+                          .toList()[index];
                       return Card(
                         margin: sPadding,
                         shape: RoundedRectangleBorder(
@@ -131,19 +142,18 @@ class InventoryView extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                elWidthSpan,
-                                // Row(
-                                //   children: [
-                                //     model.busy(index)
-                                //         ? CircularProgressIndicator()
-                                //         : IconButton(
-                                //             color: Colors.red,
-                                //             icon: Icon(Icons.delete),
-                                //             onPressed: () =>
-                                //                 model.deleteItem(index),
-                                //           ),
-                                //   ],
-                                // ),
+                                Row(
+                                  children: [
+                                    model.busy(index)
+                                        ? CircularProgressIndicator()
+                                        : IconButton(
+                                            color: Colors.red,
+                                            icon: Icon(Icons.delete),
+                                            onPressed: () => model.showMyDialog(
+                                                index, context),
+                                          ),
+                                  ],
+                                ),
                               ],
                             ),
                           ],
