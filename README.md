@@ -6,6 +6,7 @@
 - Do payment
 - Get My orders of Users
 - Get orders of store
+- Shipped Status for Orders
 
 # Dipesh Baral
 
@@ -13,3 +14,4 @@
 - Add product with image in inventory
 - Get product with image in store profile on the side of customer and vendor
 - Home View UI changes
+- Delete product
